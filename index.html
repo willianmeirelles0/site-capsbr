@@ -336,12 +336,18 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
 
   /* ---------- Dor / identificação ---------- */
   .pain-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
     gap:16px;
     margin-top:40px;
   }
   .pain-card{
+    flex:1 1 240px;
+    max-width:300px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     background:var(--cor-branco);
     border:1px solid var(--cor-borda-suave);
     border-radius:var(--radius);
@@ -482,12 +488,15 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
   .catalogo-cat:hover{background:#dcefe5;}
   .catalogo-cat.is-active{background:var(--cor-principal);color:var(--cor-branco);border-color:var(--cor-principal);}
   .catalogo-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
     gap:22px;
     margin-top:28px;
   }
   .produto-card{
+    flex:1 1 240px;
+    max-width:270px;
     background:var(--cor-branco);
     border:1px solid var(--cor-borda-suave);
     border-radius:var(--radius);
@@ -533,22 +542,42 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
   }
   .produto-preco span{font-size:12px;color:var(--cor-corpo);}
   .produto-preco strong{color:var(--cor-principal);font-size:15px;}
-  .catalogo-vazio{grid-column:1/-1;text-align:center;padding:40px 20px;color:var(--cor-corpo);}
+  .catalogo-vazio{width:100%;text-align:center;padding:40px 20px;color:var(--cor-corpo);}
 
   .condicoes-destaque{
     background:var(--cor-principal);
     padding:52px 0;
+    position:relative;
+    overflow:hidden;
   }
+  .condicoes-destaque::before{
+    content:"";
+    position:absolute;
+    top:-120px;
+    left:50%;
+    transform:translateX(-50%);
+    width:600px;
+    height:600px;
+    background:radial-gradient(circle, rgba(230,255,87,0.12) 0%, rgba(230,255,87,0) 70%);
+    pointer-events:none;
+    z-index:0;
+  }
+  .condicoes-destaque .container{position:relative;z-index:1;text-align:center;}
   @media (max-width:640px){.condicoes-destaque{padding:36px 0;}}
   .condicoes-titulo{
-    display:block;
-    text-align:center;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(230,255,87,0.1);
+    border:1px solid rgba(230,255,87,0.3);
+    color:var(--cor-destaque);
+    padding:8px 18px;
+    border-radius:999px;
     font-size:13px;
-    font-weight:800;
+    font-weight:700;
     letter-spacing:1.2px;
     text-transform:uppercase;
-    color:var(--cor-destaque);
-    margin-bottom:24px;
+    margin-bottom:28px;
   }
   .condicoes-grid{
     display:grid;
@@ -614,6 +643,42 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
   .authority-text p{font-size:16.5px;margin-bottom:16px;color:rgba(244,237,237,0.92);}
   .authority-name{display:block;font-size:30px;font-weight:800;color:var(--cor-branco);margin-bottom:6px;}
   .authority-role{display:block;font-size:16px;color:var(--cor-destaque);margin-bottom:22px;font-weight:700;}
+
+  /* ---------- Ebook ---------- */
+  .ebook-section{padding:64px 0;}
+  .ebook-card{
+    border-radius:28px;
+    padding:44px;
+    display:flex;
+    align-items:center;
+    gap:44px;
+    box-shadow:0 24px 60px rgba(0,71,81,0.2);
+  }
+  @media (max-width:760px){
+    .ebook-card{flex-direction:column;padding:36px 24px;text-align:center;}
+  }
+  .ebook-mockup{flex:0 0 190px;display:flex;justify-content:center;}
+  .ebook-cover{
+    width:190px;
+    aspect-ratio:3/4;
+    background:linear-gradient(160deg, var(--cor-principal-clara), var(--cor-principal-escura));
+    border-radius:14px;
+    border:1px solid rgba(230,255,87,0.3);
+    box-shadow:0 20px 40px rgba(0,0,0,0.35), 0 0 0 6px rgba(230,255,87,0.08);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:20px;
+    padding:24px 18px;
+    transform:rotate(-3deg);
+  }
+  .ebook-cover .logo-mark{height:26px;}
+  .ebook-cover-titulo{font-size:12.5px;font-weight:800;text-align:center;color:var(--cor-branco);line-height:1.4;}
+  .ebook-texto{flex:1;}
+  .ebook-texto h2{margin:8px 0 14px;}
+  .ebook-texto p{font-size:16px;margin-bottom:26px;max-width:560px;}
+  @media (max-width:760px){.ebook-texto p{max-width:none;}}
 
   /* ---------- FAQ ---------- */
   .faq-list{max-width:760px;margin:40px auto 0;}
@@ -1102,6 +1167,26 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
           <span class="authority-role">Sócio-fundador da CapsBR</span>
           <p>A CapsBR nasceu pra resolver o que mais trava quem quer ter uma marca própria de suplementos no Brasil: encontrar um parceiro de produção sério, regularizado e que trate cada lote como se fosse a marca dele.</p>
           <p>Por isso só trabalhamos com fórmulas testadas, seguimos as regras da Anvisa sem exceção e acompanhamos pessoalmente cada cliente, do briefing até a entrega.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EBOOK ================= -->
+  <section id="ebook" class="ebook-section">
+    <div class="container">
+      <div class="ebook-card section-escura reveal">
+        <div class="ebook-mockup">
+          <div class="ebook-cover">
+            <svg class="logo-mark" role="img" aria-label="CapsBR"><use href="#capsbr-mark"></use></svg>
+            <span class="ebook-cover-titulo">Como Construir Sua Marca de Suplementos no Brasil</span>
+          </div>
+        </div>
+        <div class="ebook-texto">
+          <span class="eyebrow">Ainda com dúvidas?</span>
+          <h2>Aprenda o caminho certo antes de terceirizar</h2>
+          <p>Se você ainda tem dúvidas de como entrar no mundo dos nutracêuticos da forma certa, ou precisa se estruturar melhor antes de dar o próximo passo, o ebook da CapsBR reúne o guia completo, direto de quem vive esse mercado.</p>
+          <a href="https://capsbr.com.br/ebook/" target="_blank" rel="noopener" class="btn btn-primary">Quero conhecer o ebook</a>
         </div>
       </div>
     </div>
