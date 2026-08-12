@@ -860,6 +860,30 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
   .policy-modal-content p{font-size:14.5px;color:var(--cor-corpo);margin-bottom:12px;line-height:1.65;}
   .policy-modal-content a{color:var(--cor-principal);text-decoration:underline;}
   @media (max-width:640px){.policy-modal-content{padding:40px 24px 32px;}}
+
+  /* ---------- Botão flutuante de WhatsApp ---------- */
+  .whatsapp-float{
+    position:fixed;
+    right:22px;
+    bottom:22px;
+    z-index:150;
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    background:#25D366;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 10px 28px rgba(0,0,0,0.28);
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .whatsapp-float svg{width:30px;height:30px;}
+  .whatsapp-float:hover{transform:scale(1.08);box-shadow:0 14px 34px rgba(0,0,0,0.34);}
+  @media (max-width:560px){
+    .whatsapp-float{right:16px;bottom:16px;width:52px;height:52px;}
+    .whatsapp-float svg{width:27px;height:27px;}
+  }
 </style>
 </head>
 <body>
@@ -1364,6 +1388,11 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
     </div>
   </div>
 </div>
+
+<!-- ================= BOTÃO FLUTUANTE DE WHATSAPP ================= -->
+<a href="#" class="whatsapp-float whatsapp-link" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16.004 3C9.377 3 4 8.373 4 15c0 2.375.688 4.59 1.875 6.453L4 29l7.723-1.828A11.94 11.94 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3Zm0 21.75c-1.98 0-3.83-.578-5.383-1.57l-.386-.242-4.582 1.086 1.11-4.469-.258-.402A9.65 9.65 0 0 1 5.25 15c0-5.937 4.82-10.75 10.754-10.75S26.75 9.063 26.75 15 21.938 24.75 16.004 24.75Zm5.906-8.055c-.324-.164-1.918-.945-2.215-1.055-.297-.109-.512-.164-.727.164-.215.324-.836 1.055-1.023 1.27-.188.215-.375.242-.699.078-.324-.164-1.367-.504-2.605-1.61-.964-.86-1.613-1.922-1.804-2.246-.188-.324-.02-.5.144-.664.148-.148.325-.383.487-.574.16-.191.215-.324.324-.539.11-.215.055-.402-.027-.566-.082-.164-.727-1.75-.996-2.395-.262-.629-.531-.543-.727-.554-.188-.008-.402-.008-.617-.008-.215 0-.566.078-.863.402-.297.324-1.133 1.106-1.133 2.696 0 1.59 1.16 3.125 1.32 3.34.164.215 2.281 3.484 5.527 4.887.773.332 1.375.531 1.844.68.774.246 1.48.211 2.035.129.621-.094 1.918-.785 2.188-1.543.27-.758.27-1.406.188-1.543-.078-.137-.297-.219-.62-.383Z"/></svg>
+</a>
 
 <script>
   // ============================================================
