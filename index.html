@@ -1447,7 +1447,7 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
     grid.innerHTML = produtos.map(function(p, i){
       const delay = i % 4 === 0 ? '' : ' reveal-delay-' + (i % 3 + 1);
       return '' +
-        '<div class="produto-card reveal' + delay + '">' +
+        '<a href="#formulario" class="produto-card reveal' + delay + '" data-categoria="' + p.categoria + '">' +
           '<div class="produto-imagem"><img src="' + CATALOGO_IMAGENS[p.categoria] + '" alt="' + p.nome + ', ' + p.categoria + ', imagem meramente ilustrativa" loading="lazy"></div>' +
           '<div class="produto-info">' +
             '<span class="produto-categoria">' + p.categoria + '</span>' +
@@ -1456,7 +1456,7 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
             '<ul class="produto-beneficios">' + p.beneficios.map(b => '<li>' + b + '</li>').join('') + '</ul>' +
             '<div class="produto-preco"><span>Pedido mínimo</span><strong>' + p.moq + ' unidades</strong></div>' +
           '</div>' +
-        '</div>';
+        '</a>';
     }).join('');
 
     // Novos cards precisam ser observados pelo IntersectionObserver do scroll reveal
@@ -1472,6 +1472,16 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
       btn.classList.add('is-active');
       renderizarCatalogo(btn.getAttribute('data-filtro'));
     });
+  });
+
+  // Clicar em um produto do catálogo leva ao formulário com a categoria já pré-selecionada
+  document.getElementById('catalogoGrid').addEventListener('click', function(e){
+    const card = e.target.closest('.produto-card');
+    if (!card) return;
+    const categoriaSelect = document.getElementById('categoria');
+    if (categoriaSelect && card.dataset.categoria) {
+      categoriaSelect.value = card.dataset.categoria;
+    }
   });
 
   // Scroll reveal
