@@ -499,14 +499,14 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
   }
   .produto-card:hover{transform:translateY(-5px);box-shadow:0 16px 36px rgba(0,71,81,0.14);}
   .produto-imagem{
-    aspect-ratio:4/3;
+    aspect-ratio:753/772;
     background:var(--cor-principal-escura);
     display:flex;
     align-items:center;
     justify-content:center;
     overflow:hidden;
   }
-  .produto-imagem img{width:100%;height:100%;object-fit:cover;object-position:center 30%;}
+  .produto-imagem img{width:100%;height:100%;object-fit:cover;object-position:center center;}
   .produto-info{padding:18px 18px 20px;flex:1;display:flex;flex-direction:column;}
   .produto-categoria{
     font-size:11.5px;
@@ -537,12 +537,9 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
 
   .condicoes-destaque{
     background:var(--cor-principal);
-    border-radius:24px;
-    padding:44px 36px;
-    margin-top:36px;
-    box-shadow:0 20px 50px rgba(0,71,81,0.18);
+    padding:52px 0;
   }
-  @media (max-width:640px){.condicoes-destaque{padding:32px 20px;}}
+  @media (max-width:640px){.condicoes-destaque{padding:36px 0;}}
   .condicoes-titulo{
     display:block;
     text-align:center;
@@ -555,8 +552,15 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
   }
   .condicoes-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    grid-template-columns:repeat(5,1fr);
     gap:16px;
+  }
+  @media (max-width:960px){
+    .condicoes-grid{grid-template-columns:repeat(3,1fr);}
+  }
+  @media (max-width:640px){
+    .condicoes-grid{grid-template-columns:1fr 1fr;}
+    .condicao-item:nth-child(5){grid-column:1 / -1;max-width:calc(50% - 8px);margin:0 auto;}
   }
   .condicao-item{
     background:rgba(244,237,237,0.06);
@@ -1027,6 +1031,35 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
     </div>
   </section>
 
+  <!-- ================= CONDIÇÕES E SERVIÇOS INCLUSOS (bloco de destaque, largura total) ================= -->
+  <div class="condicoes-destaque reveal">
+    <div class="container">
+      <span class="condicoes-titulo">Condições e serviços inclusos</span>
+      <div class="condicoes-grid">
+        <div class="condicao-item">
+          <h3>Design de rótulo</h3>
+          <p>R$ 150,00 por produto, cortesia a partir de 300 unidades no pedido.</p>
+        </div>
+        <div class="condicao-item">
+          <h3>Notificação Anvisa</h3>
+          <p>Cuidamos do código de notificação obrigatório do seu produto. R$ 300,00 por produto.</p>
+        </div>
+        <div class="condicao-item">
+          <h3>Registro de marca (INPI)</h3>
+          <p>Parceiro especializado cuida do registro da sua marca junto ao INPI, com acompanhamento completo.</p>
+        </div>
+        <div class="condicao-item">
+          <h3>Frete</h3>
+          <p>Calculado após a produção, com transportadoras parceiras. Grátis em pedidos de maior volume.</p>
+        </div>
+        <div class="condicao-item">
+          <h3>Pagamento</h3>
+          <p>50% na confirmação do pedido e 50% no despacho, ou parcelamento no cartão em até 12x.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ================= CATÁLOGO ================= -->
   <section id="catalogo">
     <div class="container">
@@ -1036,33 +1069,6 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
           <h2>Fórmulas prontas pra sua marca</h2>
         </div>
         <a href="assets/catalogo/catalogo-capsbr.pdf" class="btn btn-outline-escuro" download>Baixar catálogo em PDF</a>
-      </div>
-
-      <!-- ================= CONDIÇÕES E SERVIÇOS INCLUSOS (bloco de destaque) ================= -->
-      <div class="condicoes-destaque reveal">
-        <span class="condicoes-titulo">Condições e serviços inclusos</span>
-        <div class="condicoes-grid">
-          <div class="condicao-item">
-            <h3>Design de rótulo</h3>
-            <p>R$ 150,00 por produto, cortesia a partir de 300 unidades no pedido.</p>
-          </div>
-          <div class="condicao-item">
-            <h3>Notificação Anvisa</h3>
-            <p>Cuidamos do código de notificação obrigatório do seu produto. R$ 300,00 por produto.</p>
-          </div>
-          <div class="condicao-item">
-            <h3>Registro de marca (INPI)</h3>
-            <p>Parceiro especializado cuida do registro da sua marca junto ao INPI, com acompanhamento completo.</p>
-          </div>
-          <div class="condicao-item">
-            <h3>Frete</h3>
-            <p>Calculado após a produção, com transportadoras parceiras. Grátis em pedidos de maior volume.</p>
-          </div>
-          <div class="condicao-item">
-            <h3>Pagamento</h3>
-            <p>50% na confirmação do pedido e 50% no despacho, ou parcelamento no cartão em até 12x.</p>
-          </div>
-        </div>
       </div>
 
       <div class="catalogo-cats reveal" id="catalogoFiltros">
