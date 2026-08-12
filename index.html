@@ -347,6 +347,7 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
     border-radius:var(--radius);
     padding:24px 22px;
     box-shadow:0 8px 24px rgba(0,71,81,0.06);
+    text-align:center;
   }
   .pain-card p{font-size:15.5px;font-weight:600;color:var(--cor-principal);}
 
@@ -385,10 +386,24 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
   .card p{font-size:14.5px;color:var(--cor-corpo);}
 
   /* ---------- White Label vs Private Label ---------- */
+  .fit-subtitle{margin-top:14px;max-width:820px;margin-left:auto;margin-right:auto;white-space:nowrap;}
+  @media (max-width:640px){.fit-subtitle{white-space:normal;}}
   .fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:40px;}
   @media (max-width:760px){.fit-grid{grid-template-columns:1fr;}}
-  .fit-box{border-radius:var(--radius);padding:32px 28px;background:var(--cor-branco);border:1px solid var(--cor-borda-suave);box-shadow:0 8px 24px rgba(0,71,81,0.06);}
-  .fit-box.destaque{border:1.5px solid var(--cor-principal);}
+  .fit-box{
+    border-radius:var(--radius);
+    padding:32px 28px;
+    background:var(--cor-branco);
+    border:1.5px solid var(--cor-borda-suave);
+    box-shadow:0 8px 24px rgba(0,71,81,0.06);
+    transition:border-color .25s ease, box-shadow .25s ease;
+  }
+  @media (hover:hover){
+    .fit-box:hover{border-color:var(--cor-principal);box-shadow:0 14px 34px rgba(0,71,81,0.14);}
+  }
+  @media (hover:none){
+    .fit-box.destaque{border-color:var(--cor-principal);}
+  }
   .fit-box .fit-eyebrow{
     display:inline-block;
     font-size:12px;
@@ -516,23 +531,42 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
     padding-top:12px;
     margin-top:auto;
   }
-  .produto-preco strong{color:var(--cor-principal);font-size:17px;}
-  .produto-preco span{font-size:11px;color:var(--cor-corpo);text-align:right;}
+  .produto-preco span{font-size:12px;color:var(--cor-corpo);}
+  .produto-preco strong{color:var(--cor-principal);font-size:15px;}
   .catalogo-vazio{grid-column:1/-1;text-align:center;padding:40px 20px;color:var(--cor-corpo);}
 
+  .condicoes-destaque{
+    background:var(--cor-principal);
+    border-radius:24px;
+    padding:44px 36px;
+    margin-top:36px;
+    box-shadow:0 20px 50px rgba(0,71,81,0.18);
+  }
+  @media (max-width:640px){.condicoes-destaque{padding:32px 20px;}}
+  .condicoes-titulo{
+    display:block;
+    text-align:center;
+    font-size:13px;
+    font-weight:800;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    color:var(--cor-destaque);
+    margin-bottom:24px;
+  }
   .condicoes-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
     gap:16px;
-    margin-top:52px;
   }
   .condicao-item{
-    background:var(--cor-verde-suave);
+    background:rgba(244,237,237,0.06);
+    border:1px solid rgba(230,255,87,0.2);
     border-radius:14px;
-    padding:22px 20px;
+    padding:24px 20px;
+    text-align:center;
   }
-  .condicao-item h3{font-size:14.5px;margin-bottom:6px;}
-  .condicao-item p{font-size:13px;color:var(--cor-principal-clara);}
+  .condicao-item h3{font-size:14.5px;margin-bottom:8px;color:var(--cor-branco);}
+  .condicao-item p{font-size:13px;color:rgba(244,237,237,0.85);}
 
   .catalogo-cta{
     margin-top:40px;
@@ -827,7 +861,7 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
 
 <header>
   <div class="header-inner">
-    <a href="#topo" class="logo" aria-label="CapsBR — página inicial">
+    <a href="#topo" class="logo" aria-label="Página inicial da CapsBR">
       <svg class="logo-mark" role="img" aria-label="CapsBR"><use href="#capsbr-mark"></use></svg>
       <span class="logo-suffix">Terceirização de Suplementos</span>
     </a>
@@ -848,8 +882,8 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
   <section class="hero section-escura">
     <div class="container hero-inner">
       <span class="hero-tag reveal">TERCEIRIZAÇÃO WHITE LABEL &amp; PRIVATE LABEL</span>
-      <h1 class="reveal reveal-delay-1">Sua marca de suplementos no mercado, sem abrir fábrica</h1>
-      <p class="subheadline reveal reveal-delay-2">A CapsBR cuida da fórmula, do teste de estabilidade, do rótulo e da produção &mdash; 100% dentro das normas da Anvisa, com o melhor prazo do Brasil para White Label. Você foca em vender.</p>
+      <h1 class="reveal reveal-delay-1">Sua nova marca de suplementos no mercado, sem abrir fábrica.</h1>
+      <p class="subheadline reveal reveal-delay-2">A CapsBR cuida da fórmula, do teste de estabilidade, do rótulo e da produção, 100% dentro das normas da Anvisa, com o melhor prazo do Brasil para White Label. Você foca em vender.</p>
       <div class="cta-row reveal reveal-delay-3">
         <a href="#formulario" class="btn btn-primary">Quero terceirizar minha produção</a>
         <a href="#" class="btn btn-secondary whatsapp-link" target="_blank" rel="noopener">Falar agora no WhatsApp</a>
@@ -932,10 +966,10 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
       <div class="section-center section-intro reveal">
         <span class="eyebrow">Qual modelo é o seu</span>
         <h2>White Label ou Private Label?</h2>
-        <p style="margin-top:14px;">Os dois colocam sua marca no rótulo. A diferença é o quanto a fórmula é exclusiva sua.</p>
+        <p class="fit-subtitle">Os dois colocam sua marca no rótulo. A diferença é o quanto a fórmula é exclusiva sua.</p>
       </div>
       <div class="fit-grid">
-        <div class="fit-box reveal">
+        <div class="fit-box destaque reveal">
           <span class="fit-eyebrow">White Label</span>
           <h3>Rápido pra começar</h3>
           <p>Você escolhe entre nossas fórmulas prontas e coloca a sua marca no rótulo. Ideal pra quem quer entrar no mercado rápido, testar categorias e crescer com menos risco inicial.</p>
@@ -943,9 +977,10 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
             <li>Fórmulas já validadas e testadas</li>
             <li>Prazo de produção mais curto</li>
             <li>Grande variedade pra montar seu catálogo</li>
+            <li>Baixo custo de investimento inicial</li>
           </ul>
         </div>
-        <div class="fit-box destaque reveal reveal-delay-1">
+        <div class="fit-box reveal reveal-delay-1">
           <span class="fit-eyebrow">Private Label</span>
           <h3>Fórmula exclusiva da sua marca</h3>
           <p>Desenvolvemos uma fórmula personalizada pra sua marca, com exclusividade. Ideal pra quem já tem posicionamento definido e quer um produto que só a sua marca vende.</p>
@@ -953,6 +988,7 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
             <li>Fórmula desenvolvida sob medida</li>
             <li>Exclusividade de composição</li>
             <li>Mesmo acompanhamento e mesmo rigor com Anvisa</li>
+            <li>Para projetos grandes e com alto investimento</li>
           </ul>
         </div>
       </div>
@@ -964,7 +1000,7 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
     <div class="container">
       <div class="section-center section-intro reveal">
         <span class="eyebrow">Do briefing à entrega</span>
-        <h2>Como funciona a terceirização com a CapsBR</h2>
+        <h2>Como funciona a terceirização com a CapsBR Nutracêuticos</h2>
       </div>
       <div class="steps-grid">
         <div class="step-card reveal">
@@ -997,9 +1033,36 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
       <div class="catalogo-intro reveal">
         <div>
           <span class="eyebrow">Nosso catálogo</span>
-          <h2>33 fórmulas prontas pra sua marca</h2>
+          <h2>Fórmulas prontas pra sua marca</h2>
         </div>
         <a href="assets/catalogo/catalogo-capsbr.pdf" class="btn btn-outline-escuro" download>Baixar catálogo em PDF</a>
+      </div>
+
+      <!-- ================= CONDIÇÕES E SERVIÇOS INCLUSOS (bloco de destaque) ================= -->
+      <div class="condicoes-destaque reveal">
+        <span class="condicoes-titulo">Condições e serviços inclusos</span>
+        <div class="condicoes-grid">
+          <div class="condicao-item">
+            <h3>Design de rótulo</h3>
+            <p>R$ 150,00 por produto, cortesia a partir de 300 unidades no pedido.</p>
+          </div>
+          <div class="condicao-item">
+            <h3>Notificação Anvisa</h3>
+            <p>Cuidamos do código de notificação obrigatório do seu produto. R$ 300,00 por produto.</p>
+          </div>
+          <div class="condicao-item">
+            <h3>Registro de marca (INPI)</h3>
+            <p>Parceiro especializado cuida do registro da sua marca junto ao INPI, com acompanhamento completo.</p>
+          </div>
+          <div class="condicao-item">
+            <h3>Frete</h3>
+            <p>Calculado após a produção, com transportadoras parceiras. Grátis em pedidos de maior volume.</p>
+          </div>
+          <div class="condicao-item">
+            <h3>Pagamento</h3>
+            <p>50% na confirmação do pedido e 50% no despacho, ou parcelamento no cartão em até 12x.</p>
+          </div>
+        </div>
       </div>
 
       <div class="catalogo-cats reveal" id="catalogoFiltros">
@@ -1014,32 +1077,8 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
         <!-- Preenchido via JS a partir de CATALOGO_PRODUTOS, no fim da página -->
       </div>
 
-      <!-- ================= CONDIÇÕES E SERVIÇOS INCLUSOS ================= -->
-      <div class="condicoes-grid reveal">
-        <div class="condicao-item">
-          <h3>Design de rótulo</h3>
-          <p>R$ 150,00 por produto &mdash; cortesia a partir de 300 unidades no pedido.</p>
-        </div>
-        <div class="condicao-item">
-          <h3>Notificação Anvisa</h3>
-          <p>Cuidamos do código de notificação obrigatório do seu produto. R$ 300,00 por produto.</p>
-        </div>
-        <div class="condicao-item">
-          <h3>Registro de marca (INPI)</h3>
-          <p>Parceiro especializado cuida do registro da sua marca junto ao INPI, com acompanhamento completo.</p>
-        </div>
-        <div class="condicao-item">
-          <h3>Frete</h3>
-          <p>Calculado após a produção, com transportadoras parceiras. Grátis em pedidos de maior volume.</p>
-        </div>
-        <div class="condicao-item">
-          <h3>Pagamento</h3>
-          <p>50% na confirmação do pedido e 50% no despacho, ou parcelamento no cartão em até 12x.</p>
-        </div>
-      </div>
-
       <div class="catalogo-cta reveal">
-        <p>Todas as fórmulas passam por teste de estabilidade e seguem as normas da Anvisa. Os preços acima são por unidade, no maior volume de cada fórmula &mdash; peça sua cotação completa por quantidade.</p>
+        <p>Todas as fórmulas passam por teste de estabilidade e seguem as normas da Anvisa. Os valores variam por negociação e quantidade, peça sua cotação completa.</p>
         <a href="#formulario" class="btn btn-primary">Quero uma cotação para minha marca</a>
       </div>
     </div>
@@ -1082,7 +1121,7 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
             Preciso já ter uma empresa aberta?
             <span class="faq-icon">+</span>
           </button>
-          <div class="faq-answer"><p>O ideal é ter CNPJ pra emissão de nota fiscal e regularização do produto. Mas se você ainda está no início do processo, fale com a gente &mdash; conseguimos orientar os próximos passos.</p></div>
+          <div class="faq-answer"><p>O ideal é ter CNPJ pra emissão de nota fiscal e regularização do produto. Mas se você ainda está no início do processo, fale com a gente. Conseguimos orientar os próximos passos.</p></div>
         </div>
         <div class="faq-item reveal">
           <button type="button" class="faq-question" aria-expanded="false">
@@ -1096,14 +1135,14 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
             Vocês atendem marcas em todo o Brasil?
             <span class="faq-icon">+</span>
           </button>
-          <div class="faq-answer"><p>Sim. Atendemos marcas de todo o país &mdash; fale com a gente pelo WhatsApp pra alinhar prazo e logística até a sua região.</p></div>
+          <div class="faq-answer"><p>Sim, atendemos marcas de todo o país. Fale com a gente pelo WhatsApp pra alinhar prazo e logística até a sua região.</p></div>
         </div>
         <div class="faq-item reveal">
           <button type="button" class="faq-question" aria-expanded="false">
             Como funciona o acompanhamento durante a produção?
             <span class="faq-icon">+</span>
           </button>
-          <div class="faq-answer"><p>Você tem um canal direto conosco do briefing até a entrega, com atualizações em cada etapa &mdash; sem SAC genérico e sem ficar sem resposta.</p></div>
+          <div class="faq-answer"><p>Você tem um canal direto conosco do briefing até a entrega, com atualizações em cada etapa, sem SAC genérico e sem ficar sem resposta.</p></div>
         </div>
       </div>
     </div>
@@ -1116,7 +1155,7 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
         <div class="form-head">
           <span class="eyebrow">Vamos conversar sobre a sua marca</span>
           <h2>Solicite seu orçamento de terceirização</h2>
-          <p>Preencha os dados abaixo. Assim que você enviar, abrimos o WhatsApp com um resumo pronto pra você confirmar o envio &mdash; e a gente também recebe por e-mail.</p>
+          <p>Preencha os dados abaixo. Assim que você enviar, abrimos o WhatsApp com um resumo pronto pra você confirmar o envio, e a gente também recebe por e-mail.</p>
         </div>
 
         <form id="qualificacao-form" novalidate>
@@ -1144,7 +1183,7 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
           </div>
           <div class="campo">
             <label for="modelo">Modelo de interesse</label>
-            <select id="modelo" name="modelo">
+            <select id="modelo" name="modelo" required>
               <option value="Ainda não sei, quero orientação">Ainda não sei, quero orientação</option>
               <option value="White Label">White Label</option>
               <option value="Private Label">Private Label</option>
@@ -1152,7 +1191,7 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
           </div>
           <div class="campo">
             <label for="categoria">Categoria de interesse</label>
-            <select id="categoria" name="categoria">
+            <select id="categoria" name="categoria" required>
               <option value="Cápsulas">Cápsulas</option>
               <option value="Líquidos">Líquidos</option>
               <option value="Gomas e Pastilhas">Gomas e Pastilhas</option>
@@ -1162,16 +1201,15 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
           </div>
           <div class="campo">
             <label for="marca_status">Situação da marca</label>
-            <select id="marca_status" name="marca_status">
+            <select id="marca_status" name="marca_status" required>
               <option value="Já tenho marca registrada">Já tenho marca registrada</option>
               <option value="Ainda não tenho, quero criar">Ainda não tenho, quero criar</option>
             </select>
           </div>
           <div class="campo">
             <label for="volume">Volume mensal estimado</label>
-            <select id="volume" name="volume">
+            <select id="volume" name="volume" required>
               <option value="Ainda não sei">Ainda não sei</option>
-              <option value="Até 100 unidades">Até 100 unidades</option>
               <option value="100 a 500 unidades">100 a 500 unidades</option>
               <option value="500 a 2.000 unidades">500 a 2.000 unidades</option>
               <option value="Acima de 2.000 unidades">Acima de 2.000 unidades</option>
@@ -1278,44 +1316,39 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
   };
 
   const CATALOGO_PRODUTOS = [
-    { categoria:'Cápsulas', nome:'Hair, Skin e Nails', formato:'60 cápsulas', preco:14.90, moq:100, beneficios:['Saúde de cabelos, pele e unhas','Ação antioxidante','Suporte ao sistema imunológico'] },
-    { categoria:'Cápsulas', nome:'Emagrecedor', formato:'60 cápsulas', preco:14.90, moq:100, beneficios:['Auxilia o metabolismo','Rico em antioxidantes','Auxilia o metabolismo energético'] },
-    { categoria:'Cápsulas', nome:'Taurina', formato:'60 cápsulas', preco:14.90, moq:500, beneficios:['Ação antioxidante','Suporte à resistência física','Reduz a fadiga mental'] },
-    { categoria:'Cápsulas', nome:'Magnésio e L-Treonina', formato:'30 cápsulas', preco:12.90, moq:500, beneficios:['Suporte à saúde óssea','Auxilia na síntese de proteínas','Suporte à recuperação dos tecidos'] },
-    { categoria:'Cápsulas', nome:'Magnésio Quelato', formato:'30 cápsulas', preco:12.90, moq:500, beneficios:['Suporte ao funcionamento celular','Contribui para produção de energia','Auxilia na saúde óssea e dental'] },
-    { categoria:'Cápsulas', nome:'Magnésio Dimalato', formato:'60 cápsulas', preco:14.90, moq:500, beneficios:['Equilíbrio de minerais essenciais','Suporte ao funcionamento muscular','Contribui para o metabolismo energético'] },
-    { categoria:'Cápsulas', nome:'Blend 3 Magnésios', formato:'60 cápsulas', preco:16.90, moq:100, beneficios:['Suporte ao funcionamento muscular','Contribui para saúde óssea','Suporte ao equilíbrio eletrolítico'] },
-    { categoria:'Cápsulas', nome:'Vitamina D3 e K2', formato:'30 cápsulas', preco:13.90, moq:500, beneficios:['Absorção de cálcio','Suporte ao sistema imunológico','Auxilia na saúde óssea e muscular'] },
-    { categoria:'Cápsulas', nome:'Coenzima Q10 e L-Triptofano', formato:'30 cápsulas', preco:14.90, moq:500, beneficios:['Ação antioxidante','Qualidade do descanso noturno','Suporte ao foco e equilíbrio mental'] },
-    { categoria:'Cápsulas', nome:'Coenzima Q10 e Vitamina E', formato:'30 cápsulas', preco:17.90, moq:500, beneficios:['Ação antioxidante','Suporte à integridade celular','Contribui para o metabolismo energético'] },
-    { categoria:'Cápsulas', nome:'Blend Colágeno Tipo II', formato:'60 cápsulas', preco:20.90, moq:100, beneficios:['Saúde das articulações e ossos','Suporte ao sistema imunológico','Ação antioxidante'] },
-    { categoria:'Cápsulas', nome:'Colágeno Tipo II', formato:'30 cápsulas', preco:13.90, moq:500, beneficios:['Saúde das articulações','Elasticidade dos tecidos','Auxilia na manutenção da cartilagem'] },
-    { categoria:'Cápsulas', nome:'Pré-Treino', formato:'60 cápsulas', preco:14.90, moq:100, beneficios:['Redução do cansaço e fadiga','Suporte ao foco e estado de alerta','Auxilia no desempenho físico'] },
-    { categoria:'Cápsulas', nome:'Estimulante', formato:'60 cápsulas', preco:16.90, moq:100, beneficios:['Redução do cansaço e fadiga','Suporte ao foco e desempenho mental','Auxilia no metabolismo energético'] },
-    { categoria:'Cápsulas', nome:'Tirosina', formato:'60 cápsulas', preco:14.90, moq:500, beneficios:['Redução do cansaço e fadiga','Suporte ao desempenho cognitivo','Participa da síntese de proteínas'] },
-    { categoria:'Líquidos', nome:'Melatonina', formato:'30 ml · gotas', preco:11.90, moq:100, beneficios:['Qualidade do sono','Regulação do ciclo circadiano','Ajuste do ritmo biológico (jet lag)'] },
-    { categoria:'Líquidos', nome:'Óleo Semente de Abóbora c/ Vitamina E', formato:'30 ml · gotas', preco:14.90, moq:300, beneficios:['Rico em Vitamina E, ação antioxidante','Suporte à saúde do trato urinário','Suporte ao bem-estar masculino'] },
-    { categoria:'Líquidos', nome:'Estimulante', formato:'30 ml · gotas', preco:11.90, moq:100, beneficios:['Redução do cansaço e fadiga','Suporte à disposição','Auxilia no sistema imunológico'] },
-    { categoria:'Líquidos', nome:'Vitamina D3 e K2', formato:'30 ml · gotas', preco:14.90, moq:300, beneficios:['Suporte à saúde óssea','Suporte ao sistema imunológico','Auxilia no aproveitamento do cálcio'] },
-    { categoria:'Líquidos', nome:'Vitamina D3', formato:'20 ml · gotas', preco:11.90, moq:300, beneficios:['Suporte à saúde óssea','Suporte ao sistema imunológico','Absorção de cálcio e fósforo'] },
-    { categoria:'Líquidos', nome:'Vitamina B12', formato:'30 ml · gotas', preco:11.90, moq:300, beneficios:['Formação das células sanguíneas','Suporte ao sistema nervoso','Forma ativa (metilcobalamina)'] },
-    { categoria:'Gomas e Pastilhas', nome:'Creatina', formato:'216 g · pastilhas', preco:49.90, moq:100, beneficios:['Desempenho em alta intensidade','Suporte ao ganho de massa muscular','Auxilia na recuperação muscular'] },
-    { categoria:'Gomas e Pastilhas', nome:'Creatina', formato:'360 g · gomas', preco:63.90, moq:100, beneficios:['Desempenho em alta intensidade','Suporte ao ganho de massa muscular','3 sabores disponíveis'] },
-    { categoria:'Gomas e Pastilhas', nome:'Melatonina', formato:'105 g · gomas', preco:25.90, moq:100, beneficios:['Qualidade do sono','Regulação do ciclo circadiano','Zero açúcar, adoçado com stevia'] },
-    { categoria:'Gomas e Pastilhas', nome:'Melatonina II', formato:'120 g · pastilhas', preco:21.90, moq:100, beneficios:['Qualidade do sono','Ajuste do relógio biológico','Produto vegano'] },
-    { categoria:'Gomas e Pastilhas', nome:'Pele & Cabelo', formato:'105 g · gomas', preco:27.90, moq:100, beneficios:['Saúde de cabelos e pele','Ação antioxidante','Suporte ao sistema imunológico'] },
-    { categoria:'Gomas e Pastilhas', nome:'Imunidade Kids', formato:'120 g · gomas', preco:29.90, moq:100, beneficios:['Suporte ao sistema imunológico','Saúde de ossos e dentes','Indicado a partir de 4 anos'] },
-    { categoria:'Gomas e Pastilhas', nome:'Multivitamínico', formato:'60 chicletes', preco:25.90, moq:100, beneficios:['Saúde de cabelos, pele e unhas','Multivitamínico para toda a família','Ação antioxidante'] },
-    { categoria:'Solúveis', nome:'Creatina', formato:'300 g · pó', preco:50.90, moq:100, beneficios:['Ganho de força e massa muscular','Reposição energética muscular','Sem sabor, alta pureza'] },
-    { categoria:'Solúveis', nome:'Beta Alanina', formato:'300 g · pó', preco:27.90, moq:100, beneficios:['Redução do cansaço muscular','Desempenho em alta intensidade','Suporte ao rendimento esportivo'] },
-    { categoria:'Solúveis', nome:'Detox', formato:'150 g · pó', preco:35.90, moq:300, beneficios:['Suporte às funções de eliminação','Rica fonte de vitaminas e minerais','Ação antioxidante'] },
-    { categoria:'Solúveis', nome:'Colágeno', formato:'360 g · pó', preco:52.90, moq:300, beneficios:['Saúde de pele, cabelos e unhas','Suporte à saúde óssea','Suporte ao sistema imunológico'] },
-    { categoria:'Solúveis', nome:'Chá Noturno', formato:'150 g · pó', preco:31.90, moq:100, beneficios:['Qualidade do sono e relaxamento','Redução do cansaço e fadiga','Magnésio de alta biodisponibilidade'] }
+    { categoria:'Cápsulas', nome:'Hair, Skin e Nails', formato:'60 cápsulas', moq:100, beneficios:['Saúde de cabelos, pele e unhas','Ação antioxidante','Suporte ao sistema imunológico'] },
+    { categoria:'Cápsulas', nome:'Emagrecedor', formato:'60 cápsulas', moq:100, beneficios:['Auxilia o metabolismo','Rico em antioxidantes','Auxilia o metabolismo energético'] },
+    { categoria:'Cápsulas', nome:'Taurina', formato:'60 cápsulas', moq:500, beneficios:['Ação antioxidante','Suporte à resistência física','Reduz a fadiga mental'] },
+    { categoria:'Cápsulas', nome:'Magnésio e L-Treonina', formato:'30 cápsulas', moq:500, beneficios:['Suporte à saúde óssea','Auxilia na síntese de proteínas','Suporte à recuperação dos tecidos'] },
+    { categoria:'Cápsulas', nome:'Magnésio Quelato', formato:'30 cápsulas', moq:500, beneficios:['Suporte ao funcionamento celular','Contribui para produção de energia','Auxilia na saúde óssea e dental'] },
+    { categoria:'Cápsulas', nome:'Magnésio Dimalato', formato:'60 cápsulas', moq:500, beneficios:['Equilíbrio de minerais essenciais','Suporte ao funcionamento muscular','Contribui para o metabolismo energético'] },
+    { categoria:'Cápsulas', nome:'Blend 3 Magnésios', formato:'60 cápsulas', moq:100, beneficios:['Suporte ao funcionamento muscular','Contribui para saúde óssea','Suporte ao equilíbrio eletrolítico'] },
+    { categoria:'Cápsulas', nome:'Vitamina D3 e K2', formato:'30 cápsulas', moq:500, beneficios:['Absorção de cálcio','Suporte ao sistema imunológico','Auxilia na saúde óssea e muscular'] },
+    { categoria:'Cápsulas', nome:'Coenzima Q10 e L-Triptofano', formato:'30 cápsulas', moq:500, beneficios:['Ação antioxidante','Qualidade do descanso noturno','Suporte ao foco e equilíbrio mental'] },
+    { categoria:'Cápsulas', nome:'Coenzima Q10 e Vitamina E', formato:'30 cápsulas', moq:500, beneficios:['Ação antioxidante','Suporte à integridade celular','Contribui para o metabolismo energético'] },
+    { categoria:'Cápsulas', nome:'Blend Colágeno Tipo II', formato:'60 cápsulas', moq:100, beneficios:['Saúde das articulações e ossos','Suporte ao sistema imunológico','Ação antioxidante'] },
+    { categoria:'Cápsulas', nome:'Colágeno Tipo II', formato:'30 cápsulas', moq:500, beneficios:['Saúde das articulações','Elasticidade dos tecidos','Auxilia na manutenção da cartilagem'] },
+    { categoria:'Cápsulas', nome:'Pré-Treino', formato:'60 cápsulas', moq:100, beneficios:['Redução do cansaço e fadiga','Suporte ao foco e estado de alerta','Auxilia no desempenho físico'] },
+    { categoria:'Cápsulas', nome:'Estimulante', formato:'60 cápsulas', moq:100, beneficios:['Redução do cansaço e fadiga','Suporte ao foco e desempenho mental','Auxilia no metabolismo energético'] },
+    { categoria:'Cápsulas', nome:'Tirosina', formato:'60 cápsulas', moq:500, beneficios:['Redução do cansaço e fadiga','Suporte ao desempenho cognitivo','Participa da síntese de proteínas'] },
+    { categoria:'Líquidos', nome:'Melatonina', formato:'30 ml · gotas', moq:100, beneficios:['Qualidade do sono','Regulação do ciclo circadiano','Ajuste do ritmo biológico (jet lag)'] },
+    { categoria:'Líquidos', nome:'Óleo Semente de Abóbora c/ Vitamina E', formato:'30 ml · gotas', moq:300, beneficios:['Rico em Vitamina E, ação antioxidante','Suporte à saúde do trato urinário','Suporte ao bem-estar masculino'] },
+    { categoria:'Líquidos', nome:'Estimulante', formato:'30 ml · gotas', moq:100, beneficios:['Redução do cansaço e fadiga','Suporte à disposição','Auxilia no sistema imunológico'] },
+    { categoria:'Líquidos', nome:'Vitamina D3 e K2', formato:'30 ml · gotas', moq:300, beneficios:['Suporte à saúde óssea','Suporte ao sistema imunológico','Auxilia no aproveitamento do cálcio'] },
+    { categoria:'Líquidos', nome:'Vitamina D3', formato:'20 ml · gotas', moq:300, beneficios:['Suporte à saúde óssea','Suporte ao sistema imunológico','Absorção de cálcio e fósforo'] },
+    { categoria:'Líquidos', nome:'Vitamina B12', formato:'30 ml · gotas', moq:300, beneficios:['Formação das células sanguíneas','Suporte ao sistema nervoso','Forma ativa (metilcobalamina)'] },
+    { categoria:'Gomas e Pastilhas', nome:'Creatina', formato:'216 g · pastilhas', moq:100, beneficios:['Desempenho em alta intensidade','Suporte ao ganho de massa muscular','Auxilia na recuperação muscular'] },
+    { categoria:'Gomas e Pastilhas', nome:'Creatina', formato:'360 g · gomas', moq:100, beneficios:['Desempenho em alta intensidade','Suporte ao ganho de massa muscular','3 sabores disponíveis'] },
+    { categoria:'Gomas e Pastilhas', nome:'Melatonina', formato:'105 g · gomas', moq:100, beneficios:['Qualidade do sono','Regulação do ciclo circadiano','Zero açúcar, adoçado com stevia'] },
+    { categoria:'Gomas e Pastilhas', nome:'Melatonina II', formato:'120 g · pastilhas', moq:100, beneficios:['Qualidade do sono','Ajuste do relógio biológico','Produto vegano'] },
+    { categoria:'Gomas e Pastilhas', nome:'Pele & Cabelo', formato:'105 g · gomas', moq:100, beneficios:['Saúde de cabelos e pele','Ação antioxidante','Suporte ao sistema imunológico'] },
+    { categoria:'Gomas e Pastilhas', nome:'Imunidade Kids', formato:'120 g · gomas', moq:100, beneficios:['Suporte ao sistema imunológico','Saúde de ossos e dentes','Indicado a partir de 4 anos'] },
+    { categoria:'Gomas e Pastilhas', nome:'Multivitamínico', formato:'60 chicletes', moq:100, beneficios:['Saúde de cabelos, pele e unhas','Multivitamínico para toda a família','Ação antioxidante'] },
+    { categoria:'Solúveis', nome:'Creatina', formato:'300 g · pó', moq:100, beneficios:['Ganho de força e massa muscular','Reposição energética muscular','Sem sabor, alta pureza'] },
+    { categoria:'Solúveis', nome:'Beta Alanina', formato:'300 g · pó', moq:100, beneficios:['Redução do cansaço muscular','Desempenho em alta intensidade','Suporte ao rendimento esportivo'] },
+    { categoria:'Solúveis', nome:'Detox', formato:'150 g · pó', moq:300, beneficios:['Suporte às funções de eliminação','Rica fonte de vitaminas e minerais','Ação antioxidante'] },
+    { categoria:'Solúveis', nome:'Colágeno', formato:'360 g · pó', moq:300, beneficios:['Saúde de pele, cabelos e unhas','Suporte à saúde óssea','Suporte ao sistema imunológico'] }
   ];
-
-  function formatarPreco(valor){
-    return valor.toFixed(2).replace('.', ',');
-  }
 
   function renderizarCatalogo(filtro){
     const grid = document.getElementById('catalogoGrid');
@@ -1328,13 +1361,13 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
       const delay = i % 4 === 0 ? '' : ' reveal-delay-' + (i % 3 + 1);
       return '' +
         '<div class="produto-card reveal' + delay + '">' +
-          '<div class="produto-imagem"><img src="' + CATALOGO_IMAGENS[p.categoria] + '" alt="' + p.nome + ' — ' + p.categoria + ', imagem meramente ilustrativa" loading="lazy"></div>' +
+          '<div class="produto-imagem"><img src="' + CATALOGO_IMAGENS[p.categoria] + '" alt="' + p.nome + ', ' + p.categoria + ', imagem meramente ilustrativa" loading="lazy"></div>' +
           '<div class="produto-info">' +
             '<span class="produto-categoria">' + p.categoria + '</span>' +
             '<h3>' + p.nome + '</h3>' +
             '<span class="produto-formato">' + p.formato + '</span>' +
             '<ul class="produto-beneficios">' + p.beneficios.map(b => '<li>' + b + '</li>').join('') + '</ul>' +
-            '<div class="produto-preco"><strong>R$ ' + formatarPreco(p.preco) + '/un</strong><span>a partir de ' + p.moq + ' un</span></div>' +
+            '<div class="produto-preco"><span>Pedido mínimo</span><strong>' + p.moq + ' unidades</strong></div>' +
           '</div>' +
         '</div>';
     }).join('');
@@ -1435,9 +1468,8 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
       mensagem: form.mensagem.value.trim()
     };
 
-    if (!dados.nome || !dados.whatsapp || !dados.email) {
-      formFeedback.textContent = 'Preencha nome, WhatsApp e e-mail para continuar.';
-      formFeedback.classList.add('show');
+    if (!form.checkValidity()) {
+      form.reportValidity();
       return;
     }
 
@@ -1461,7 +1493,7 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           access_key: WEB3FORMS_ACCESS_KEY,
-          subject: 'Novo lead de terceirização — ' + dados.nome,
+          subject: 'Novo lead de terceirização: ' + dados.nome,
           from_name: 'Site CapsBR',
           ...dados
         })
