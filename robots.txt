@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://capsbr.com.br/sitemap.xml
