@@ -143,6 +143,39 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
 <!-- End Meta Pixel Code -->
 
 <!-- ============================================================
+     Google Tag Manager, Google Analytics (GA4) e Google Ads —
+     mesma regra do Meta Pixel: só iniciam depois do aceite de
+     cookies. GA4 e Google Ads reaproveitam o mesmo carregamento do
+     gtag.js (só precisa carregar uma vez, mesmo enviando pra dois
+     destinos), e o GTM sobe em paralelo.
+     ============================================================ -->
+<script>
+function iniciarGoogleTracking(){
+  if (window.__googleTrackingIniciado) return;
+  window.__googleTrackingIniciado = true;
+
+  // Google Tag Manager
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-WVWQDVNS');
+
+  // Google tag (gtag.js) — carrega uma vez, configura GA4 e Google Ads
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function(){ dataLayer.push(arguments); };
+  var gtagScript = document.createElement('script');
+  gtagScript.async = true;
+  gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-LNGH1V1WSN';
+  document.head.appendChild(gtagScript);
+  gtag('js', new Date());
+  gtag('config', 'G-LNGH1V1WSN');   // Google Analytics 4
+  gtag('config', 'AW-18387904448'); // Google Ads
+}
+</script>
+<!-- End Google Tag Manager / GA4 / Google Ads -->
+
+<!-- ============================================================
      FORMULÁRIO DE QUALIFICAÇÃO — E-MAIL (Web3Forms):
      A chave abaixo é pública por natureza (fica visível no
      código-fonte), então NÃO é uma credencial secreta — é só um
@@ -394,6 +427,11 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
     font-size:13px;
     font-weight:600;
     margin-bottom:28px;
+    text-align:center;
+  }
+  .hero-tag-quebra{display:inline;}
+  @media (max-width:600px){
+    .hero-tag{border-radius:18px;flex-direction:column;gap:1px;}
   }
   .hero .cta-row{justify-content:center;}
   .hero-note{margin-top:18px;font-size:13px;color:rgba(244,237,237,0.65);}
@@ -1052,6 +1090,10 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
 </style>
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WVWQDVNS"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
   <symbol id="capsbr-mark" viewBox="164.94 420.44 744 197">
@@ -1138,7 +1180,7 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
   <!-- ================= HERO ================= -->
   <section class="hero section-escura">
     <div class="container hero-inner">
-      <span class="hero-tag reveal">TERCEIRIZAÇÃO WHITE LABEL &amp; PRIVATE LABEL</span>
+      <span class="hero-tag reveal">TERCEIRIZAÇÃO WHITE LABEL <span class="hero-tag-quebra">&amp; PRIVATE LABEL</span></span>
       <h1 class="reveal reveal-delay-1">Sua nova marca de suplementos no mercado, sem abrir fábrica.</h1>
       <p class="subheadline reveal reveal-delay-2">A CapsBR cuida da fórmula, do teste de estabilidade, do rótulo e da produção, 100% dentro das normas da Anvisa, com o melhor prazo do Brasil para White Label. Você foca em vender.</p>
       <div class="price-anchor reveal reveal-delay-2">
@@ -1149,7 +1191,7 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
         <a href="#formulario" class="btn btn-primary">Quero terceirizar minha produção</a>
         <a href="#" class="btn btn-secondary whatsapp-link" target="_blank" rel="noopener">Falar agora no WhatsApp</a>
       </div>
-      <p class="hero-note reveal reveal-delay-3">Sem compromisso &middot; respondemos em até 1h útil (geralmente bem mais rápido) &middot; atendimento direto com quem produz</p>
+      <p class="hero-note reveal reveal-delay-3">Respondemos em até 1h útil (geralmente bem mais rápido) &middot; atendimento direto com quem produz</p>
     </div>
   </section>
 
@@ -1565,8 +1607,8 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
       <h3>3. Onde as respostas ficam armazenadas</h3>
       <p>As respostas do formulário são enviadas por e-mail para a equipe CapsBR e, opcionalmente, encaminhadas por você via WhatsApp com um resumo gerado automaticamente pelo site.</p>
 
-      <h3>4. Cookies e publicidade (Meta Pixel)</h3>
-      <p>Este site usa cookies e o Meta Pixel (Facebook/Instagram Ads) para entender como os visitantes usam a página e mostrar anúncios mais relevantes sobre a CapsBR em outras plataformas. O Meta Pixel só é ativado depois que você aceita o aviso de cookies exibido no site; até lá, nenhum dado de navegação é enviado para a Meta. Ao aceitar, o Meta Pixel pode registrar eventos como visualização de página, envio do formulário e cliques no WhatsApp. Você pode gerenciar ou bloquear cookies a qualquer momento nas configurações do seu navegador, e pode revogar o consentimento apagando os dados de navegação deste site. Saiba mais sobre como a Meta trata esses dados em <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener">facebook.com/privacy/policy</a>.</p>
+      <h3>4. Cookies e publicidade (Meta Pixel, Google Analytics e Google Ads)</h3>
+      <p>Este site usa cookies, o Meta Pixel (Facebook/Instagram Ads), o Google Analytics e o Google Ads (via Google Tag Manager) para entender como os visitantes usam a página e mostrar anúncios mais relevantes sobre a CapsBR nessas plataformas. Nenhuma dessas ferramentas é ativada até você aceitar o aviso de cookies exibido no site; até lá, nenhum dado de navegação é enviado para Meta ou Google. Ao aceitar, essas ferramentas podem registrar eventos como visualização de página, envio do formulário e cliques no WhatsApp, incluindo nome, e-mail e telefone informados no formulário (usados de forma protegida para melhorar a segmentação dos anúncios). Você pode gerenciar ou bloquear cookies a qualquer momento nas configurações do seu navegador, e pode revogar o consentimento apagando os dados de navegação deste site. Saiba mais em <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener">facebook.com/privacy/policy</a> e <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>.</p>
 
       <h3>5. Seus direitos (LGPD)</h3>
       <p>Nos termos da Lei Geral de Proteção de Dados (Lei nº 13.709/2018), você pode solicitar a qualquer momento a confirmação, o acesso, a correção, a anonimização, a portabilidade ou a eliminação dos seus dados pessoais, além de revogar consentimentos previamente dados. Para exercer qualquer desses direitos, entre em contato pelo e-mail acima.</p>
@@ -1613,18 +1655,24 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
   document.querySelectorAll('.whatsapp-link').forEach(function(el){
     el.addEventListener('click', function(){
       if (typeof fbq === 'function') fbq('track', 'Contact');
+      if (typeof gtag === 'function') gtag('event', 'contact_whatsapp', { event_category: 'engajamento' });
     });
   });
 
   // ============================================================
   // CONSENTIMENTO DE COOKIES
-  // O Meta Pixel só é iniciado depois que a pessoa aceita o aviso
-  // (ou já tinha aceitado antes, guardado no localStorage).
+  // Meta Pixel, GA4, GTM e Google Ads só iniciam depois que a
+  // pessoa aceita o aviso (ou já tinha aceitado antes, guardado no
+  // localStorage).
   // ============================================================
+  function iniciarRastreamento(){
+    iniciarMetaPixel();
+    iniciarGoogleTracking();
+  }
   const cookieAviso = document.getElementById('cookieAviso');
   const CONSENT_KEY = 'capsbr_cookie_consent';
   if (localStorage.getItem(CONSENT_KEY) === 'aceito') {
-    iniciarMetaPixel();
+    iniciarRastreamento();
   } else if (cookieAviso) {
     cookieAviso.classList.add('show');
     document.body.classList.add('tem-aviso-cookie');
@@ -1635,7 +1683,7 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
       localStorage.setItem(CONSENT_KEY, 'aceito');
       cookieAviso.classList.remove('show');
       document.body.classList.remove('tem-aviso-cookie');
-      iniciarMetaPixel();
+      iniciarRastreamento();
     });
   }
 
@@ -1845,9 +1893,41 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1"
       }).catch(function(){ /* segue o fluxo mesmo se o e-mail falhar */ });
     }
 
-    // (2) Evento de conversão do Meta Pixel
+    // (2) Evento de conversão do Meta Pixel, com Advanced Matching:
+    // reenviar o e-mail/telefone/nome no 'init' antes do 'track' ajuda o
+    // algoritmo da Meta a casar esse lead com o perfil da pessoa nas
+    // plataformas dela, o que melhora a otimização das campanhas. O
+    // próprio pixel.js faz o hash desses dados no navegador antes de
+    // enviar, nada sai em texto puro.
     if (typeof fbq === 'function') {
-      fbq('track', 'Lead');
+      var nomePartes = dados.nome.split(' ').filter(Boolean);
+      var telefoneDigitos = dados.whatsapp.replace(/\D/g, '');
+      if (telefoneDigitos && telefoneDigitos.slice(0, 2) !== '55') telefoneDigitos = '55' + telefoneDigitos;
+      fbq('init', '1024961890342249', {
+        em: dados.email,
+        ph: telefoneDigitos,
+        fn: nomePartes[0] || '',
+        ln: nomePartes.length > 1 ? nomePartes[nomePartes.length - 1] : ''
+      });
+      fbq('track', 'Lead', {
+        content_name: dados.modelo,
+        content_category: dados.categoria
+      });
+    }
+
+    // (2b) Mesmo evento espelhado no GA4/Google Ads (via dataLayer)
+    if (typeof gtag === 'function') {
+      gtag('event', 'generate_lead', {
+        event_category: 'formulario',
+        modelo: dados.modelo,
+        categoria: dados.categoria,
+        volume: dados.volume
+      });
+      // Se você tiver o rótulo de conversão do Google Ads (Ferramentas >
+      // Conversões > sua ação de lead > "Ver detalhes da tag" > pega o
+      // texto depois da barra em AW-18387904448/XXXXXXXX), descomente e
+      // preencha a linha abaixo para contar conversão no Ads também:
+      // gtag('event', 'conversion', { send_to: 'AW-18387904448/COLE_O_ROTULO_AQUI' });
     }
 
     // (3) Sempre abre o WhatsApp com o resumo pronto
