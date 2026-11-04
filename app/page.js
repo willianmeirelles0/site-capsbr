@@ -9,7 +9,6 @@ import ComoFunciona from '@/components/ComoFunciona';
 import CondicoesDestaque from '@/components/CondicoesDestaque';
 import Catalogo from '@/components/Catalogo';
 import Sobre from '@/components/Sobre';
-import Ebook from '@/components/Ebook';
 import Faq from '@/components/Faq';
 import Formulario from '@/components/Formulario';
 import Footer from '@/components/Footer';
@@ -29,7 +28,6 @@ export default function Home() {
         <CondicoesDestaque />
         <Catalogo />
         <Sobre />
-        <Ebook />
         <Faq />
         <Formulario />
       </main>
