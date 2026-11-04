@@ -47,7 +47,7 @@ export default function Catalogo() {
             const delay = i % 4 === 0 ? '' : ' reveal-delay-' + ((i % 3) + 1);
             return (
               <a
-                key={p.categoria + p.nome + p.formato}
+                key={p.codigo}
                 href="#formulario"
                 className={'produto-card reveal' + delay}
                 onClick={() => setCategoriaPreSelecionada(p.categoria)}
@@ -56,14 +56,9 @@ export default function Catalogo() {
                   <img src={CATALOGO_IMAGENS[p.categoria]} alt={p.nome + ', ' + p.categoria + ', imagem meramente ilustrativa'} loading="lazy" />
                 </div>
                 <div className="produto-info">
-                  <span className="produto-categoria">{p.categoria}</span>
+                  <span className="produto-categoria">{p.categoria} · {p.codigo}</span>
                   <h3>{p.nome}</h3>
                   <span className="produto-formato">{p.formato}</span>
-                  <ul className="produto-beneficios">
-                    {p.beneficios.map((b) => (
-                      <li key={b}>{b}</li>
-                    ))}
-                  </ul>
                   <div className="produto-preco">
                     <span>Pedido mínimo</span>
                     <strong>{p.moq} unidades</strong>

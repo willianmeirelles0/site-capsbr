@@ -197,6 +197,11 @@ export default function Formulario() {
               </p>
               <div className={'form-feedback' + (feedback ? ' show' : '')}>
                 Recebemos seus dados! Confirme o envio na aba do WhatsApp que acabou de abrir.
+                <br />
+                Enquanto isso, já pode conferir nosso{' '}
+                <a href="https://catalogo.capsbr.com.br/" target="_blank" rel="noopener" style={{ color: 'inherit', textDecoration: 'underline' }}>
+                  catálogo completo com preços
+                </a>.
               </div>
             </div>
           </form>

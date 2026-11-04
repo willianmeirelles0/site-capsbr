@@ -493,9 +493,6 @@ nav.main-nav{
 }
 .produto-info h3{font-size:16.5px;margin-bottom:2px;}
 .produto-formato{font-size:12.5px;color:var(--cor-principal-clara);font-weight:600;margin-bottom:10px;display:block;}
-.produto-beneficios{list-style:none;display:flex;flex-direction:column;gap:5px;margin-bottom:14px;flex:1;}
-.produto-beneficios li{font-size:12.5px;color:var(--cor-corpo);padding-left:16px;position:relative;line-height:1.45;}
-.produto-beneficios li::before{content:"";position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--cor-destaque-escuro);}
 .produto-preco{
   display:flex;
   align-items:baseline;
