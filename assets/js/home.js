@@ -69,17 +69,20 @@
 
   /* ---------- Brand builder ---------- */
   // o frasco 3D (scene3d.js) lê Caps.builder e escuta 'builder:change'
-  const st = window.Caps.builder = { brand: 'SUA MARCA', theme: 'teal', k: 'both' };
-  const bc = $('.js-b-caps'), bd = $('.js-b-drop');
+  const st = window.Caps.builder = { brand: 'SUA MARCA', theme: 'teal', k: 'caps' };
+  const BK = ['caps', 'drop', 'goma', 'sol'];
+  const LINE2 = { caps: '60 cápsulas', drop: '30 mL', goma: '90 gomas', sol: '200 g' };
+  const bEls = { caps: $('.js-b-caps'), drop: $('.js-b-drop'), goma: $('.js-b-goma'), sol: $('.js-b-sol') };
   const emit = d => window.dispatchEvent(new CustomEvent('builder:change', { detail: d }));
   const renderB = () => {
     if (!document.documentElement.classList.contains('has-3d-builder')) {
-      bc.innerHTML = bottle({ kind: 'caps', brand: st.brand || 'SUA MARCA', theme: st.theme, line1: 'Suplemento alimentar', line2: '60 cápsulas' });
-      bd.innerHTML = bottle({ kind: 'drop', brand: st.brand || 'SUA MARCA', theme: st.theme, line1: 'Suplemento alimentar', line2: '30 mL' });
+      BK.forEach(k => { bEls[k].innerHTML = bottle({ kind: k, brand: st.brand || 'SUA MARCA', theme: st.theme, line1: 'Suplemento alimentar', line2: LINE2[k] }); });
     }
     $('.js-wa-brand').href = waLink(`Olá! Simulei minha marca "${st.brand || 'SUA MARCA'}" no site da CapsBR e quero conversar sobre produção.`);
   };
   renderB();
+  // só o formato ativo aparece no fallback 2D (sem GSAP na carga, pra não "piscar")
+  BK.forEach(n => { if (n !== st.k) Object.assign(bEls[n].style, { opacity: 0, width: 0, visibility: 'hidden' }); });
   const cnt = $('.js-count-b'), inp = $('#brand'), MAXB = +inp.maxLength || 16;
   const upCount = () => { cnt.textContent = `${inp.value.length}/${MAXB}`; cnt.classList.toggle('is-max', inp.value.length >= MAXB); };
   upCount();
@@ -108,8 +111,7 @@
     const k = st.k = b.dataset.k;
     emit({ k });
     if (document.documentElement.classList.contains('has-3d-builder')) return;
-    gsap.to(bc, { autoAlpha: k === 'drop' ? 0 : 1, xPercent: k === 'drop' ? -30 : 0, width: k === 'drop' ? 0 : 'auto', duration: .6, ease: 'expo.out' });
-    gsap.to(bd, { autoAlpha: k === 'caps' ? 0 : 1, xPercent: k === 'caps' ? 30 : 0, width: k === 'caps' ? 0 : 'auto', duration: .6, ease: 'expo.out' });
+    BK.forEach(n => { const on = n === k; gsap.to(bEls[n], { autoAlpha: on ? 1 : 0, xPercent: on ? 0 : 30, width: on ? 'auto' : 0, duration: .6, ease: 'expo.out' }); });
   });
 
   /* ---------- FAQ ---------- */

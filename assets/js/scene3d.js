@@ -196,7 +196,8 @@ function drawLabel(cv, o) {
   const barY = Math.max(H * (isDrop ? .5 : .4), lastB + H * (isDrop ? .14 : .1));
   ctx.fillStyle = ink; ctx.fillRect(fx, barY, fw * (isDrop ? .36 : .3), Math.max(2, H * (isDrop ? .006 : .004)));
   const generic = !o.line1 || /^suplemento alimentar$/i.test(o.line1);
-  const subs = isDrop ? ['SUPLEMENTO ALIMENTAR'] : ['SUPLEMENTO ALIMENTAR', generic ? 'EM CÁPSULAS' : String(o.line1).toUpperCase()];
+  const GENERIC_SUB = { caps: 'EM CÁPSULAS', goma: 'EM GOMAS', sol: 'PÓ SOLÚVEL' };
+  const subs = isDrop ? ['SUPLEMENTO ALIMENTAR'] : ['SUPLEMENTO ALIMENTAR', generic ? (GENERIC_SUB[o.kind] || 'EM CÁPSULAS') : String(o.line1).toUpperCase()];
   const fsS = Math.min(H * (isDrop ? .05 : .056), fitFont(ctx, 'SUPLEMENTO ALIMENTAR', 400, FONT_B, H * .06, fw * .96, .02));
   let yy = barY + H * (isDrop ? .14 : .12);
   subs.forEach((ln, i) => { const f = Math.min(fsS, fitFont(ctx, ln, 400, FONT_B, fsS, fw * .98, .02)); text(ctx, ln, fx, yy + i * fsS * 1.38, f, 400, FONT_B, ink, .02, 'left', .95); });
@@ -213,7 +214,12 @@ function drawLabel(cv, o) {
   /* ---- LATERAL ESQUERDA: modo de uso ---- */
   const sx = W * .135, sw = W * .17;
   text(ctx, 'MODO DE USO', sx, H * .2, H * .045, 600, FONT_M, ink, .14, 'left', .8);
-  const use = o.kind === 'drop' ? 'Agite antes de usar. Consumir a porção indicada, diluída em água ou diretamente, conforme orientação.' : 'Consumir a porção indicada ao dia, com água, de preferência junto a uma refeição.';
+  const USE_TXT = {
+    drop: 'Agite antes de usar. Consumir a porção indicada, diluída em água ou diretamente, conforme orientação.',
+    goma: 'Mastigar a porção indicada ao dia, de preferência junto a uma refeição.',
+    sol: 'Diluir a porção indicada em água ou na bebida de preferência, uma vez ao dia.',
+  };
+  const use = USE_TXT[o.kind] || 'Consumir a porção indicada ao dia, com água, de preferência junto a uma refeição.';
   wrapLines(ctx, use, H * .045, 500, FONT_B, sw).slice(0, 4).forEach((ln, i) => text(ctx, ln, sx, H * .3 + i * H * .068, H * .045, 500, FONT_B, ink, 0, 'left', .72));
   text(ctx, 'CONSERVAÇÃO', sx, H * .66, H * .045, 600, FONT_M, ink, .14, 'left', .8);
   wrapLines(ctx, 'Manter em local seco e arejado, longe da luz e do calor.', H * .045, 500, FONT_B, sw).slice(0, 2).forEach((ln, i) => text(ctx, ln, sx, H * .76 + i * H * .068, H * .045, 500, FONT_B, ink, 0, 'left', .72));
@@ -269,12 +275,16 @@ const SPEC = {
   },
 };
 const GEO = {};
+// goma e sol usam o mesmo pote (frasco) da cápsula — é o mesmo tipo de embalagem
+// na vida real, só muda o que tem dentro e a cor do material (vidro x opaco)
+const SHAPE_ALIAS = { goma: 'caps', sol: 'caps' };
 function geos(kind) {
-  if (GEO[kind]) return GEO[kind];
-  const s = SPEC[kind];
+  const sk = SHAPE_ALIAS[kind] || kind;
+  if (GEO[sk]) return GEO[sk];
+  const s = SPEC[sk];
   const g = { body: new THREE.LatheGeometry(s.body, 96), cap: ridge(new THREE.LatheGeometry(s.cap, 360), ...s.capRidge) };
   if (s.bulb) g.bulb = new THREE.LatheGeometry(s.bulb, 64);
-  return (GEO[kind] = g);
+  return (GEO[sk] = g);
 }
 let shadowTex = null;
 function blobShadow() {
@@ -325,24 +335,58 @@ function makePile(top, scale = .21) {
   return api;
 }
 
+/* gomas empilhadas dentro do pote (mesmas posições da pilha de cápsulas, pedaços
+   irregulares coloridos em vez de cápsula lisa) */
+let GUMMY_GEO = null;
+function gummyGeo() { return GUMMY_GEO || (GUMMY_GEO = new THREE.IcosahedronGeometry(1, 1)); }
+const GUMMY_HUES = [.08, .09, .07, .1, .085];
+function makeGummyPile(top, scale = .2) {
+  const pts = pilePoints(top), n = pts.length;
+  const mat = LOW
+    ? new THREE.MeshStandardMaterial({ color: '#e8832a', roughness: .3 })
+    : new THREE.MeshPhysicalMaterial({ color: '#ffffff', roughness: .18, clearcoat: .8, clearcoatRoughness: .15, transmission: .3, thickness: .4, ior: 1.3, sheen: .35, sheenColor: new THREE.Color('#fff3df') });
+  mat.userData.solid = true;
+  const im = new THREE.InstancedMesh(gummyGeo(), mat, n);
+  const o = new THREE.Object3D(), col = new THREE.Color();
+  let sd = 9; const rnd = () => (sd = (sd * 16807) % 2147483647) / 2147483647;
+  pts.forEach((p, i) => {
+    o.position.set(p.x, p.y, p.z); o.rotation.set(p.rx, p.ry, p.rz, 'YXZ');
+    o.scale.set(scale * (.82 + rnd() * .36), scale * (.82 + rnd() * .36), scale * (.82 + rnd() * .36));
+    o.updateMatrix(); im.setMatrixAt(i, o.matrix);
+    col.setHSL(GUMMY_HUES[i % GUMMY_HUES.length] + (rnd() - .5) * .015, .82, .5 + (rnd() - .5) * .12);
+    im.setColorAt(i, col);
+  });
+  const group = new THREE.Group(); group.add(im);
+  im.frustumCulled = false;
+  const api = { group, mats: [mat], n, k: 1, set(k) { k = clamp01(k); api.k = k; const c = Math.round(n * k); im.count = c; group.visible = c > 0; }, topAt: k => .2 + (top - .2) * clamp01(k) };
+  return api;
+}
+
 /* opts: { kind, brand, line1, line2, code, theme, rows, porcao, porcoes, texW, maxAniso, fill } */
 function makeBottle(opts, renderer) {
-  const kind = opts.kind === 'drop' ? 'drop' : 'caps';
-  const s = SPEC[kind], g = geos(kind);
+  const kind = ['drop', 'goma', 'sol'].includes(opts.kind) ? opts.kind : 'caps';
+  const sk = SHAPE_ALIAS[kind] || kind;
+  const s = SPEC[sk], g = geos(kind);
+  // pote de cápsulas e de gomas são de vidro (dá pra ver o conteúdo); pote de pó
+  // solúvel e o frasco de gotas são plástico opaco
+  const glass = kind === 'caps' || kind === 'goma';
+  const jar = kind === 'caps' || kind === 'goma' || kind === 'sol';
   const root = new THREE.Group(), spin = new THREE.Group(); root.add(spin);
-  const white = kind === 'caps'
+  const white = glass
     ? new THREE.MeshPhysicalMaterial({ color: '#ffffff', roughness: .03, metalness: 0, clearcoat: 1, clearcoatRoughness: .02, specularIntensity: 1, envMapIntensity: 2.2, side: THREE.DoubleSide, transparent: true, opacity: .2, depthWrite: false })
     : new THREE.MeshPhysicalMaterial({ color: '#f7f7f5', roughness: .26, clearcoat: 1, clearcoatRoughness: .12, side: THREE.DoubleSide, transparent: true });
-  if (kind === 'caps') { white.userData.base = .2; white.userData.glass = true; }
+  if (glass) { white.userData.base = .2; white.userData.glass = true; }
   const capM = new THREE.MeshPhysicalMaterial({ color: '#fbfbfa', roughness: .4, clearcoat: .5, clearcoatRoughness: .3, transparent: true });
   const body = new THREE.Mesh(g.body, white); spin.add(body);
-  if (kind === 'caps') body.renderOrder = 2;
+  if (glass) body.renderOrder = 2;
   const capG = new THREE.Group(); capG.add(new THREE.Mesh(g.cap, capM)); spin.add(capG);
   const mats = [white, capM];
-  // cápsulas dentro do pote (vidro transparente)
+  // conteúdo visível dentro do pote de vidro (cápsulas cremes ou gomas coloridas)
   let pile = null;
-  if (kind === 'caps' && opts.fill !== false) {
-    pile = makePile(s.fillTop); spin.add(pile.group); mats.push(...pile.mats);
+  if (opts.fill !== false) {
+    if (kind === 'caps') pile = makePile(s.fillTop);
+    else if (kind === 'goma') pile = makeGummyPile(s.fillTop);
+    if (pile) { spin.add(pile.group); mats.push(...pile.mats); }
   }
   if (g.bulb) { const bm = new THREE.MeshPhysicalMaterial({ color: '#f1f1ee', roughness: .55, sheen: .4, sheenColor: new THREE.Color('#ffffff'), transparent: true }); capG.add(new THREE.Mesh(g.bulb, bm)); mats.push(bm); }
   // rótulo
@@ -356,7 +400,7 @@ function makeBottle(opts, renderer) {
   mats.push(labM);
   const mkLabelGeo = (len = Math.PI * 2, start = -Math.PI) => new THREE.CylinderGeometry(L.r, L.r, L.h, 160, 1, true, start, len);
   const label = new THREE.Mesh(mkLabelGeo(), labM); label.position.y = L.y; spin.add(label);
-  const shadow = blobShadow(); shadow.scale.setScalar(kind === 'caps' ? 3.1 : 2.1); root.add(shadow);
+  const shadow = blobShadow(); shadow.scale.setScalar(jar ? 3.1 : 2.1); root.add(shadow);
   const state = { ...opts, theme: opts.theme || 'teal' };
   const themeObj = k => typeof k === 'string' ? (THEMES[k] || THEMES.teal) : k;
   const paint = (th = themeObj(state.theme)) => { drawLabel(cv, { ...state, kind, theme: th }); tex.needsUpdate = true; };
@@ -778,17 +822,23 @@ function builder() {
   const common = { brand: B.brand, theme: 'teal', line1: 'Suplemento alimentar' };
   const pot = makeBottle({ ...common, kind: 'caps', line2: '60 cápsulas', rows: sampleRows('caps'), porcao: 'Porção de 2 cápsulas (1 g)', porcoes: 'Porções por embalagem: 30' }, S.renderer);
   const drop = makeBottle({ ...common, kind: 'drop', line2: '30 mL', rows: sampleRows('drop'), porcao: 'Porção de 1 mL (20 gotas)', porcoes: 'Porções por embalagem: 30' }, S.renderer);
-  S.scene.add(pot.root, drop.root);
+  const goma = makeBottle({ ...common, kind: 'goma', line2: '90 gomas', rows: sampleRows('goma'), porcao: 'Porção de 4 gomas (8 g)', porcoes: 'Porções por embalagem: 15' }, S.renderer);
+  const sol = makeBottle({ ...common, kind: 'sol', line2: '200 g', rows: sampleRows('sol'), porcao: 'Porção de 10 g (1 medida)', porcoes: 'Porções por embalagem: 20' }, S.renderer);
+  const bottles = { caps: pot, drop, goma, sol };
+  S.scene.add(pot.root, drop.root, goma.root, sol.root);
   const drag = dragRotate(S.canvas, () => hint && hint.classList.add('is-gone'));
   const hint = document.querySelector('.builder__hint');
-  const lay = { pot: { x: -1.25, s: 1, a: 1 }, drop: { x: 1.55, s: 1, a: 1 } };
-  const layouts = { both: { pot: { x: -1.2, s: 1, a: 1 }, drop: { x: 1.6, s: 1, a: 1 } }, caps: { pot: { x: 0, s: 1.12, a: 1 }, drop: { x: 3.5, s: .6, a: 0 } }, drop: { pot: { x: -3.5, s: .6, a: 0 }, drop: { x: 0, s: 1.45, a: 1 } } };
+  // só um frasco por vez em foco no centro; os outros ficam fora do palco, invisíveis
+  const OFF = { x: 0, s: .55, a: 0 }, FOCUS = { x: 0, s: 1.12, a: 1 };
+  const layouts = { caps: {}, drop: {}, goma: {}, sol: {} };
+  Object.keys(layouts).forEach(k => { Object.keys(bottles).forEach(n => { layouts[k][n] = n === k ? FOCUS : OFF; }); });
+  const lay = { caps: { ...FOCUS }, drop: { ...OFF }, goma: { ...OFF }, sol: { ...OFF } };
   let ready = false;
-  fontsLoaded.then(() => { pot.paint(); drop.paint(); ready = true; });
+  fontsLoaded.then(() => { pot.paint(); drop.paint(); goma.paint(); sol.paint(); ready = true; });
   addEventListener('builder:change', e => {
     const d = e.detail || {};
-    if (d.brand !== undefined) { pot.set({ brand: d.brand }); drop.set({ brand: d.brand }); }
-    if (d.k) { const L = layouts[d.k]; ['pot', 'drop'].forEach(n => gsap.to(lay[n], { ...L[n], duration: .9, ease: 'expo.out' })); }
+    if (d.brand !== undefined) Object.values(bottles).forEach(b => b.set({ brand: d.brand }));
+    if (d.k && layouts[d.k]) { const L = layouts[d.k]; Object.keys(bottles).forEach(n => gsap.to(lay[n], { ...L[n], duration: .9, ease: 'expo.out' })); }
     if (d.flip) { drag.target = Math.round(drag.target / Math.PI) * Math.PI + Math.PI; drag.vel = 0; drag.touched = true; }
   });
   let rot = 0;
@@ -800,10 +850,11 @@ function builder() {
     const vh = S.visH(), vw = vh * S.camera.aspect, narrow = S.W < 700;
     // no celular o frasco ocupa quase todo o palco (preview grande, perto do campo do nome)
     const fit = Math.min(vh * (narrow ? .74 : .6) / 4.04, vw * (narrow ? .9 : .8) / 4.9), lift = narrow ? .32 * fit : 0;
-    [[pot, lay.pot], [drop, lay.drop]].forEach(([b, l], i) => {
-      b.root.scale.setScalar(fit * l.s * (i ? 1.12 : 1));
+    Object.keys(bottles).forEach(n => {
+      const b = bottles[n], l = lay[n];
+      b.root.scale.setScalar(fit * l.s);
       b.root.position.set(l.x * fit, -2.1 * fit + lift, 0);
-      b.spin.rotation.y = rot + (i ? .12 : 0);
+      b.spin.rotation.y = rot;
       b.setAlpha(l.a);
     });
     S.render();
