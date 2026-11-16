@@ -273,11 +273,21 @@ const SPEC = {
     label: { r: .636, h: .92, y: .76 },
     height: 2.81,
   },
+  // pote largo e baixo (estilo pote de creatina): boca quase do tamanho do
+  // corpo, sem gargalo estreito, com tampa achatada e larga
+  sol: {
+    body: lathePts([[0, .05], [1, .05], [1.08, 0], [1.14, 0], ...arc(1.14, .16, .16, -Math.PI / 2, 0, 6), [1.3, 1.95], ...arc(1.1, 1.95, .2, 0, Math.PI / 2, 8), [1.05, 2.15], [1.05, 2.3], [1, 2.33], [.95, 2.33]]),
+    cap: lathePts([[1.08, 2.2], [1.12, 2.22], [1.12, 2.66], ...arc(1.02, 2.66, .08, 0, Math.PI / 2, 6), [0, 2.74]]),
+    capRidge: [2.26, 2.62, 130, .013],
+    label: { r: 1.31, h: 1.35, y: 1 },
+    height: 2.74,
+  },
 };
 const GEO = {};
-// goma e sol usam o mesmo pote (frasco) da cápsula — é o mesmo tipo de embalagem
-// na vida real, só muda o que tem dentro e a cor do material (vidro x opaco)
-const SHAPE_ALIAS = { goma: 'caps', sol: 'caps' };
+// goma usa o mesmo pote (frasco) da cápsula — é o mesmo tipo de embalagem na
+// vida real, só muda o que tem dentro e a cor do material (vidro x opaco).
+// Solúvel (pote de creatina) tem forma própria, mais larga e baixa.
+const SHAPE_ALIAS = { goma: 'caps' };
 function geos(kind) {
   const sk = SHAPE_ALIAS[kind] || kind;
   if (GEO[sk]) return GEO[sk];
@@ -828,11 +838,14 @@ function builder() {
   S.scene.add(pot.root, drop.root, goma.root, sol.root);
   const drag = dragRotate(S.canvas, () => hint && hint.classList.add('is-gone'));
   const hint = document.querySelector('.builder__hint');
-  // só um frasco por vez em foco no centro; os outros ficam fora do palco, invisíveis
-  const OFF = { x: 0, s: .55, a: 0 }, FOCUS = { x: 0, s: 1.12, a: 1 };
+  // só um frasco por vez em foco no centro; os outros ficam fora do palco, invisíveis.
+  // cada forma tem sua própria escala de foco pra preencher bem o palco (a
+  // referência de "fit" no loop abaixo foi calibrada pro pote de cápsulas)
+  const OFF = { x: 0, s: .55, a: 0 };
+  const FOCUS_S = { caps: 1.12, drop: 1.45, goma: 1.12, sol: 1.55 };
   const layouts = { caps: {}, drop: {}, goma: {}, sol: {} };
-  Object.keys(layouts).forEach(k => { Object.keys(bottles).forEach(n => { layouts[k][n] = n === k ? FOCUS : OFF; }); });
-  const lay = { caps: { ...FOCUS }, drop: { ...OFF }, goma: { ...OFF }, sol: { ...OFF } };
+  Object.keys(layouts).forEach(k => { Object.keys(bottles).forEach(n => { layouts[k][n] = n === k ? { x: 0, s: FOCUS_S[n], a: 1 } : OFF; }); });
+  const lay = { caps: { x: 0, s: FOCUS_S.caps, a: 1 }, drop: { ...OFF }, goma: { ...OFF }, sol: { ...OFF } };
   let ready = false;
   fontsLoaded.then(() => { pot.paint(); drop.paint(); goma.paint(); sol.paint(); ready = true; });
   addEventListener('builder:change', e => {
