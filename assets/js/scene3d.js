@@ -38,6 +38,7 @@ let quality = 1;
 })();
 const D = THREE.MathUtils.degToRad;
 const clamp01 = v => Math.max(0, Math.min(1, v));
+const smooth = (a, b, x) => { const t = clamp01((x - a) / (b - a)); return t * t * (3 - 2 * t); };
 const seg = (t, a, b) => clamp01((t - a) / (b - a));
 const eOut = t => 1 - Math.pow(1 - t, 3);
 const eIO = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -47,8 +48,10 @@ const THEMES = Caps.THEMES || { teal: { label: '#14483f', ink: '#ffffff' } };
 
 /* =========================================================
    CÁPSULA
+   Duas metades: corpo (R) e tampa (RC) um pouco mais larga, com lábio
+   arredondado na borda aberta → o encaixe central fica visível e pega luz.
    ========================================================= */
-const R = 0.5, RC = 0.522, L = 1.15;
+const R = 0.5, RC = 0.526, L = 1.15;
 function bodyProfile(n = 18) {
   const pts = [], cy = -L + R;
   for (let i = 0; i <= n; i++) { const a = -Math.PI / 2 + (i / n) * (Math.PI / 2); pts.push(new THREE.Vector2(Math.max(1e-4, R * Math.cos(a)), cy + R * Math.sin(a))); }
@@ -56,14 +59,23 @@ function bodyProfile(n = 18) {
   return pts;
 }
 function capProfile(n = 18) {
-  const pts = [new THREE.Vector2(RC * 0.975, -0.2), new THREE.Vector2(RC, -0.185)], cy = L - RC;
+  // borda da tampa: entra por dentro, rola num lábio e sobe pela parede
+  const pts = [
+    new THREE.Vector2(RC * 0.95, -0.188),
+    new THREE.Vector2(RC * 0.972, -0.203),
+    new THREE.Vector2(RC * 0.992, -0.204),
+    new THREE.Vector2(RC * 1.004, -0.196),
+    new THREE.Vector2(RC, -0.182),
+  ], cy = L - RC;
   pts.push(new THREE.Vector2(RC, cy));
   for (let i = 1; i <= n; i++) { const a = (i / n) * (Math.PI / 2); pts.push(new THREE.Vector2(Math.max(1e-4, RC * Math.cos(a)), cy + RC * Math.sin(a))); }
   return pts;
 }
 const CGEO = { body: new THREE.LatheGeometry(bodyProfile(), 72), cap: new THREE.LatheGeometry(capProfile(), 72) };
-// cápsulas pequenas (dentro dos potes / caindo): versão leve, invisível a diferença nesse tamanho
-const CGEO_S = LOW ? { body: new THREE.LatheGeometry(bodyProfile(5), 16), cap: new THREE.LatheGeometry(capProfile(5), 16) } : CGEO;
+// cápsulas pequenas (dentro dos potes / caindo): versão mais leve, mas ainda com o encaixe
+const CGEO_S = LOW
+  ? { body: new THREE.LatheGeometry(bodyProfile(5), 16), cap: new THREE.LatheGeometry(capProfile(5), 16) }
+  : { body: new THREE.LatheGeometry(bodyProfile(12), 40), cap: new THREE.LatheGeometry(capProfile(12), 40) };
 CGEO.ring = new THREE.TorusGeometry(RC * 0.99, 0.012, 10, 72); CGEO.ring.rotateX(Math.PI / 2); CGEO.ring.translate(0, -0.19, 0);
 
 function capsule(c1 = COL.teal, c2 = COL.cream) {
@@ -77,6 +89,57 @@ function capsule(c1 = COL.teal, c2 = COL.cream) {
   gBot.add(new THREE.Mesh(CGEO.body, bot), new THREE.Mesh(CGEO.body, inBot));
   inner.add(gTop, gBot); root.add(inner);
   return { root, inner, top: gTop, bot: gBot, setAlpha(a) { all.forEach(x => { x.opacity = a; x.depthWrite = a > 0.98; }); root.visible = a > 0.01; } };
+}
+
+/* =========================================================
+   AMBIENTE DE ESTÚDIO (equivalente vanilla de <Environment> + <Lightformer>)
+   Uma "sala" escura com painéis emissivos HDR (valores > 1) é renderizada
+   num cubemap via PMREM. No vidro isso vira os reflexos verticais nítidos
+   das laterais, como nas fotos de produto em estúdio.
+   ========================================================= */
+function createStudioEnvironment(renderer, { intensity = 1, room = '#6b6d6c', floor = '#a3a4a2' } = {}) {
+  const env = new THREE.Scene();
+  const disposables = [];
+  const add = (geo, mat) => { const m = new THREE.Mesh(geo, mat); disposables.push(geo, mat); env.add(m); return m; };
+
+  // paredes e piso (cinza médio: ilumina o rótulo/tampa sem lavar o contraste do vidro)
+  add(new THREE.BoxGeometry(40, 24, 40), new THREE.MeshBasicMaterial({ color: room, side: THREE.BackSide })).position.y = 6;
+  const fl = add(new THREE.PlaneGeometry(40, 40), new THREE.MeshBasicMaterial({ color: floor }));
+  fl.rotation.x = -Math.PI / 2; fl.position.y = -3;
+
+  // Lightformer: plano emissivo; a cor é multiplicada pela potência (HDR)
+  const lightformer = ({ w, h, pos, power, target = [0, pos[1], 0], color = '#ffffff' }) => {
+    const m = add(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color(color).multiplyScalar(power * intensity), side: THREE.DoubleSide, toneMapped: false }));
+    m.position.set(...pos); m.lookAt(...target);
+    return m;
+  };
+  // laterais: um painel largo + um filete fino em cada lado → reflexo vertical duplo
+  lightformer({ w: 1.6, h: 16, pos: [-7.5, 3, 2.8], power: 7 });
+  lightformer({ w: .4, h: 16, pos: [-5.8, 3, 5.2], power: 5 });
+  lightformer({ w: 1.2, h: 16, pos: [7.5, 3, 2.4], power: 5.5 });
+  lightformer({ w: .3, h: 16, pos: [5.6, 3, 5.4], power: 3.5 });
+  // softbox de cima (brilho na tampa e no topo das cápsulas)
+  lightformer({ w: 9, h: 9, pos: [0, 10, 0], target: [0, 0, 0], power: 3 });
+  // contra-luz atrás (atravessa o vidro pela transmissão e recorta as cápsulas)
+  lightformer({ w: 12, h: 3.5, pos: [0, 1.5, -10], power: .9 });
+  // fill frontal fraco (mantém o rótulo legível sem marcar o vidro)
+  lightformer({ w: 14, h: 10, pos: [0, 2, 13], power: .9 });
+
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const rt = pmrem.fromScene(env, 0); // sigma 0 = reflexos nítidos
+  pmrem.dispose();
+  disposables.forEach(d => d.dispose());
+  return rt.texture;
+}
+
+/* aplica o ambiente de estúdio na cena + tone mapping de fotografia de produto */
+function applyStudioLighting(renderer, scene, opts = {}) {
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = opts.exposure ?? 1;
+  if (scene.environment && scene.environment.dispose) scene.environment.dispose();
+  scene.environment = createStudioEnvironment(renderer, opts);
+  return scene.environment;
 }
 
 /* =========================================================
@@ -253,36 +316,53 @@ function drawLabel(cv, o) {
 }
 
 /* =========================================================
-   FRASCOS
+   FRASCOS (pote / frasco)
    ========================================================= */
 function lathePts(arr) { return arr.map(([r, y]) => new THREE.Vector2(Math.max(1e-4, r), y)); }
 function arc(cx, cy, r, a0, a1, n = 8) { const o = []; for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * i / n; o.push([cx + r * Math.cos(a), cy + r * Math.sin(a)]); } return o; }
-function ridge(geo, y0, y1, n, amp) {
-  const p = geo.attributes.position;
-  for (let i = 0; i < p.count; i++) {
-    const x = p.getX(i), y = p.getY(i), z = p.getZ(i);
-    if (y < y0 || y > y1) continue;
-    const r = Math.hypot(x, z); if (r < 1e-3) continue;
-    const th = Math.atan2(x, z), s = Math.cos(th * n);
-    const k = 1 + amp * Math.sign(s) * Math.pow(Math.abs(s), .35) / r;
-    p.setX(i, x * k); p.setZ(i, z * k);
+
+/* Frisos verticais da tampa: anel de geometria própria (não deformação de
+   vértices). Cada friso tem perfil trapezoidal suave (topo plano, flancos
+   arredondados) e afunila nas pontas, encostando no núcleo liso da tampa. */
+function knurlGeometry({ y0, y1, rv, depth, n }, samples = LOW ? 5 : 10, rows = LOW ? 8 : 16) {
+  const cols = n * samples, pos = [], idx = [];
+  const ramp = Math.min(.04, (y1 - y0) * .12);
+  for (let i = 0; i <= rows; i++) {
+    const k = .5 - .5 * Math.cos((i / rows) * Math.PI); // mais linhas nas pontas
+    const y = y0 + (y1 - y0) * k;
+    const taper = smooth(y0, y0 + ramp, y) * (1 - smooth(y1 - ramp, y1, y));
+    for (let j = 0; j < cols; j++) {
+      const t = (j % samples) / samples;
+      const p = smooth(.04, .28, t) * (1 - smooth(.62, .86, t));
+      const r = rv + depth * p * taper, th = (j / cols) * Math.PI * 2;
+      pos.push(Math.sin(th) * r, y, Math.cos(th) * r);
+    }
   }
-  geo.computeVertexNormals();
-  return geo;
+  for (let i = 0; i < rows; i++) for (let j = 0; j < cols; j++) {
+    const a = i * cols + j, b = i * cols + (j + 1) % cols, c = a + cols, d = b + cols;
+    idx.push(a, b, c, b, d, c);
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  g.setIndex(idx); g.computeVertexNormals();
+  return g;
 }
+
+/* cap: núcleo liso (lábio inferior + vale + borda superior arredondada);
+   knurl: anel de frisos que cobre o vale */
 const SPEC = {
   caps: {
     body: lathePts([[0, .05], [.8, .05], [.84, 0], [.88, 0], ...arc(.88, .12, .12, -Math.PI / 2, 0, 6), [1, 2.94], ...arc(.8, 2.94, .2, 0, Math.PI / 2, 8), [.79, 3.16], [.79, 3.4], [.76, 3.43], [.7, 3.43]]),
-    cap: lathePts([[.815, 3.22], [.835, 3.24], [.835, 3.98], ...arc(.775, 3.98, .06, 0, Math.PI / 2, 5), [0, 4.04]]),
-    capRidge: [3.27, 3.95, 110, .012],
+    cap: lathePts([[.8, 3.2], [.818, 3.205], ...arc(.825, 3.225, .012, -Math.PI / 2, 0, 3), [.837, 3.29], [.815, 3.3], [.815, 3.93], [.837, 3.94], [.837, 3.975], ...arc(.777, 3.975, .06, 0, Math.PI / 2, 6), [.6, 4.033], [0, 4.03]]),
+    knurl: { y0: 3.3, y1: 3.93, rv: .815, depth: .022, n: 120 },
     label: { r: 1.006, h: 2.16, y: 1.72 },
     fillTop: 3.02,
     height: 4.04,
   },
   drop: {
     body: lathePts([[0, 0], [.55, 0], ...arc(.55, .08, .08, -Math.PI / 2, 0, 5), [.63, 1.44], ...arc(.33, 1.44, .3, 0, Math.PI / 2, 8), [.26, 1.76], [.26, 1.86]]),
-    cap: lathePts([[.33, 1.78], [.345, 1.8], [.345, 2.16], ...arc(.3, 2.16, .045, 0, Math.PI / 2, 4), [.2, 2.205], [.2, 2.22]]),
-    capRidge: [1.82, 2.14, 48, .008],
+    cap: lathePts([[.33, 1.78], [.345, 1.8], [.345, 1.82], [.335, 1.826], [.335, 2.134], [.345, 2.14], [.345, 2.16], ...arc(.3, 2.16, .045, 0, Math.PI / 2, 4), [.2, 2.205], [.2, 2.22]]),
+    knurl: { y0: 1.826, y1: 2.134, rv: .335, depth: .011, n: 56 },
     bulb: lathePts([[.185, 2.2], [.2, 2.26], [.215, 2.4], [.212, 2.55], ...arc(0, 2.6, .212, 0, Math.PI / 2, 10)]),
     label: { r: .636, h: .92, y: .76 },
     height: 2.81,
@@ -291,22 +371,21 @@ const SPEC = {
   // corpo, sem gargalo estreito, com tampa achatada e larga
   sol: {
     body: lathePts([[0, .05], [1, .05], [1.08, 0], [1.14, 0], ...arc(1.14, .16, .16, -Math.PI / 2, 0, 6), [1.3, 1.95], ...arc(1.1, 1.95, .2, 0, Math.PI / 2, 8), [1.05, 2.15], [1.05, 2.3], [1, 2.33], [.95, 2.33]]),
-    cap: lathePts([[1.08, 2.2], [1.12, 2.22], [1.12, 2.66], ...arc(1.02, 2.66, .08, 0, Math.PI / 2, 6), [0, 2.74]]),
-    capRidge: [2.26, 2.62, 130, .013],
+    cap: lathePts([[1.08, 2.2], [1.12, 2.22], [1.12, 2.27], [1.1, 2.276], [1.1, 2.614], [1.12, 2.622], [1.12, 2.66], ...arc(1.02, 2.66, .08, 0, Math.PI / 2, 6), [0, 2.74]]),
+    knurl: { y0: 2.276, y1: 2.614, rv: 1.1, depth: .022, n: 150 },
     label: { r: 1.31, h: 1.35, y: 1 },
     height: 2.74,
   },
 };
 const GEO = {};
 // goma usa o mesmo pote (frasco) da cápsula — é o mesmo tipo de embalagem na
-// vida real, só muda o que tem dentro e a cor do material (vidro x opaco).
-// Solúvel (pote de creatina) tem forma própria, mais larga e baixa.
+// vida real, só muda o que tem dentro. Solúvel (pote de creatina) tem forma própria.
 const SHAPE_ALIAS = { goma: 'caps' };
 function geos(kind) {
   const sk = SHAPE_ALIAS[kind] || kind;
   if (GEO[sk]) return GEO[sk];
   const s = SPEC[sk];
-  const g = { body: new THREE.LatheGeometry(s.body, 96), cap: ridge(new THREE.LatheGeometry(s.cap, 360), ...s.capRidge) };
+  const g = { body: new THREE.LatheGeometry(s.body, 128), cap: new THREE.LatheGeometry(s.cap, 128), knurl: knurlGeometry(s.knurl) };
   if (s.bulb) g.bulb = new THREE.LatheGeometry(s.bulb, 64);
   return (GEO[sk] = g);
 }
@@ -324,11 +403,12 @@ function blobShadow() {
 }
 
 /* cápsulas creme empilhadas dentro do pote (InstancedMesh, de baixo pra cima) */
-const CREAM = { body: '#efe6d3', cap: '#e9dec6' };
+const CREAM = { body: '#e4d3a3', cap: '#dcc794' };
 let PILE_PTS = null;
 function pilePoints(top) {
   if (PILE_PTS) return PILE_PTS;
   let sd = 11; const rnd = () => (sd = (sd * 16807) % 2147483647) / 2147483647;
+  const gauss = () => (rnd() + rnd() + rnd() - 1.5) / 1.5; // ~normal em [-1, 1]
   const out = [];
   for (let y = .2; y < top; y += .19) {
     const pts = [];
@@ -338,21 +418,35 @@ function pilePoints(top) {
       if (pts.every(p => (p[0] - x) ** 2 + (p[1] - z) ** 2 > .07)) pts.push([x, z, a, r]);
     }
     pts.forEach(([x, z, a, r]) => {
-      // perto do vidro a cápsula deita tangente à parede; no meio, aleatória
-      const ry = r > .45 ? -(a + Math.PI / 2) + (rnd() - .5) * .5 : rnd() * Math.PI * 2;
-      out.push({ x, y: y + (rnd() - .5) * .07, z, rx: (rnd() - .5) * .7, ry, rz: Math.PI / 2 + (rnd() - .5) * .8 });
+      const wall = r > .45;
+      // perto do vidro a cápsula deita tangente à parede; no meio, direção livre
+      const ry = wall ? -(a + Math.PI / 2) + gauss() * .35 : rnd() * Math.PI * 2;
+      // inclinação: a maioria quase deitada; ~18% do miolo apoiada em diagonal
+      const steep = !wall && rnd() < .18;
+      const tilt = steep ? (.55 + rnd() * .45) * (rnd() < .5 ? -1 : 1) : gauss() * .38;
+      // metade virada (tampa de um lado ou do outro) → encaixes em posições variadas
+      const flip = rnd() < .5 ? Math.PI : 0;
+      out.push({ x, y: y + gauss() * .045, z, rx: gauss() * .4, ry, rz: Math.PI / 2 + tilt + flip, tone: rnd() });
     });
   }
   return (PILE_PTS = out);
 }
 function makePile(top, scale = .21) {
   const pts = pilePoints(top), n = pts.length;
-  const mb = LOW ? new THREE.MeshStandardMaterial({ color: CREAM.body, roughness: .32 }) : new THREE.MeshPhysicalMaterial({ color: CREAM.body, roughness: .3, clearcoat: .7, clearcoatRoughness: .2, sheen: .4, sheenColor: new THREE.Color('#ffffff') });
-  const mc = LOW ? new THREE.MeshStandardMaterial({ color: CREAM.cap, roughness: .32 }) : new THREE.MeshPhysicalMaterial({ color: CREAM.cap, roughness: .3, clearcoat: .7, clearcoatRoughness: .2 });
+  // acabamento de gelatina: brilho firme (roughness .2) + verniz leve
+  const mb = LOW ? new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .2 }) : new THREE.MeshPhysicalMaterial({ color: '#ffffff', roughness: .2, clearcoat: .6, clearcoatRoughness: .12, sheen: .3, sheenColor: new THREE.Color('#ffffff') });
+  const mc = LOW ? new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .2 }) : new THREE.MeshPhysicalMaterial({ color: '#ffffff', roughness: .2, clearcoat: .6, clearcoatRoughness: .12 });
   mb.userData.solid = mc.userData.solid = true;
   const ib = new THREE.InstancedMesh(CGEO_S.body, mb, n), ic = new THREE.InstancedMesh(CGEO_S.cap, mc, n);
-  const o = new THREE.Object3D();
-  pts.forEach((p, i) => { o.position.set(p.x, p.y, p.z); o.rotation.set(p.rx, p.ry, p.rz, 'YXZ'); o.scale.setScalar(scale); o.updateMatrix(); ib.setMatrixAt(i, o.matrix); ic.setMatrixAt(i, o.matrix); });
+  const o = new THREE.Object3D(), cb = new THREE.Color(CREAM.body), cc = new THREE.Color(CREAM.cap), tmp = new THREE.Color();
+  pts.forEach((p, i) => {
+    o.position.set(p.x, p.y, p.z); o.rotation.set(p.rx, p.ry, p.rz, 'YXZ'); o.scale.setScalar(scale); o.updateMatrix();
+    ib.setMatrixAt(i, o.matrix); ic.setMatrixAt(i, o.matrix);
+    // variação sutil de tom entre cápsulas (lotes de gelatina nunca são idênticos)
+    const v = (p.tone - .5) * .05;
+    ib.setColorAt(i, tmp.copy(cb).offsetHSL(0, v * .6, v));
+    ic.setColorAt(i, tmp.copy(cc).offsetHSL(0, v * .6, v - .01));
+  });
   const group = new THREE.Group(); group.add(ib, ic);
   ib.frustumCulled = ic.frustumCulled = false;
   const api = { group, mats: [mb, mc], n, k: 1, set(k) { k = clamp01(k); api.k = k; const c = Math.round(n * k); ib.count = ic.count = c; group.visible = c > 0; }, topAt: k => .2 + (top - .2) * clamp01(k) };
@@ -386,7 +480,7 @@ function makeGummyPile(top, scale = .2) {
   return api;
 }
 
-/* opts: { kind, brand, line1, line2, code, theme, rows, porcao, porcoes, texW, maxAniso, fill } */
+/* opts: { kind, brand, line1, line2, code, theme, rows, porcao, porcoes, texH, maxAniso, fill } */
 function makeBottle(opts, renderer) {
   const kind = ['drop', 'goma', 'sol'].includes(opts.kind) ? opts.kind : 'caps';
   const sk = SHAPE_ALIAS[kind] || kind;
@@ -395,20 +489,29 @@ function makeBottle(opts, renderer) {
   // solúvel e o frasco de gotas são plástico opaco
   const glass = kind === 'caps' || kind === 'goma';
   const jar = kind === 'caps' || kind === 'goma' || kind === 'sol';
-  // teste de realismo: vidro com refração de verdade (transmission), só na
-  // cápsula por enquanto — se aprovar, aplicamos em goma também
-  const realGlass = kind === 'caps';
+  // vidro com refração de verdade (transmission). Em aparelho fraco a passada
+  // extra de transmissão pesa demais → cai no vidro "falso" por opacidade.
+  const realGlass = glass && !LOW;
   const root = new THREE.Group(), spin = new THREE.Group(); root.add(spin);
   const white = realGlass
-    ? new THREE.MeshPhysicalMaterial({ color: '#ffffff', roughness: .04, metalness: 0, clearcoat: 1, clearcoatRoughness: .03, transmission: 1, thickness: .55, ior: 1.5, specularIntensity: 1, envMapIntensity: 1.3, side: THREE.FrontSide, transparent: true })
+    ? new THREE.MeshPhysicalMaterial({
+      color: '#ffffff', metalness: 0,
+      transmission: .96, ior: 1.52, roughness: .04,
+      clearcoat: 1, clearcoatRoughness: .02,
+      thickness: .22,                                   // parede fina: refrata sem "lupa"
+      attenuationColor: new THREE.Color('#eef5f2'), attenuationDistance: 3, // leve tom de vidro nas bordas
+      specularIntensity: 1, envMapIntensity: 1.4,
+      side: THREE.FrontSide, transparent: true,
+    })
     : glass
       ? new THREE.MeshPhysicalMaterial({ color: '#ffffff', roughness: .03, metalness: 0, clearcoat: 1, clearcoatRoughness: .02, specularIntensity: 1, envMapIntensity: 2.2, side: THREE.DoubleSide, transparent: true, opacity: .2, depthWrite: false })
       : new THREE.MeshPhysicalMaterial({ color: '#f7f7f5', roughness: .26, clearcoat: 1, clearcoatRoughness: .12, side: THREE.DoubleSide, transparent: true });
   if (glass) { white.userData.base = realGlass ? 1 : .2; white.userData.glass = true; }
-  const capM = new THREE.MeshPhysicalMaterial({ color: '#fbfbfa', roughness: .4, clearcoat: .5, clearcoatRoughness: .3, transparent: true });
+  // tampa: plástico branco injetado, semi-fosco
+  const capM = new THREE.MeshPhysicalMaterial({ color: '#f6f6f4', roughness: .38, clearcoat: .35, clearcoatRoughness: .25, sheen: .25, sheenColor: new THREE.Color('#ffffff'), transparent: true });
   const body = new THREE.Mesh(g.body, white); spin.add(body);
   if (glass) body.renderOrder = 2;
-  const capG = new THREE.Group(); capG.add(new THREE.Mesh(g.cap, capM)); spin.add(capG);
+  const capG = new THREE.Group(); capG.add(new THREE.Mesh(g.cap, capM), new THREE.Mesh(g.knurl, capM)); spin.add(capG);
   const mats = [white, capM];
   // conteúdo visível dentro do pote de vidro (cápsulas cremes ou gomas coloridas)
   let pile = null;
@@ -418,17 +521,25 @@ function makeBottle(opts, renderer) {
     if (pile) { spin.add(pile.group); mats.push(...pile.mats); }
   }
   if (g.bulb) { const bm = new THREE.MeshPhysicalMaterial({ color: '#f1f1ee', roughness: .55, sheen: .4, sheenColor: new THREE.Color('#ffffff'), transparent: true }); capG.add(new THREE.Mesh(g.bulb, bm)); mats.push(bm); }
-  // rótulo
-  const L = s.label, circ = 2 * Math.PI * L.r;
+
+  // rótulo: altura mínima de 2048 px (largura segue a proporção real do
+  // rótulo), limitada ao tamanho máximo de textura da GPU
+  const Lb = s.label, circ = 2 * Math.PI * Lb.r;
+  const maxTex = renderer ? renderer.capabilities.maxTextureSize : 4096;
+  const texH = WEAK ? 1024 : (opts.texH || 2048);
   const cv = document.createElement('canvas');
-  cv.width = Math.min(opts.texW || 3072, WEAK ? 2048 : MOBILE ? 3072 : 4096); cv.height = Math.round(cv.width * L.h / circ);
+  cv.width = Math.min(Math.round(texH * circ / Lb.h), maxTex, MOBILE ? 4096 : 8192);
+  cv.height = Math.round(cv.width * Lb.h / circ);
   const tex = new THREE.CanvasTexture(cv);
-  tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = renderer ? renderer.capabilities.getMaxAnisotropy() : 4;
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = renderer ? renderer.capabilities.getMaxAnisotropy() : 16;
+  tex.generateMipmaps = true;
+  tex.minFilter = THREE.LinearMipmapLinearFilter; tex.magFilter = THREE.LinearFilter;
   tex.wrapS = THREE.RepeatWrapping;
   const labM = new THREE.MeshPhysicalMaterial({ map: tex, roughness: .42, clearcoat: .35, clearcoatRoughness: .3, transparent: true });
   mats.push(labM);
-  const mkLabelGeo = (len = Math.PI * 2, start = -Math.PI) => new THREE.CylinderGeometry(L.r, L.r, L.h, 160, 1, true, start, len);
-  const label = new THREE.Mesh(mkLabelGeo(), labM); label.position.y = L.y; spin.add(label);
+  const mkLabelGeo = (len = Math.PI * 2, start = -Math.PI) => new THREE.CylinderGeometry(Lb.r, Lb.r, Lb.h, 192, 1, true, start, len);
+  const label = new THREE.Mesh(mkLabelGeo(), labM); label.position.y = Lb.y; spin.add(label);
   const shadow = blobShadow(); shadow.scale.setScalar(jar ? 3.1 : 2.1); root.add(shadow);
   const state = { ...opts, theme: opts.theme || 'teal' };
   const themeObj = k => typeof k === 'string' ? (THEMES[k] || THEMES.teal) : k;
@@ -437,12 +548,19 @@ function makeBottle(opts, renderer) {
   const api = {
     root, spin, body, cap: capG, label, shadow, kind, height: s.height, mats,
     set(o) { Object.assign(state, o); paint(); },
-    // troca de cor suave (interpola fundo e tinta)
+    // troca de cor suave (interpola fundo e tinta). Com o canvas em alta
+    // resolução, redesenhar + reenviar a textura a cada frame trava; então o
+    // repaint durante a transição é limitado a ~16/s e o quadro final é exato.
     setTheme(k, dur = .7) {
       const from = themeObj(state.theme), to = themeObj(k); state.theme = k;
       if (colorTw) colorTw.kill();
-      const o = { t: 0 };
-      colorTw = gsap.to(o, { t: 1, duration: dur, ease: 'power2.inOut', onUpdate: () => paint({ label: mix(from.label, to.label, o.t), ink: mix(from.ink, to.ink, o.t) }) });
+      const o = { t: 0 }; let last = 0;
+      const step = () => paint({ label: mix(from.label, to.label, o.t), ink: mix(from.ink, to.ink, o.t) });
+      colorTw = gsap.to(o, {
+        t: 1, duration: dur, ease: 'power2.inOut',
+        onUpdate: () => { const now = performance.now(); if (now - last < 60) return; last = now; step(); },
+        onComplete: () => paint(),
+      });
     },
     // rótulo sendo aplicado (0..1)
     wrap(k) {
@@ -467,6 +585,9 @@ function makeBottle(opts, renderer) {
   api.paint = paint;
   return api;
 }
+Caps.createStudioEnvironment = createStudioEnvironment;
+Caps.applyStudioLighting = applyStudioLighting;
+export { createStudioEnvironment, applyStudioLighting };
 
 /* =========================================================
    PALCO
@@ -630,7 +751,9 @@ function hero() {
   cyl(.95, .95, .5, teal, 0, 4.29, 0, chuck, 48);
   cyl(.7, .95, .2, steel, 0, 4.64, 0, chuck, 48);
   // tampa extra que a tampadora segura
-  const capSpare = new THREE.Mesh(geos('caps').cap, new THREE.MeshPhysicalMaterial({ color: '#fbfbfa', roughness: .4, clearcoat: .5 }));
+  const capSpareM = new THREE.MeshPhysicalMaterial({ color: '#f6f6f4', roughness: .38, clearcoat: .35 });
+  const capSpare = new THREE.Group();
+  capSpare.add(new THREE.Mesh(geos('caps').cap, capSpareM), new THREE.Mesh(geos('caps').knurl, capSpareM));
   chuck.add(capSpare);
   const lampB = box3(.16, .16, .05, glow.clone(), .65, 7.75, .42, capper);
 
@@ -654,7 +777,7 @@ function hero() {
   const okDot = box3(.2, .2, .05, glow.clone(), 0, 5.3, 1.62, insp);
 
   /* ---------- potes (6 em fila, indexando) ---------- */
-  const potOpts = { kind: 'caps', brand: 'Sua Marca', line1: 'Suplemento alimentar', line2: '60 cápsulas', theme: 'teal', rows: sampleRows('caps'), porcao: 'Porção de 2 cápsulas (1 g)', porcoes: 'Porções por embalagem: 30', texW: TEX };
+  const potOpts = { kind: 'caps', brand: 'Sua Marca', line1: 'Suplemento alimentar', line2: '60 cápsulas', theme: 'teal', rows: sampleRows('caps'), porcao: 'Porção de 2 cápsulas (1 g)', porcoes: 'Porções por embalagem: 30', texH: 1024 };
   const pots = Array.from({ length: 6 }, () => { const b = makeBottle(potOpts, S.renderer); world.add(b.root); b.shadow.scale.setScalar(2.6); return b; });
   // cápsulas caindo do bico até o pote
   const NF = 12, fallM = pots[0].pile.mats;
@@ -848,7 +971,10 @@ function builder() {
   if (!box || !B) return;
   const S = stage(box, { fov: 24, z: 15 });
   S.camera.position.set(0, 1.1, 15); S.camera.lookAt(0, 0, 0);
-  const common = { brand: B.brand, theme: 'teal', line1: 'Suplemento alimentar' };
+  // luz de estúdio (reflexos verticais nítidos no vidro), só no simulador —
+  // o resto do site (hero/fábrica) continua com o ambiente simples de antes
+  applyStudioLighting(S.renderer, S.scene, { exposure: 1.05 });
+  const common = { brand: B.brand, theme: 'teal', line1: 'Suplemento alimentar', texH: 1536 };
   const pot = makeBottle({ ...common, kind: 'caps', line2: '60 cápsulas', rows: sampleRows('caps'), porcao: 'Porção de 2 cápsulas (1 g)', porcoes: 'Porções por embalagem: 30' }, S.renderer);
   const drop = makeBottle({ ...common, kind: 'drop', line2: '30 mL', rows: sampleRows('drop'), porcao: 'Porção de 1 mL (20 gotas)', porcoes: 'Porções por embalagem: 30' }, S.renderer);
   const goma = makeBottle({ ...common, kind: 'goma', line2: '90 gomas', rows: sampleRows('goma'), porcao: 'Porção de 4 gomas (8 g)', porcoes: 'Porções por embalagem: 15' }, S.renderer);
