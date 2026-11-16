@@ -27,13 +27,11 @@
   set('.js-porcao', p.porcao); set('.js-porcoes', p.porcoes);
   $('.js-bens').innerHTML = p.beneficios.map(b => `<li data-reveal><i><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></i>${b}</li>`).join('');
 
-  // foto recortada do produto (mesma foto do card, sem fundo quando disponível)
-  // Gomas e Solúveis ainda não têm o recorte sem fundo (só o designer pode
-  // gerar isso); por enquanto reaproveita a foto do card pra esses dois.
+  // foto recortada do produto, sem fundo (PNG com transparência)
   const CUT_BY_TIPO = {
     'Líquidos': { src: 'liquidos-recorte.png', w: 279, h: 820 },
-    'Gomas e Pastilhas': { src: 'gomas-card.jpg', w: 480, h: 720 },
-    'Solúveis': { src: 'soluveis-card.jpg', w: 480, h: 720 },
+    'Gomas e Pastilhas': { src: 'gomas-recorte.png', w: 502, h: 820 },
+    'Solúveis': { src: 'soluveis-recorte.png', w: 544, h: 820 },
   };
   const cut = CUT_BY_TIPO[p.tipo] || { src: 'capsulas-recorte.png', w: 572, h: 820 };
   const photo = $('.js-photo'); if (photo) photo.innerHTML = `<img src="assets/img/${cut.src}" alt="${p.titulo}, ${isLiq ? 'frasco conta-gotas' : 'pote'} com a sua marca" width="${cut.w}" height="${cut.h}" fetchpriority="high" decoding="async">`;
