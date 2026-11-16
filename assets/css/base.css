@@ -228,3 +228,18 @@ body.menu-open{overflow:hidden}
 .policy-modal-content p{font-size:14.5px;color:var(--muted,#555);margin-bottom:12px;line-height:1.65}
 .policy-modal-content a{color:var(--orange);text-decoration:underline}
 @media (max-width:640px){.policy-modal-content{padding:40px 24px 32px}}
+
+/* ---------- Formulário de qualificação (alternativa ao WhatsApp) ---------- */
+#qualificacao-form{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+#qualificacao-form .form-full{grid-column:1 / -1}
+#qualificacao-form .field select,
+#qualificacao-form .field textarea{width:100%;padding:18px 24px;border-radius:var(--r-md);border:1px solid var(--border);background:var(--surface);color:var(--text);font-family:var(--f-text,inherit);font-size:16px;outline:none;transition:border-color .3s,box-shadow .3s}
+#qualificacao-form .field select:focus,
+#qualificacao-form .field textarea:focus{border-color:var(--orange);box-shadow:0 0 0 4px rgba(20,72,63,.15)}
+#qualificacao-form .field textarea{resize:vertical;min-height:110px}
+#qualificacao-form .field input{height:56px;font-size:16px}
+.form-honeypot{position:absolute;left:-9999px;opacity:0;pointer-events:none}
+.form-disclaimer{font-size:12.5px;color:var(--dim);margin-top:16px;text-align:center}
+.form-feedback{display:none;margin-top:18px;padding:14px 18px;border-radius:var(--r-md);background:rgba(20,72,63,.08);border:1px solid rgba(20,72,63,.3);color:var(--orange);font-size:14px;font-weight:600;text-align:center}
+.form-feedback.show{display:block}
+@media (max-width:620px){#qualificacao-form{grid-template-columns:1fr}}

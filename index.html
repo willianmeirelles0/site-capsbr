@@ -55,6 +55,7 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1" alt
       <a href="#marca">Crie sua marca</a>
       <a href="#fabrica">Produção</a>
       <a href="#sobre">Sobre</a>
+      <a href="#formulario">Orçamento</a>
       <a href="#faq">Dúvidas</a>
     </nav>
     <div class="nav__right">
@@ -257,6 +258,75 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1" alt
   </div>
 </section>
 
+<!-- ================= FORMULÁRIO (alternativa a quem prefere não abrir o WhatsApp agora) ================= -->
+<section class="sec sec--cream" id="formulario" style="margin:0 12px">
+  <div class="wrap" style="max-width:720px">
+    <div class="eyebrow"><span class="num">08</span><span class="line"></span><span class="mono">Prefere ser chamado?</span></div>
+    <h2 class="display h2" data-split>Preencha e a gente te chama.</h2>
+    <p class="lead" style="margin-top:20px">Se preferir não abrir o WhatsApp agora, deixe seus dados que a gente entra em contato. Ao enviar, já abrimos o WhatsApp com um resumo pronto pra você confirmar, e também recebemos por e-mail.</p>
+
+    <form id="qualificacao-form" novalidate style="margin-top:40px">
+      <div class="form-honeypot">
+        <label for="empresa_site">Não preencha este campo</label>
+        <input type="text" id="empresa_site" name="empresa_site" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label for="q_nome">Nome completo</label>
+        <input type="text" id="q_nome" name="nome" placeholder="Seu nome" required>
+      </div>
+      <div class="field">
+        <label for="q_marca">Nome da marca (se já tiver)</label>
+        <input type="text" id="q_marca" name="marca" placeholder="Ex: Minha Marca">
+      </div>
+      <div class="field">
+        <label for="q_whatsapp">WhatsApp com DDD</label>
+        <input type="tel" id="q_whatsapp" name="whatsapp" placeholder="(00) 00000-0000" required>
+      </div>
+      <div class="field">
+        <label for="q_email">E-mail</label>
+        <input type="email" id="q_email" name="email" placeholder="seu@email.com" required>
+      </div>
+      <div class="field">
+        <label for="q_linha">Linha de interesse</label>
+        <select id="q_linha" name="linha" required>
+          <option value="Cápsulas">Cápsulas</option>
+          <option value="Líquidos">Líquidos</option>
+          <option value="Gomas e Pastilhas">Gomas e Pastilhas</option>
+          <option value="Solúveis">Solúveis</option>
+          <option value="Ainda não sei">Ainda não sei</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="q_marca_status">Situação da marca</label>
+        <select id="q_marca_status" name="marca_status" required>
+          <option value="Já tenho marca registrada">Já tenho marca registrada</option>
+          <option value="Ainda não tenho, quero criar">Ainda não tenho, quero criar</option>
+        </select>
+      </div>
+      <div class="field form-full">
+        <label for="q_volume">Volume mensal estimado</label>
+        <select id="q_volume" name="volume" required>
+          <option value="Ainda não sei">Ainda não sei</option>
+          <option value="100 a 500 unidades">100 a 500 unidades</option>
+          <option value="500 a 2.000 unidades">500 a 2.000 unidades</option>
+          <option value="Acima de 2.000 unidades">Acima de 2.000 unidades</option>
+        </select>
+      </div>
+      <div class="field form-full">
+        <label for="q_mensagem">Conte um pouco sobre o que você precisa</label>
+        <textarea id="q_mensagem" name="mensagem" placeholder="Ex: quero lançar uma linha de termogênico, ainda não tenho fórmula definida..."></textarea>
+      </div>
+
+      <div class="form-full" style="text-align:center;margin-top:8px">
+        <button type="submit" class="btn btn--primary" style="width:100%;max-width:420px;justify-content:center">Enviar e abrir WhatsApp</button>
+        <p class="form-disclaimer">Seus dados são usados apenas para retorno comercial da CapsBR. Veja nossa <button type="button" class="js-policy-trigger" style="background:none;border:none;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer">Política de Privacidade</button>.</p>
+        <div class="form-feedback js-form-feedback">Recebemos seus dados! Confirme o envio na aba do WhatsApp que acabou de abrir.</div>
+      </div>
+    </form>
+  </div>
+</section>
+
 <!-- ================= FAQ ================= -->
 <section class="sec" id="faq" style="padding-top:0">
   <div class="wrap faq">
@@ -348,5 +418,6 @@ src="https://www.facebook.com/tr?id=1024961890342249&ev=PageView&noscript=1" alt
 </div>
 
 <script defer src="assets/js/tracking.js?v=20261116a"></script>
+<script defer src="assets/js/formulario.js?v=20261116a"></script>
 </body>
 </html>
