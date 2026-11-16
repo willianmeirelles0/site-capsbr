@@ -55,6 +55,7 @@
 .hero__stats b{display:block;font-family:var(--f-display);font-size:34px;font-weight:500;letter-spacing:-.03em}
 .hero__stats b em{font-style:normal;color:var(--orange)}
 .hero__stats span{font-size:13px;color:var(--muted)}
+.hero__stats b span{font-size:inherit;color:inherit}
 .hero__visual{position:relative;height:620px;display:grid;place-items:center;perspective:1200px}
 .hero__visual .cap3d{--w:150px;--h:380px;transform:rotate(28deg);filter:drop-shadow(0 60px 80px rgba(20,72,63,.35))}
 .hero__mini{position:absolute;--w:44px;--h:110px}
@@ -168,6 +169,7 @@
 .counter b{display:block;font-family:var(--f-display);font-size:44px;font-weight:500;letter-spacing:-.04em;line-height:1}
 .counter b em{font-style:normal;color:var(--orange)}
 .counter span{font-size:13px;color:#6d6358}
+.counter b span{font-size:inherit;color:inherit}
 .timeline{position:relative;padding-left:48px}
 .timeline__line{position:absolute;left:11px;top:8px;bottom:8px;width:2px;background:#e1d8cc;border-radius:2px}
 .timeline__line i{position:absolute;inset:0;background:var(--orange);transform-origin:top;transform:scaleY(0)}
