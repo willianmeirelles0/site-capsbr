@@ -1,0 +1,17 @@
+SITE CAPSBR — COMO PUBLICAR NA VERCEL
+======================================
+
+1) Suba esta pasta para um repositório no GitHub (ou arraste a pasta em vercel.com/new).
+2) Na Vercel: Add New > Project > importe o repositório. Não precisa mudar nenhuma configuração de build.
+3) Senha do painel: em Settings > Environment Variables, crie
+      ADMIN_PASSWORD = (uma senha com no mínimo 8 caracteres)
+4) Banco do painel (para salvar as alterações de produtos e preços):
+   aba Storage (ou Marketplace) > Upstash Redis > Create/Connect ao projeto.
+   As variáveis são criadas automaticamente.
+5) Faça um novo deploy (Deployments > Redeploy).
+
+Painel administrativo: https://SEU-DOMINIO/admin
+  - Lá você adiciona, edita e remove produtos, preços, WhatsApp, promoção e avisos.
+
+Testar no computador (opcional, precisa do Node.js 20+):
+  npm run dev   ->  http://localhost:3000

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="no-js">
+<head>
+<meta charset="utf-8">
+<script>if(matchMedia('(max-width:900px)').matches)document.documentElement.classList.add('is-lite')</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>CapsBR | Sua marca própria de suplementos</title>
+<meta name="description" content="Fábrica de suplementos com marca própria: cápsulas e líquidos com rótulo personalizado, teste de estabilidade e notificação ANVISA.">
+<link rel="icon" href="assets/img/capsbr-logo-header.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script type="importmap">{"imports":{"three":"/assets/vendor/three/three.module.min.js","three/addons/":"/assets/vendor/three/addons/"}}</script>
+<link rel="modulepreload" href="/assets/vendor/three/three.module.min.js">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
+<link rel="stylesheet" href="assets/css/base.css?v=20261109a">
+<link rel="stylesheet" href="assets/css/lab.css?v=20261109b">
+</head>
+<body>
+
+<!-- Preloader: cápsula enchendo -->
+<div class="loader" aria-hidden="true">
+  <div class="loader__panel loader__panel--t"></div>
+  <div class="loader__panel loader__panel--b"></div>
+  <div class="loader__core">
+    <div class="loader__caps"><div class="loader__fill"></div><div class="loader__seam"></div><div class="loader__shine"></div></div>
+    <div class="loader__count"><span class="js-count">000</span>%</div>
+  </div>
+</div>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" aria-hidden="true"></div>
+
+<div class="announce" role="region" aria-label="Aviso">
+  <div class="announce__track">
+    <span data-promo>Black Friday CapsBR: até 37% off até 30/11</span><span>Marca própria a partir de 300 unidades</span><span>Teste de estabilidade em todo produto</span><span>Notificação ANVISA no mesmo fluxo</span><span>Produção em 15 a 45 dias</span>
+    <span data-promo>Black Friday CapsBR: até 37% off até 30/11</span><span>Marca própria a partir de 300 unidades</span><span>Teste de estabilidade em todo produto</span><span>Notificação ANVISA no mesmo fluxo</span><span>Produção em 15 a 45 dias</span>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="wrap nav__in">
+    <a href="#" class="nav__logo" aria-label="CapsBR"><img src="assets/img/capsbr-logo-branca-header.png" alt="CapsBR"></a>
+    <nav class="nav__links">
+      <a href="#processo">Como funciona</a>
+      <a href="#formulas">Fórmulas</a>
+      <a href="#marca">Crie sua marca</a>
+      <a href="#fabrica">Produção</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#faq">Dúvidas</a>
+    </nav>
+    <div class="nav__right">
+      <a class="btn btn--primary js-wa" href="#" target="_blank" rel="noopener">Falar no WhatsApp <span class="arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H4M13 1v9" stroke="currentColor" stroke-width="1.8"/></svg></span></a>
+      <button class="nav__burger js-burger" type="button" aria-label="Abrir menu" aria-expanded="false"><i></i><i></i></button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="hero__bg">
+    <div class="hero__grid"></div>
+    <div class="hero__glow"></div>
+    <div class="hero__glow hero__glow--2"></div>
+  </div>
+  <div class="wrap hero__in">
+    <div>
+      <div class="hero__tags hero-anim"><span class="tag"><span class="dot"></span>Fábrica de marca própria</span><a href="#formulas" class="tag tag--promo" data-promo>Black Friday · até 37% off →</a></div>
+      <h1 class="display h1 hero-title">Sua marca de <span class="accent">suplementos,</span> pronta pra vender.</h1>
+      <p class="lead hero-anim">Fórmulas CapsBR com rótulo personalizado e Teste de Estabilidade em todo produto. Você escolhe a fórmula, a gente cuida da produção e sua marca entra no mercado.</p>
+      <div class="hero__ctas hero-anim">
+        <a href="#formulas" class="btn btn--primary">Ver fórmulas <span class="arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H4M13 1v9" stroke="currentColor" stroke-width="1.8"/></svg></span></a>
+        <a href="#marca" class="btn btn--ghost">Criar minha marca</a>
+      </div>
+      <div class="hero__stats hero-anim">
+        <div><b data-count="16">0</b><span>fórmulas prontas</span></div>
+        <div><b><span data-count="300">0</span><em>+</em></b><span>unidades mínimas</span></div>
+        <div><b><span data-count="45">0</span><em>d</em></b><span>prazo máximo</span></div>
+      </div>
+    </div>
+    <div class="hero__visual">
+      <div class="hero__static" aria-hidden="true">
+        <img class="hero__static-caps" src="assets/img/hero-capsulas.webp" alt="" width="628" height="900" decoding="async" fetchpriority="high">
+        <img class="hero__static-liq" src="assets/img/hero-liquidos.webp" alt="" width="306" height="900" decoding="async">
+      </div>
+      <div class="cap3d hero-cap"><div class="cap3d__half cap3d__half--top"></div><div class="cap3d__half cap3d__half--bot"></div></div>
+      <ol class="hero-line" aria-label="Etapas de produção">
+        <li class="hero-line__step"><i></i>Envase</li>
+        <li class="hero-line__step"><i></i>Tampa</li>
+        <li class="hero-line__step"><i></i>Rótulo</li>
+        <li class="hero-line__step"><i></i>Pronto</li>
+      </ol>
+      <div class="hero__chip c1"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg></span><div>Notificação ANVISA<small>inclusa no processo</small></div></div>
+    </div>
+  </div>
+  <div class="hero__scroll"><div class="mouse"></div><span class="mono">role</span></div>
+</section>
+
+<!-- ================= CAPSULE SCROLL ================= -->
+<section class="caps-scroll" id="processo">
+  <div class="caps-pin">
+    <div class="caps-bgword" aria-hidden="true">CAPSBR</div>
+    <canvas class="caps-particles" aria-hidden="true"></canvas>
+    <div class="caps-intro">
+      <span class="tag"><span class="dot"></span>Da fórmula à prateleira</span>
+      <h2 class="display h2">Abra a cápsula. Veja sua marca nascer.</h2>
+    </div>
+    <div class="caps-stage">
+      <div class="cap3d caps-cap"><div class="cap3d__half cap3d__half--top"></div><div class="cap3d__half cap3d__half--bot"></div></div>
+      <div class="caps-bottle"></div>
+    </div>
+    <div class="caps-steps">
+      <div class="caps-step"><span class="mono">01 · Fórmula</span><h3>Escolha entre fórmulas já validadas.</h3><p>Cápsulas e líquidos com composição pronta, tabela nutricional e benefícios definidos.</p></div>
+      <div class="caps-step"><span class="mono">02 · Estabilidade</span><h3>Teste de estabilidade em todo produto.</h3><p>Cada lote é avaliado para manter qualidade do primeiro ao último frasco.</p></div>
+      <div class="caps-step"><span class="mono">03 · Rótulo</span><h3>Rótulo com a cara da sua marca.</h3><p>Arte personalizada, tabela nutricional e notificação na ANVISA no mesmo fluxo.</p></div>
+      <div class="caps-step"><span class="mono">04 · Produção</span><h3>Em 15 a 45 dias, no seu estoque.</h3><p>Prazo real contado após a chegada do rótulo impresso. Sem surpresa.</p></div>
+    </div>
+    <div class="caps-progress"><span class="js-step-n">01</span><div class="bar"><i></i></div><span>04</span></div>
+  </div>
+</section>
+
+<!-- ================= FORMULA MARQUEE ================= -->
+<div class="formula-band">
+  <div class="marquee" style="--speed:50s"><div class="marquee__track js-marq-a"></div></div>
+  <div class="marquee marquee--rev" style="--speed:60s"><div class="marquee__track js-marq-b"></div></div>
+</div>
+
+<!-- ================= PRODUCTS ================= -->
+<section class="sec theme-dark sec--rounded" id="formulas">
+  <div class="wrap">
+    <div class="sec__head">
+      <div>
+        <div class="eyebrow"><span class="num">02</span><span class="line"></span><span class="mono">Fórmulas</span></div>
+        <h2 class="display h2" data-split>Escolha a fórmula.<br>A marca é <span class="accent">sua.</span></h2>
+      </div>
+      <div class="filters js-filters"></div>
+    </div>
+    <div class="pgrid js-grid"></div>
+    <p class="mono" style="color:var(--dim);margin-top:24px">Valores por unidade, sujeitos à confirmação na cotação final e à aprovação do rótulo.</p>
+  </div>
+</section>
+
+<!-- ================= BRAND BUILDER ================= -->
+<section class="sec" id="marca" style="padding-top:40px">
+  <div class="wrap builder">
+    <div class="builder__stage">
+      <div class="builder__bottles">
+        <div class="b b--caps js-b-caps"></div>
+        <div class="b b--drop js-b-drop"></div>
+      </div>
+      <div class="stage-ui">
+        <span class="stage-ui__hint builder__hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12h16M4 12l4-4M4 12l4 4M20 12l-4-4M20 12l-4 4"/></svg>Arraste para girar</span>
+        <button class="stage-ui__btn js-flip-b" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8M21 3v5h-5M21 12a9 9 0 0 1-15.5 6.2L3 16M3 21v-5h5"/></svg><span>Ver tabela</span></button>
+      </div>
+    </div>
+    <div class="builder__form">
+      <div>
+        <div class="eyebrow"><span class="num">03</span><span class="line"></span><span class="mono">Sua marca no produto</span></div>
+        <h2 class="display h2" data-split>Visualize sua marca agora.</h2>
+        <p class="lead" style="margin-top:20px">Esse é o produto final, já pronto pra sua marca: pote de vidro transparente e conta-gotas de 30 mL, com rótulo verde. Digite o nome da sua marca e veja como fica. Gire o frasco para ver a tabela nutricional no verso.</p>
+      </div>
+      <div class="field"><label for="brand">Nome da marca</label><div class="field__in"><input id="brand" maxlength="16" value="SUA MARCA" autocomplete="off" spellcheck="false"><span class="field__count js-count-b">9/16</span></div></div>
+      <div class="field"><label>Formato</label>
+        <div class="seg js-seg"><span class="seg__pill"></span><button class="is-active" data-k="both">Os dois</button><button data-k="caps">Cápsulas</button><button data-k="drop">Líquido</button></div>
+      </div>
+      <div><a class="btn btn--primary js-wa-brand" href="#" target="_blank" rel="noopener">Quero essa marca <span class="arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H4M13 1v9" stroke="currentColor" stroke-width="1.8"/></svg></span></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STORY (cream) ================= -->
+<section class="sec sec--cream story" id="sobre">
+  <div class="wrap story__grid" style="grid-template-columns:1fr;max-width:640px">
+    <div class="story__sticky" style="position:static">
+      <div class="eyebrow"><span class="num">04</span><span class="line"></span><span class="mono">Nossa história</span></div>
+      <h2 class="display h2" data-split>Nascemos pra tirar marcas do <span class="accent">papel</span>.</h2>
+      <p class="lead" style="margin-top:24px">A CapsBR Nutracêuticos existe para que empreendedores tenham uma linha de suplementos própria sem precisar montar uma fábrica.</p>
+      <div class="counters">
+        <div class="counter"><b><span data-count="30">0</span><em>+</em></b><span>marcas de suplementos já lançadas</span></div>
+        <div class="counter"><b>R$ 390 mil</b><span>em vendas em 40 dias, um dos cases de marca lançada com a gente</span></div>
+        <div class="counter"><b><span data-count="100">0</span><em>%</em></b><span>com teste de estabilidade</span></div>
+      </div>
+    </div>
+    <div class="timeline" style="display:none">
+      <div class="timeline__line"><i></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROCESS ================= -->
+<section class="sec process">
+  <svg class="process__svg" viewBox="0 0 1440 800" preserveAspectRatio="none" aria-hidden="true"><g class="js-paths" fill="none" stroke="#14483f" stroke-width="1"></g></svg>
+  <div class="wrap">
+    <div class="sec__head">
+      <div>
+        <div class="eyebrow"><span class="num">05</span><span class="line"></span><span class="mono">Como fechar</span></div>
+        <h2 class="display h2" data-split>Quatro passos.<br>Zero burocracia.</h2>
+      </div>
+      <p class="lead" style="max-width:38ch">Do primeiro “oi” no WhatsApp até a sua marca em produção, com cotação e contrato transparentes.</p>
+    </div>
+    <div class="steps">
+      <div class="spot step" data-reveal><span class="step__n">01</span><svg class="step__ic" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="10" y="20" width="36" height="16" rx="8"/><path d="M28 20v16"/></svg><h4>Escolha</h4><p>Selecione a fórmula e o volume direto aqui no site.</p></div>
+      <div class="spot step" data-reveal><span class="step__n">02</span><svg class="step__ic" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 42l4-10a16 16 0 1 1 6 6z"/></svg><h4>Converse</h4><p>Fale com a CapsBR no WhatsApp e receba a cotação.</p></div>
+      <div class="spot step" data-reveal><span class="step__n">03</span><svg class="step__ic" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="14" y="10" width="28" height="36" rx="4"/><path d="M20 20h16M20 27h16M20 34h9"/></svg><h4>Aprove</h4><p>Assine o contrato e aprove a arte do seu rótulo.</p></div>
+      <div class="spot step" data-reveal><span class="step__n">04</span><svg class="step__ic" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 40h36M14 40V24l8 6v-6l8 6v-6l8 6V14h6v26"/></svg><h4>Produza</h4><p>Sua marca entra em produção. Entrega em 15 a 45 dias.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FÁBRICA (BENTO) ================= -->
+<section class="sec factory" id="fabrica" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec__head">
+      <div>
+        <div class="eyebrow"><span class="num">06</span><span class="line"></span><span class="mono">Por que CapsBR</span></div>
+        <h2 class="display h2" data-split>Produção com rigor de fábrica.<br>Cada etapa à vista.</h2>
+      </div>
+      <p class="lead" style="max-width:40ch">Do pó da fórmula ao lote aprovado, cada etapa é acompanhada de perto. Veja por dentro.</p>
+    </div>
+    <div class="bento">
+      <article class="bx bx--enc" data-reveal>
+        <div class="bx__hud"><span class="dot"></span><span class="mono">Linha em operação</span></div>
+        <div class="bx__art"><svg class="js-bx" data-w="enc" role="img" aria-label="Encapsuladora enchendo um pote de vidro"></svg></div>
+        <div class="bx__txt"><span class="mono">01 · Encapsulamento</span><h3>Da fórmula ao pote, com controle em cada etapa.</h3><p>A fórmula é dosada, encapsulada e envasada no pote de vidro com controle em cada etapa.</p></div>
+      </article>
+      <article class="bx bx--stab" data-reveal>
+        <div class="bx__art"><svg class="js-bx" data-w="stab" role="img" aria-label="Câmara climática de estabilidade"></svg></div>
+        <div class="bx__txt"><span class="mono">02 · Estabilidade</span><h3>Teste em todo produto.</h3><p>Câmara climática garante a qualidade até o fim da validade.</p></div>
+      </article>
+      <article class="bx bx--env" data-reveal>
+        <div class="bx__art"><svg class="js-bx" data-w="env" role="img" aria-label="Envase de conta-gotas"></svg></div>
+        <div class="bx__txt"><span class="mono">03 · Líquidos</span><h3>Envase de precisão.</h3><p>Conta-gotas de 30 mL cheios e lacrados com controle de qualidade.</p></div>
+      </article>
+      <article class="bx bx--rot" data-reveal>
+        <div class="bx__art"><svg class="js-bx" data-w="rot" role="img" aria-label="Rotuladora aplicando o rótulo da sua marca"></svg></div>
+        <div class="bx__txt"><span class="mono">04 · Rotulagem</span><h3>O seu rótulo, aplicado com precisão.</h3><p>Arte com a sua marca, tabela nutricional e notificação na ANVISA no mesmo fluxo.</p></div>
+      </article>
+      <article class="bx bx--laudo" data-reveal>
+        <div class="bx__art"><svg class="js-bx" data-w="laudo" role="img" aria-label="Laudo de análise aprovado"></svg></div>
+        <div class="bx__txt"><span class="mono">05 · Laudo</span><h3>Laudo por lote.</h3><p>Documentação pronta para você vender com segurança.</p></div>
+      </article>
+      <article class="bx bx--qc" data-reveal>
+        <div class="bx__art"><svg class="js-bx" data-w="qc" role="img" aria-label="Inspeção de qualidade na esteira"></svg></div>
+        <div class="bx__txt"><span class="mono">06 · Controle de qualidade</span><h3>Cada frasco inspecionado antes de sair.</h3><p>Peso, lacre, rótulo e lote conferidos um a um.</p></div>
+      </article>
+    </div>
+    <div class="factory__inc"><span>Incluso em todo pedido</span><b>Rótulo personalizado</b><b>Teste de estabilidade</b><b>Tabela nutricional</b><b>Notificação ANVISA</b><b>Laudo por lote</b></div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="sec" id="faq" style="padding-top:0">
+  <div class="wrap faq">
+    <div>
+      <div class="eyebrow"><span class="num">07</span><span class="line"></span><span class="mono">Dúvidas</span></div>
+      <h2 class="display h2" data-split>Perguntas frequentes.</h2>
+      <p class="lead" style="margin-top:20px">Não achou o que procurava? Chama a gente no WhatsApp.</p>
+    </div>
+    <div class="acc js-faq"></div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="sec--orange cta">
+  <div class="cta__bg js-cta-bg"></div>
+  <div class="wrap" style="position:relative">
+    <span class="mono">Sua linha própria de suplementos</span>
+    <h2 class="display h1" data-split>Sua marca na prateleira em até 45 dias.</h2>
+    <div class="cta__promo" data-promo>
+      <span class="mono">Black Friday CapsBR termina em</span>
+      <div class="countdown js-countdown"><div><b>00</b><span>dias</span></div><div><b>00</b><span>horas</span></div><div><b>00</b><span>min</span></div><div><b>00</b><span>seg</span></div></div>
+    </div>
+    <p class="cta__lead" data-nopromo>Escolha a fórmula, mande no WhatsApp e receba a cotação com rótulo, ANVISA e prazo, tudo numa conversa.</p>
+    <div><a class="btn btn--dark js-wa" href="#" target="_blank" rel="noopener">Falar no WhatsApp <span class="arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H4M13 1v9" stroke="currentColor" stroke-width="1.8"/></svg></span></a></div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="#" class="nav__logo" aria-label="CapsBR"><img src="assets/img/capsbr-logo-branca-header.png" alt="CapsBR"></a>
+        <p>Fábrica de suplementos com marca própria. Cápsulas e líquidos com rótulo personalizado, do pedido à entrega.</p>
+        <a class="btn btn--primary js-wa" href="#" target="_blank" rel="noopener">Falar no WhatsApp <span class="arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H4M13 1v9" stroke="currentColor" stroke-width="1.8"/></svg></span></a>
+      </div>
+      <div class="footer__grid">
+        <div><h4>Navegação</h4><a href="#processo">Como funciona</a><a href="#formulas">Fórmulas</a><a href="#marca">Crie sua marca</a><a href="#faq">Dúvidas</a></div>
+        <div><h4>Linhas</h4><a href="#formulas">Cápsulas</a><a href="#formulas">Líquidos</a><a href="https://catalogo.capsbr.com.br/" target="_blank" rel="noopener">Catálogo completo</a></div>
+        <div><h4>Contato</h4><a class="js-wa" href="#" target="_blank" rel="noopener">WhatsApp</a><a href="https://www.instagram.com/capsbr.nutra/" target="_blank" rel="noopener">Instagram</a><a href="mailto:contato@capsbr.com.br">contato@capsbr.com.br</a></div>
+      </div>
+    </div>
+    <div class="footer__badges"><span>Notificação ANVISA</span><span>Teste de estabilidade</span><span>Tabela nutricional validada</span><span>Pedido a partir de 300 un.</span></div>
+    <div class="footer__legal"><span>© 2026 CapsBR Nutracêuticos Ltda. · CNPJ 68.259.906/0001-69</span><span><span data-promo>Condições de Black Friday válidas até 30/11/2026. </span>Imagens ilustrativas.</span></div>
+  </div>
+</footer>
+
+
+
+<script defer src="/assets/vendor/gsap.min.js"></script>
+<script defer src="/assets/vendor/ScrollTrigger.min.js"></script>
+<script defer src="/assets/vendor/lenis.min.js"></script>
+<script defer src="assets/js/data.js?v=20261106c"></script>
+<script defer src="/api/catalog"></script>
+<script defer src="assets/js/shared.js?v=20261109a"></script>
+<script defer src="assets/js/home.js?v=20261109b"></script>
+<script defer src="assets/js/bento.js?v=20261106c"></script>
+<script type="module" src="assets/js/scene3d.js?v=20261109a"></script>
+</body>
+</html>

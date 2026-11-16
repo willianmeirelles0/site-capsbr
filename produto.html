@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>Fórmula · CapsBR</title>
+<meta name="description" content="Fórmula CapsBR com sua marca: composição, tabela nutricional e preço por volume.">
+<link rel="icon" href="assets/img/capsbr-logo-header.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
+<link rel="stylesheet" href="assets/css/base.css?v=20261106c">
+<link rel="stylesheet" href="assets/css/lab.css?v=20261106c">
+<link rel="stylesheet" href="assets/css/product.css?v=20261106c">
+</head>
+<body class="pg-product">
+
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" aria-hidden="true"></div>
+
+<div class="announce" role="region" aria-label="Aviso">
+  <div class="announce__track">
+    <span data-promo>Black Friday CapsBR: até 37% off até 30/11</span><span>Marca própria a partir de 300 unidades</span><span>Teste de estabilidade em todo produto</span><span>Notificação ANVISA no mesmo fluxo</span><span>Produção em 15 a 45 dias</span>
+    <span data-promo>Black Friday CapsBR: até 37% off até 30/11</span><span>Marca própria a partir de 300 unidades</span><span>Teste de estabilidade em todo produto</span><span>Notificação ANVISA no mesmo fluxo</span><span>Produção em 15 a 45 dias</span>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="wrap nav__in">
+    <a href="index.html#formulas" class="nav__back js-back" aria-label="Voltar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></a>
+    <a href="index.html" class="nav__logo" aria-label="CapsBR"><img src="assets/img/capsbr-logo-branca-header.png" alt="CapsBR"></a>
+    <nav class="nav__links">
+      <a href="index.html#processo">Como funciona</a>
+      <a href="index.html#formulas">Fórmulas</a>
+      <a href="#tabela">Tabela nutricional</a>
+      <a href="#como-funciona">Produção</a>
+    </nav>
+    <div class="nav__right">
+      <a class="btn btn--primary js-wa" href="#" target="_blank" rel="noopener">Falar no WhatsApp <span class="arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H4M13 1v9" stroke="currentColor" stroke-width="1.8"/></svg></span></a>
+      <button class="nav__burger js-burger" type="button" aria-label="Abrir menu" aria-expanded="false"><i></i><i></i></button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ================= HERO PRODUTO ================= -->
+<section class="pd-hero">
+  <div class="wrap pd-hero__in">
+    <div class="pd-stage">
+      <div class="pd-stage__panel">
+        <div class="pd-stage__rings"><i></i><i></i><i></i></div>
+        <div class="pd-stage__word js-word" aria-hidden="true"></div>
+        <div class="pd-stage__photo js-photo"></div>
+        <div class="stage-ui">
+          <a class="stage-ui__btn" href="#tabela"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16M4 10h16M4 15h10M4 20h7"/></svg><span>Ver tabela nutricional</span></a>
+        </div>
+        <div class="pd-chip c1" data-promo><b class="js-off">-0%</b><span>na Black Friday</span></div>
+        <div class="pd-chip c2"><span class="pd-chip__ic">✓</span><span>Teste de<br>estabilidade</span></div>
+      </div>
+    </div>
+
+    <div class="pd-info">
+      <nav class="pd-crumb mono"><a href="index.html">Início</a><span>/</span><a href="index.html#formulas">Fórmulas</a><span>/</span><b class="js-crumb"></b></nav>
+      <div class="pd-tags">
+        <span class="tag tag--code js-code" data-scramble></span>
+        <span class="tag js-cat"></span>
+        <span class="pd-hot js-hot" hidden>Mais pedido</span>
+      </div>
+      <h1 class="display pd-title js-title">Fórmula</h1>
+      <p class="pd-comp js-nome"></p>
+      <p class="lead js-desc"></p>
+
+      <ul class="pd-bens js-bens"></ul>
+
+      <div class="pd-buy">
+        <div class="pd-buy__top"><span class="mono">Quantidade de unidades</span><span class="pd-buy__size"><span class="mono">Embalagem</span><b class="js-size"></b></span></div>
+        <div class="pd-qty js-qty"></div>
+        <div class="pd-buy__price">
+          <div>
+            <small class="mono">Preço por unidade</small>
+            <div class="pd-buy__row"><b class="js-por"></b><em>/un.</em><s class="js-de" data-promo></s><span class="pd-buy__off js-off2" data-promo></span></div>
+          </div>
+          <div class="pd-buy__lot"><small class="mono">Total do lote</small><b class="js-lot"></b><span class="js-lot-q"></span></div>
+        </div>
+        <div class="pd-buy__lines">
+          <div><span>Impressão de rótulos <small class="js-c-rot-l"></small></span><b class="js-c-rot"></b></div>
+          <div><span>Notificação ANVISA</span><b class="js-anvisa">R$ 300,00</b></div>
+          <div><span>Arte do rótulo</span><b class="pd-buy__free" data-promo>Cortesia</b><b data-nopromo>Sob consulta</b></div>
+          <div class="pd-buy__total"><span>Investimento estimado</span><b class="js-c-total"></b></div>
+          <div class="pd-buy__eco" data-promo><span>Você economiza na Black Friday</span><b class="js-c-eco"></b></div>
+        </div>
+      </div>
+
+      <div class="pd-inc">
+        <div class="pd-inc__head"><span class="pd-inc__seal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 2.1 3.2-.3.9 3.1 2.8 1.6-1 3 1 3-2.8 1.6-.9 3.1-3.2-.3L12 22l-2.4-2.1-3.2.3-.9-3.1L2.7 15.5l1-3-1-3 2.8-1.6.9-3.1 3.2.3z"/><path d="M8.5 12.2l2.3 2.3 4.7-4.8"/></svg></span><div><b>Incluso em todo pedido</b><small>Sem custo extra, do primeiro ao último lote</small></div></div>
+        <ul class="pd-inc__list">
+          <li><i>01</i><span><b>Rótulo personalizado</b>com a sua marca</span></li>
+          <li><i>02</i><span><b>Teste de estabilidade</b>em todo produto</span></li>
+          <li><i>03</i><span><b>Tabela nutricional</b>pronta para o rótulo</span></li>
+          <li><i>04</i><span><b>Notificação ANVISA</b>no mesmo fluxo</span></li>
+          <li><i>05</i><span><b>Laudo por lote</b>rastreável</span></li>
+        </ul>
+      </div>
+
+      <div class="pd-ctas">
+        <a class="wa-cta js-wa-calc" href="#" target="_blank" rel="noopener">
+          <span class="wa-cta__ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-1.7-.1a15 15 0 0 1-6.6-5.8c-.5-.9-.9-2-.9-3 0-1 .5-1.6.8-1.9.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.5.1.7-.1l.9-1.1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg></span>
+          <span class="wa-cta__txt"><b>Quero com minha marca</b><small>Abre o WhatsApp com esta cotação pronta</small></span>
+          <span class="wa-cta__go"><svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.8"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TABELA NUTRICIONAL ================= -->
+<section class="sec" id="tabela">
+  <div class="wrap pd-nutri">
+    <div class="pd-nutri__side">
+      <div class="eyebrow"><span class="num">01</span><span class="line"></span><span class="mono">Informação nutricional</span></div>
+      <h2 class="display h2" data-split>Tabela clara, rótulo pronto.</h2>
+      <p class="lead" style="margin-top:20px">A tabela já vem validada pela nossa equipe técnica e diagramada no seu rótulo, junto com a notificação na ANVISA.</p>
+      <div class="pd-nutri__legend mono"><span><i class="lg-a"></i>% Valor Diário</span><span><i class="lg-b"></i>VD não estabelecido</span></div>
+    </div>
+    <div class="nt" data-reveal>
+      <div class="nt__head">
+        <div><span class="mono">Informação nutricional</span><b class="js-nt-title"></b></div>
+        <span class="tag tag--code js-code2"></span>
+      </div>
+      <div class="nt__meta"><span class="js-nt-porcoes"></span><span class="js-nt-porcao"></span></div>
+      <div class="nt__cols mono"><span>Nutriente</span><span>Quantidade</span><span>%VD*</span></div>
+      <div class="nt__rows js-nt-rows"></div>
+      <p class="nt__foot">*Percentual de valores diários fornecidos pela porção. (*) VD não estabelecido.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= COMO FUNCIONA (linha de produção) ================= -->
+<section class="sec factory pd-fac" id="como-funciona" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec__head">
+      <div>
+        <div class="eyebrow"><span class="num">02</span><span class="line"></span><span class="mono">Como funciona</span></div>
+        <h2 class="display h2" data-split>Como o seu produto é feito.</h2>
+      </div>
+      <p class="lead" style="max-width:40ch">Esta fórmula passa pela nossa linha de <b class="js-fac-kind">cápsulas</b>, da mistura ao lote aprovado. Acompanhe cada etapa e cada máquina em tempo real.</p>
+    </div>
+    <div class="factory__stage">
+      <div class="factory__scroll"><svg class="factory__svg js-fac-svg" viewBox="0 0 1200 470" role="img" aria-label="Animação da linha de produção"></svg></div>
+      <div class="factory__hud"><span class="dot"></span><span class="mono">Linha <b class="js-fac-name">Cápsulas</b> em operação</span><span class="mono factory__count">Unidades hoje <b class="js-fac-count">12.480</b></span></div>
+    </div>
+    <ol class="factory__steps js-fac-steps"></ol>
+  </div>
+</section>
+
+<!-- ================= DO PEDIDO À ENTREGA ================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">03</span><span class="line"></span><span class="mono">Do pedido à entrega</span></div>
+    <h2 class="display h2" data-split>Sua marca em 4 passos.</h2>
+    <div class="pd-steps">
+      <div class="pd-step spot" data-reveal><span class="pd-step__n">01</span><h3>Escolha</h3><p>Defina esta fórmula e o volume ideal pro seu momento.</p></div>
+      <div class="pd-step spot" data-reveal><span class="pd-step__n">02</span><h3>Arte do rótulo</h3><p>Nosso time cria a arte com a sua marca e a tabela já diagramada.</p></div>
+      <div class="pd-step spot" data-reveal><span class="pd-step__n">03</span><h3>ANVISA + estabilidade</h3><p>Notificação e teste de estabilidade cuidados pela CapsBR.</p></div>
+      <div class="pd-step spot" data-reveal><span class="pd-step__n">04</span><h3>Produção</h3><p>De 15 a 45 dias após a chegada do rótulo impresso.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RELACIONADOS ================= -->
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="pd-rel__head">
+      <div>
+        <div class="eyebrow"><span class="num">04</span><span class="line"></span><span class="mono">Combine com</span></div>
+        <h2 class="display h2" data-split>Monte sua linha.</h2>
+      </div>
+      <a class="btn btn--ghost" href="index.html#formulas">Ver todas as fórmulas</a>
+    </div>
+    <div class="pgrid pd-rel js-rel"></div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="sec--orange cta">
+  <div class="cta__bg js-cta-bg"></div>
+  <div class="wrap" style="position:relative">
+    <span class="mono">Sua linha própria de suplementos</span>
+    <h2 class="display h1" data-split>Sua marca na prateleira em até 45 dias.</h2>
+    <div class="cta__promo" data-promo>
+      <span class="mono">Black Friday CapsBR termina em</span>
+      <div class="countdown js-countdown"><div><b>00</b><span>dias</span></div><div><b>00</b><span>horas</span></div><div><b>00</b><span>min</span></div><div><b>00</b><span>seg</span></div></div>
+    </div>
+    <p class="cta__lead" data-nopromo>Escolha a fórmula, mande no WhatsApp e receba a cotação com rótulo, ANVISA e prazo, tudo numa conversa.</p>
+    <div><a class="btn btn--dark js-wa-prod" href="#" target="_blank" rel="noopener">Falar no WhatsApp <span class="arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H4M13 1v9" stroke="currentColor" stroke-width="1.8"/></svg></span></a></div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo" aria-label="CapsBR"><img src="assets/img/capsbr-logo-branca-header.png" alt="CapsBR"></a>
+        <p>Fábrica de suplementos com marca própria. Cápsulas e líquidos com rótulo personalizado, do pedido à entrega.</p>
+        <a class="btn btn--primary js-wa" href="#" target="_blank" rel="noopener">Falar no WhatsApp <span class="arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H4M13 1v9" stroke="currentColor" stroke-width="1.8"/></svg></span></a>
+      </div>
+      <div class="footer__grid">
+        <div><h4>Navegação</h4><a href="index.html#processo">Como funciona</a><a href="index.html#formulas">Fórmulas</a><a href="index.html#marca">Crie sua marca</a><a href="index.html#faq">Dúvidas</a></div>
+        <div><h4>Linhas</h4><a href="index.html#formulas">Cápsulas</a><a href="index.html#formulas">Líquidos</a><a href="https://catalogo.capsbr.com.br/" target="_blank" rel="noopener">Catálogo completo</a></div>
+        <div><h4>Contato</h4><a class="js-wa" href="#" target="_blank" rel="noopener">WhatsApp</a><a href="https://www.instagram.com/capsbr.nutra/" target="_blank" rel="noopener">Instagram</a><a href="mailto:contato@capsbr.com.br">contato@capsbr.com.br</a></div>
+      </div>
+    </div>
+    <div class="footer__badges"><span>Notificação ANVISA</span><span>Teste de estabilidade</span><span>Tabela nutricional validada</span><span>Pedido a partir de 300 un.</span></div>
+    <div class="footer__legal"><span>© 2026 CapsBR Nutracêuticos Ltda. · CNPJ 68.259.906/0001-69</span><span><span data-promo>Condições de Black Friday válidas até 30/11/2026. </span>Imagens ilustrativas.</span></div>
+  </div>
+</footer>
+
+
+
+<script defer src="/assets/vendor/gsap.min.js"></script>
+<script defer src="/assets/vendor/ScrollTrigger.min.js"></script>
+<script defer src="/assets/vendor/lenis.min.js"></script>
+<script defer src="assets/js/data.js?v=20261106c"></script>
+<script defer src="/api/catalog"></script>
+<script defer src="assets/js/shared.js?v=20261109a"></script>
+<script defer src="assets/js/product.js?v=20261106c"></script>
+<script defer src="assets/js/factory.js?v=20261106c"></script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel · CapsBR</title>
+<link rel="icon" href="/assets/img/capsbr-logo-header.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<main class="login" id="login" hidden>
+  <form class="login__card" id="loginForm" autocomplete="on">
+    <span class="logo" aria-label="CapsBR"></span>
+    <h1>Painel administrativo</h1>
+    <p class="muted">Entre com a senha para editar produtos, preços e a campanha.</p>
+    <label class="field">
+      <span>Senha</span>
+      <input type="password" id="loginPw" name="password" autocomplete="current-password" required minlength="1">
+    </label>
+    <p class="login__err" id="loginErr" role="alert" hidden></p>
+    <button class="btn btn--primary btn--block" type="submit" id="loginBtn">Entrar</button>
+    <a class="login__back" href="/">← Voltar ao site</a>
+  </form>
+</main>
+
+<!-- ============ APP ============ -->
+<div class="app" id="app" hidden>
+  <aside class="side">
+    <div class="side__brand"><span class="logo"></span><small>Painel</small></div>
+    <nav class="side__nav" id="nav">
+      <button data-view="produtos" class="is-active"><i>▦</i>Produtos <b class="count" id="navCount"></b></button>
+      <button data-view="campanha"><i>%</i>Campanha</button>
+      <button data-view="valores"><i>R$</i>Custos do pedido</button>
+      <button data-view="contato"><i>☏</i>Contato e avisos</button>
+      <button data-view="catalogo"><i>❐</i>Catálogo</button>
+      <button data-view="historico"><i>↺</i>Histórico</button>
+      <button data-view="backup"><i>⇅</i>Backup</button>
+    </nav>
+    <div class="side__foot">
+      <a href="/" target="_blank" rel="noopener" class="side__link">Ver site ↗</a>
+      <button class="side__link" id="logoutBtn">Sair</button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="top">
+      <button class="top__menu" id="menuBtn" aria-label="Menu">☰</button>
+      <div class="top__title"><h2 id="viewTitle">Produtos</h2><span class="top__meta" id="metaInfo"></span></div>
+      <div class="top__actions">
+        <span class="status" id="status"></span>
+        <button class="btn btn--ghost" id="discardBtn" disabled>Descartar</button>
+        <button class="btn btn--primary" id="saveBtn" disabled>Salvar e publicar</button>
+      </div>
+    </header>
+
+    <div class="banner" id="banner" hidden></div>
+
+    <!-- PRODUTOS -->
+    <section class="view" data-view="produtos">
+      <div class="toolbar">
+        <div class="search"><input type="search" id="q" placeholder="Buscar por nome, código ou categoria" aria-label="Buscar"></div>
+        <div class="seg" id="fTipo" role="tablist">
+          <button class="is-active" data-v="">Todos</button><button data-v="Cápsulas">Cápsulas</button><button data-v="Líquidos">Líquidos</button>
+        </div>
+        <button class="btn btn--primary" id="newBtn">+ Novo produto</button>
+      </div>
+      <div class="table-wrap">
+        <table class="table" id="pTable">
+          <thead><tr><th class="c-ord">Ordem</th><th>Produto</th><th>Tipo · Categoria</th><th class="num">A partir de</th><th class="num">Selo</th><th class="c-hot">Mais pedido</th><th class="c-act"></th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <p class="empty" id="pEmpty" hidden>Nenhum produto encontrado.</p>
+      </div>
+      <p class="hint">A ordem aqui é a ordem dos cards no site. Os preços da coluna "A partir de" usam a maior faixa de quantidade.</p>
+    </section>
+
+    <!-- CAMPANHA -->
+    <section class="view" data-view="campanha" hidden>
+      <div class="card">
+        <div class="card__head">
+          <div><h3>Campanha promocional</h3><p class="muted">Quando ativa, o site mostra os preços promocionais, o contador, o selo de desconto e os textos da campanha. Ao terminar a data, tudo volta sozinho aos preços normais.</p></div>
+          <span class="pill" id="promoState"></span>
+        </div>
+        <div class="grid2">
+          <label class="switch-row field--full"><input type="checkbox" id="promoOn" data-site="promo.enabled"><span class="switch"></span><span><b>Campanha ligada</b><small>Desligue para encerrar antes da data.</small></span></label>
+          <label class="field"><span>Nome da campanha</span><input type="text" data-site="promo.name" maxlength="40" placeholder="Black Friday"><small class="err" data-err="promo.name"></small></label>
+          <label class="field"><span>Desconto máximo anunciado (%)</span><div class="affix"><input type="text" inputmode="numeric" data-site="promo.max" maxlength="2"><em>%</em></div><small class="help" id="maxHelp"></small><small class="err" data-err="promo.max"></small></label>
+          <label class="field"><span>Termina em (data)</span><input type="date" id="promoDate"><small class="err" data-err="promo.end"></small></label>
+          <label class="field"><span>Horário (Brasília)</span><input type="time" id="promoTime" step="60"></label>
+          <label class="field field--full"><span>Texto da barra do topo durante a campanha <em class="opt">opcional</em></span><input type="text" data-site="announceBanner" maxlength="90" id="bannerTxt"><small class="help">Em branco, o site usa: <b id="bannerAuto"></b></small></label>
+        </div>
+      </div>
+    </section>
+
+    <!-- VALORES -->
+    <section class="view" data-view="valores" hidden>
+      <div class="card">
+        <h3>Custos do pedido</h3>
+        <p class="muted">Usados na calculadora da página de cada produto ("composição do investimento") e na mensagem enviada pelo WhatsApp.</p>
+        <div class="grid2">
+          <label class="field"><span>Rótulos para cápsulas (por lote)</span><div class="affix affix--pre"><em>R$</em><input type="text" inputmode="decimal" data-site="costs.rotuloCaps" data-money></div><small class="err" data-err="costs.rotuloCaps"></small></label>
+          <label class="field"><span>Rótulos para líquidos (por lote)</span><div class="affix affix--pre"><em>R$</em><input type="text" inputmode="decimal" data-site="costs.rotuloLiq" data-money></div><small class="err" data-err="costs.rotuloLiq"></small></label>
+          <label class="field"><span>Tamanho do lote de rótulos</span><div class="affix"><input type="text" inputmode="numeric" data-site="costs.rotuloLote"><em>un.</em></div><small class="err" data-err="costs.rotuloLote"></small></label>
+          <label class="field"><span>Notificação ANVISA (por pedido)</span><div class="affix affix--pre"><em>R$</em><input type="text" inputmode="decimal" data-site="costs.anvisa" data-money></div><small class="err" data-err="costs.anvisa"></small></label>
+        </div>
+        <div class="example" id="costExample"></div>
+      </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section class="view" data-view="contato" hidden>
+      <div class="card">
+        <h3>WhatsApp de vendas</h3>
+        <p class="muted">Todos os botões do site abrem conversa com este número.</p>
+        <div class="grid2">
+          <label class="field"><span>Número com DDI e DDD</span><input type="text" inputmode="tel" data-site="whatsapp" maxlength="20" placeholder="5554997090147"><small class="help" id="waFmt"></small><small class="err" data-err="whatsapp"></small></label>
+          <div class="field field--btn"><a class="btn btn--ghost" id="waTest" target="_blank" rel="noopener">Testar no WhatsApp ↗</a></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card__head"><div><h3>Barra de avisos do topo</h3><p class="muted">Frases que passam no letreiro do topo de todas as páginas. O aviso da campanha entra automaticamente quando ela está ativa.</p></div><button class="btn btn--ghost" id="addAnn">+ Aviso</button></div>
+        <ul class="list" id="annList"></ul>
+        <small class="err" data-err="announce"></small>
+      </div>
+    </section>
+
+    <!-- HISTÓRICO -->
+    <section class="view" data-view="historico" hidden>
+      <div class="card">
+        <div class="card__head"><div><h3>Versões salvas</h3><p class="muted">Cada vez que você salva, uma cópia fica guardada aqui (até 40). Carregar uma versão coloca o conteúdo no editor; nada muda no site até você salvar.</p></div><button class="btn btn--ghost" id="histReload">Atualizar</button></div>
+        <div class="table-wrap"><table class="table"><thead><tr><th>Versão</th><th>Salva em</th><th>Descrição</th><th class="num">Produtos</th><th class="c-act"></th></tr></thead><tbody id="histBody"></tbody></table></div>
+        <p class="empty" id="histEmpty" hidden>Nenhuma versão salva ainda. O site está usando o catálogo padrão.</p>
+      </div>
+    </section>
+
+    <!-- CATÁLOGO -->
+    <section class="view" data-view="catalogo" hidden>
+      <div class="card">
+        <h3>Link do catálogo</h3>
+        <p class="muted">Gere o link para mandar ao lead. Com o nome preenchido, o catálogo abre com uma animação de boas-vindas e a capa "Preparado para {nome}". Sem nome, é o link normal.</p>
+        <div class="grid2">
+          <label class="field field--full"><span>Nome do lead <em class="muted" style="font-style:normal;font-weight:400">(opcional)</em></span><input type="text" id="catPara" maxlength="40" placeholder="Ex.: Mariana Souza ou Loja Vida Fit" autocomplete="off"></label>
+          <div class="field"><span>Linha</span>
+            <div class="seg" id="catLinha" role="group" aria-label="Linha">
+              <button type="button" data-v="todas" class="is-active">Todas</button>
+              <button type="button" data-v="capsulas">Cápsulas</button>
+              <button type="button" data-v="liquidos">Líquidos</button>
+            </div>
+          </div>
+          <label class="switch-row"><input type="checkbox" id="catPrecos" checked><span class="switch"></span><span><b>Mostrar preços</b><small>Desligue para mandar o catálogo sem valores.</small></span></label>
+        </div>
+        <div class="catlink">
+          <span class="label">Link gerado</span>
+          <code id="catUrl"></code>
+        </div>
+        <div class="catacts">
+          <button type="button" class="btn btn--primary" id="catCopy">Copiar link</button>
+          <a class="btn btn--ghost" id="catWa" target="_blank" rel="noopener">Enviar no WhatsApp ↗</a>
+          <a class="btn btn--ghost" id="catOpen" target="_blank" rel="noopener">Abrir catálogo ↗</a>
+          <a class="btn btn--ghost" id="catPdf" target="_blank" rel="noopener">Baixar PDF ↗</a>
+        </div>
+        <p class="hint">O catálogo usa os produtos e preços já publicados. Se mudar algo em Produtos, salve antes de gerar o link.</p>
+      </div>
+    </section>
+
+    <!-- BACKUP -->
+    <section class="view" data-view="backup" hidden>
+      <div class="card">
+        <h3>Exportar</h3>
+        <p class="muted">Baixa um arquivo .json com todos os produtos e configurações do editor (incluindo alterações ainda não salvas).</p>
+        <button class="btn btn--ghost" id="exportBtn">Baixar backup (.json)</button>
+      </div>
+      <div class="card">
+        <h3>Importar</h3>
+        <p class="muted">Carrega um backup no editor. O arquivo é conferido antes; nada muda no site até você salvar.</p>
+        <label class="btn btn--ghost file-btn">Escolher arquivo .json<input type="file" id="importFile" accept="application/json,.json" hidden></label>
+      </div>
+      <div class="card card--warn">
+        <h3>Restaurar padrão</h3>
+        <p class="muted">Coloca no editor o catálogo original do site (16 produtos e configurações iniciais).</p>
+        <button class="btn btn--danger-ghost" id="factoryBtn">Carregar padrão no editor</button>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ============ EDITOR DE PRODUTO ============ -->
+<div class="drawer" id="drawer" hidden>
+  <div class="drawer__veil" data-close></div>
+  <form class="drawer__panel" id="pForm" novalidate>
+    <header class="drawer__head">
+      <div><small class="muted" id="dMode">Editar produto</small><h3 id="dTitle">Produto</h3></div>
+      <button type="button" class="icon-btn" data-close aria-label="Fechar">✕</button>
+    </header>
+    <div class="drawer__body">
+      <div class="dsec">
+        <h4>Identificação</h4>
+        <div class="grid2">
+          <label class="field field--full"><span>Nome no site</span><input type="text" name="titulo" maxlength="80" required><small class="err" data-perr="titulo"></small></label>
+          <label class="field field--full"><span>Nome completo <em class="opt">opcional</em></span><input type="text" name="nome" maxlength="120"><small class="help">Aparece abaixo do título na página do produto, quando for diferente.</small></label>
+          <label class="field"><span>Código</span><input type="text" name="id" maxlength="16" class="mono" placeholder="C-017"><small class="help" id="idHint"></small><small class="err" data-perr="id"></small></label>
+          <label class="field"><span>Endereço da página</span><div class="affix affix--pre"><em>?p=</em><input type="text" name="slug" maxlength="60" class="mono"></div><small class="help">Gerado pelo nome. Mudar quebra links já compartilhados.</small><small class="err" data-perr="slug"></small></label>
+          <label class="field"><span>Tipo</span><select name="tipo"><option>Cápsulas</option><option>Líquidos</option></select><small class="err" data-perr="tipo"></small></label>
+          <label class="field"><span>Categoria</span><input type="text" name="categoria" maxlength="40" list="catList"><datalist id="catList"></datalist><small class="err" data-perr="categoria"></small></label>
+          <label class="field"><span>Tamanho</span><input type="text" name="tamanho" maxlength="40" placeholder="60 cápsulas"><small class="err" data-perr="tamanho"></small></label>
+          <label class="switch-row"><input type="checkbox" name="maisPedido"><span class="switch"></span><span><b>Mais pedido</b><small>Mostra o selo no card.</small></span></label>
+        </div>
+      </div>
+
+      <div class="dsec">
+        <div class="dsec__head"><h4>Preços por quantidade</h4><button type="button" class="btn btn--sm btn--ghost" id="addVol">+ Faixa</button></div>
+        <p class="help">O site mostra as faixas de até 1.000 unidades como botões (300, 500, 1.000) e "Personalizado" acima disso. A maior faixa define o "a partir de" do card.</p>
+        <table class="vtable"><thead><tr><th>Quantidade</th><th>Preço normal</th><th>Preço na campanha</th><th class="num">Desconto</th><th></th></tr></thead><tbody id="volBody"></tbody></table>
+        <small class="err" data-perr="volumes"></small>
+        <div class="grid2 mt">
+          <label class="field"><span>Selo de desconto no card</span><div class="affix"><input type="text" inputmode="numeric" name="desconto" maxlength="2"><em>%</em></div><small class="help"><button type="button" class="linkish" id="autoOff"></button></small><small class="err" data-perr="desconto"></small></label>
+        </div>
+      </div>
+
+      <div class="dsec">
+        <h4>Conteúdo</h4>
+        <label class="field"><span>Descrição</span><textarea name="descricao" rows="4" maxlength="900"></textarea><small class="err" data-perr="descricao"></small></label>
+        <div class="dsec__head mt"><span class="label">Benefícios</span><button type="button" class="btn btn--sm btn--ghost" id="addBen">+ Benefício</button></div>
+        <ul class="list" id="benList"></ul>
+      </div>
+
+      <div class="dsec">
+        <div class="dsec__head"><h4>Tabela nutricional</h4><button type="button" class="btn btn--sm btn--ghost" id="addRow">+ Linha</button></div>
+        <div class="grid2">
+          <label class="field"><span>Porção</span><input type="text" name="porcao" maxlength="80" placeholder="Porção de 2 cápsulas (1 g)"></label>
+          <label class="field"><span>Porções por embalagem</span><input type="text" name="porcoes" maxlength="80" placeholder="Porções por embalagem: 30"></label>
+        </div>
+        <table class="vtable ntable"><thead><tr><th>Nutriente</th><th>Quantidade</th><th>%VD</th><th></th></tr></thead><tbody id="nutBody"></tbody></table>
+        <label class="field mt"><span>Não contém quantidades significativas de…</span><textarea name="naoContem" rows="3" maxlength="600"></textarea></label>
+      </div>
+    </div>
+    <footer class="drawer__foot">
+      <small class="muted" id="dErrSum"></small>
+      <button type="button" class="btn btn--ghost" data-close>Cancelar</button>
+      <button type="submit" class="btn btn--primary">Aplicar</button>
+    </footer>
+  </form>
+</div>
+
+<!-- ============ MODAL / TOAST ============ -->
+<div class="modal" id="modal" hidden>
+  <div class="modal__veil"></div>
+  <div class="modal__card" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <h3 id="mTitle"></h3>
+    <div id="mBody" class="modal__body"></div>
+    <div class="modal__foot"><button class="btn btn--ghost" id="mCancel">Cancelar</button><button class="btn btn--primary" id="mOk">Confirmar</button></div>
+  </div>
+</div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script type="module" src="/admin/admin.js"></script>
+</body>
+</html>
