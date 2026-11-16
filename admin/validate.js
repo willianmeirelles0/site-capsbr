@@ -4,7 +4,7 @@
    Sem dependências. Toda gravação passa por normalizeCatalog().
    ========================================================= */
 
-export const TIPOS = ['Cápsulas', 'Líquidos'];
+export const TIPOS = ['Cápsulas', 'Líquidos', 'Gomas e Pastilhas', 'Solúveis'];
 export const LIMITS = { products: 200, volumes: 10, beneficios: 10, tabela: 40, announce: 12 };
 export const DEFAULT_SITE = {
   whatsapp: '5554997090147',

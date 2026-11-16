@@ -139,10 +139,15 @@ ${line(38, 238, l2, 8, 124, 600, FONT_B, t.sub, .06)}
     theme: 'teal',
     code: p.id,
   });
-  // foto real do produto (pote de vidro ou conta-gotas)
+  // foto real do produto (pote, frasco, goma ou pote de pó)
+  const PHOTO_BY_TIPO = {
+    'Líquidos': { img: 'liquidos', alt: 'frasco conta-gotas', w: 317, h: 476 },
+    'Gomas e Pastilhas': { img: 'gomas', alt: 'pote de gomas', w: 480, h: 720 },
+    'Solúveis': { img: 'soluveis', alt: 'pote de pó solúvel', w: 480, h: 720 },
+  };
   const photoFor = p => {
-    const liq = p.tipo === 'Líquidos';
-    return `<span class="pcard__photo"><img src="assets/img/${liq ? 'liquidos' : 'capsulas'}-card.jpg" alt="${p.titulo}, ${liq ? 'frasco conta-gotas' : 'pote de cápsulas'}" loading="lazy" decoding="async" width="${liq ? 317 : 505}" height="720"></span>`;
+    const ph = PHOTO_BY_TIPO[p.tipo] || { img: 'capsulas', alt: 'pote de cápsulas', w: 480, h: 720 };
+    return `<span class="pcard__photo"><img src="assets/img/${ph.img}-card.jpg" alt="${p.titulo}, ${ph.alt}" loading="lazy" decoding="async" width="${ph.w}" height="${ph.h}"></span>`;
   };
   // [de, por] → preço vigente (promo ou normal)
   const priceAt = (p, v) => { const [de, por] = p.volumes[v]; return PROMO.on ? por : de; };

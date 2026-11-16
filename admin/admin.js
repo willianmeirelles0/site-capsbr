@@ -245,7 +245,7 @@ function renderProducts() {
     const errs = productErrors(i);
     const keys = Object.keys(p.volumes || {}).map(Number).sort((a, b) => a - b);
     const last = keys.length ? p.volumes[keys[keys.length - 1]] : null;
-    const img = p.tipo === 'Líquidos' ? 'liquidos' : 'capsulas';
+    const img = IMG_BY_TIPO[p.tipo] || 'capsulas';
     return `<tr data-i="${i}" class="${errs.length ? 'is-err' : ''}">
       <td><div class="ord"><span>${i + 1}</span>
         <button class="icon-btn" data-act="up" title="Subir" ${i === 0 || filtering ? 'disabled' : ''}>↑</button>
@@ -305,8 +305,10 @@ $('#pTable tbody').addEventListener('change', e => {
   refresh();
 });
 
+const ID_PREFIX = { 'Cápsulas': 'C', 'Líquidos': 'L', 'Gomas e Pastilhas': 'G', 'Solúveis': 'S' };
+const IMG_BY_TIPO = { 'Cápsulas': 'capsulas', 'Líquidos': 'liquidos', 'Gomas e Pastilhas': 'gomas', 'Solúveis': 'soluveis' };
 function nextId(tipo) {
-  const pre = tipo === 'Líquidos' ? 'L' : 'C';
+  const pre = ID_PREFIX[tipo] || 'C';
   const used = new Set(state.draft.products.map(p => p.id));
   let n = Math.max(0, ...state.draft.products.map(p => (p.id.match(new RegExp(`^${pre}-(\\d+)$`)) || [])[1] | 0)) + 1;
   while (used.has(`${pre}-${String(n).padStart(3, '0')}`)) n++;
@@ -462,7 +464,7 @@ form.addEventListener('input', e => {
 });
 form.addEventListener('change', e => {
   const f = form.elements;
-  if (e.target === f.tipo && ed.isNew && /^[CL]-\d+$/.test(f.id.value)) f.id.value = nextId(f.tipo.value);
+  if (e.target === f.tipo && ed.isNew && /^[CLGS]-\d+$/.test(f.id.value)) f.id.value = nextId(f.tipo.value);
   if (e.target === f.slug) f.slug.value = slugify(f.slug.value);
   validateForm(showErr || !ed.isNew);
 });

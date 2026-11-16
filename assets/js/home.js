@@ -18,7 +18,7 @@
   const arrow = '<svg viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H4M13 1v9" stroke="currentColor" stroke-width="1.8"/></svg>';
 
   /* ---------- WhatsApp links ---------- */
-  $$('.js-wa').forEach(a => a.href = waLink(PROMO.on ? 'Olá! Vim pelo site da CapsBR e quero conhecer as condições da ' + PROMO.name + '.' : 'Olá! Vim pelo site da CapsBR e quero criar minha marca de suplementos.'));
+  $$('.js-wa').forEach(a => a.href = waLink(PROMO.on ? 'Olá! Quero terceirizar a produção da minha marca de suplementos com a CapsBR e conhecer as condições da ' + PROMO.name + '.' : 'Olá! Quero terceirizar a produção da minha marca de suplementos com a CapsBR.'));
 
   /* ---------- Marquees ---------- */
   const names = P.map(p => p.titulo);
@@ -47,8 +47,10 @@
     { k: 'all', l: 'Todas', n: P.length },
     { k: 'Cápsulas', l: 'Cápsulas', n: P.filter(p => p.tipo === 'Cápsulas').length },
     { k: 'Líquidos', l: 'Líquidos', n: P.filter(p => p.tipo === 'Líquidos').length },
+    { k: 'Gomas e Pastilhas', l: 'Gomas & Pastilhas', n: P.filter(p => p.tipo === 'Gomas e Pastilhas').length },
+    { k: 'Solúveis', l: 'Solúveis', n: P.filter(p => p.tipo === 'Solúveis').length },
     { k: 'hot', l: 'Mais pedidos', n: P.filter(p => p.maisPedido).length },
-  ];
+  ].filter(f => f.n > 0 || f.k === 'all');
   const fbox = $('.js-filters');
   fbox.innerHTML = filters.map((f, i) => `<button class="chip${i ? '' : ' is-active'}" data-k="${f.k}">${f.l}<sup>${f.n}</sup></button>`).join('');
   fbox.addEventListener('click', e => {

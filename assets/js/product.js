@@ -27,19 +27,28 @@
   set('.js-porcao', p.porcao); set('.js-porcoes', p.porcoes);
   $('.js-bens').innerHTML = p.beneficios.map(b => `<li data-reveal><i><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></i>${b}</li>`).join('');
 
-  // foto recortada do produto (mesma foto do card, sem fundo)
-  const photo = $('.js-photo'); if (photo) photo.innerHTML = `<img src="assets/img/${isLiq ? 'liquidos' : 'capsulas'}-cut.webp" alt="${p.titulo}, ${isLiq ? 'frasco conta-gotas' : 'pote de cápsulas'} com a sua marca" width="${isLiq ? 397 : 632}" height="${isLiq ? 833 : 859}" fetchpriority="high" decoding="async">`;
+  // foto recortada do produto (mesma foto do card, sem fundo quando disponível)
+  // Gomas e Solúveis ainda não têm o recorte sem fundo (só o designer pode
+  // gerar isso); por enquanto reaproveita a foto do card pra esses dois.
+  const CUT_BY_TIPO = {
+    'Líquidos': { src: 'liquidos-recorte.png', w: 279, h: 820 },
+    'Gomas e Pastilhas': { src: 'gomas-card.jpg', w: 480, h: 720 },
+    'Solúveis': { src: 'soluveis-card.jpg', w: 480, h: 720 },
+  };
+  const cut = CUT_BY_TIPO[p.tipo] || { src: 'capsulas-recorte.png', w: 572, h: 820 };
+  const photo = $('.js-photo'); if (photo) photo.innerHTML = `<img src="assets/img/${cut.src}" alt="${p.titulo}, ${isLiq ? 'frasco conta-gotas' : 'pote'} com a sua marca" width="${cut.w}" height="${cut.h}" fetchpriority="high" decoding="async">`;
   if (isLiq && photo) photo.classList.add('is-liq');
 
   const msgBase = `Olá! Vim pelo site da CapsBR e tenho interesse na fórmula ${p.titulo} (${p.id}) com a minha marca.`;
-  $$('.js-wa').forEach(a => a.href = waLink('Olá! Vim pelo site da CapsBR e quero criar minha marca de suplementos.'));
+  $$('.js-wa').forEach(a => a.href = waLink('Olá! Quero terceirizar a produção da minha marca de suplementos com a CapsBR.'));
   $$('.js-wa-prod').forEach(a => a.href = waLink(msgBase));
 
   /* ---------- Tabela nutricional (sem linhas zeradas) ---------- */
   const rows = nutriRows(p);
   // frasco 3D do hero (scene3d.js)
   window.Caps.product = { kind: isLiq ? 'drop' : 'caps', line1: p.titulo.length > 22 ? p.categoria : p.titulo, line2: p.tamanho, code: p.id, rows, porcao: p.porcao, porcoes: p.porcoes };
-  set('.js-fac-kind', isLiq ? 'líquidos' : 'cápsulas');
+  const FAC_KIND = { 'Líquidos': 'líquidos', 'Gomas e Pastilhas': 'gomas e pastilhas', 'Solúveis': 'pós solúveis' };
+  set('.js-fac-kind', FAC_KIND[p.tipo] || 'cápsulas');
   set('.js-nt-title', p.titulo);
   set('.js-nt-porcoes', p.porcoes); set('.js-nt-porcao', p.porcao);
   $('.js-nt-rows').innerHTML = rows.map(r => {

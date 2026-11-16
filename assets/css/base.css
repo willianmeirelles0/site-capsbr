@@ -206,3 +206,25 @@ input,select,textarea{font-size:max(16px,1em)}
 .mnav__wa svg{width:14px;height:14px}
 body.menu-open{overflow:hidden}
 @media (min-width:981px){.mnav{display:none}}
+
+/* ---------- Aviso de cookies ---------- */
+.cookie-aviso{position:fixed;left:16px;right:16px;bottom:16px;z-index:160;max-width:640px;margin:0 auto;background:var(--ink);color:#fff;border-radius:var(--r-md);padding:20px 24px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.cookie-aviso p{font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.85);margin-bottom:14px}
+.cookie-aviso-link{background:none;border:none;padding:0;font:inherit;color:var(--orange-soft, var(--orange));text-decoration:underline;cursor:pointer}
+.cookie-aviso-acoes{display:flex;justify-content:flex-end}
+.cookie-aviso .btn{height:42px;padding:0 22px;font-size:13.5px}
+@media (max-width:480px){.cookie-aviso{left:10px;right:10px;bottom:10px;padding:18px}.cookie-aviso-acoes{justify-content:stretch}.cookie-aviso .btn{width:100%;justify-content:center}}
+
+/* ---------- Modal de política de privacidade ---------- */
+.policy-modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}
+.policy-modal[hidden]{display:none}
+.policy-modal-backdrop{position:absolute;inset:0;background:rgba(10,20,18,.6);backdrop-filter:blur(3px)}
+.policy-modal-dialog{position:relative;z-index:1;background:#fff;border-radius:var(--r-lg);max-width:720px;width:100%;max-height:82vh;overflow-y:auto;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+.policy-modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;border:none;background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer}
+.policy-modal-close:hover{background:var(--border)}
+.policy-modal-content{padding:52px 44px 40px}
+.policy-modal-content h2{margin:6px 0 4px;font-family:var(--f-display)}
+.policy-modal-content h3{font-size:17px;margin:26px 0 10px;font-family:var(--f-display)}
+.policy-modal-content p{font-size:14.5px;color:var(--muted,#555);margin-bottom:12px;line-height:1.65}
+.policy-modal-content a{color:var(--orange);text-decoration:underline}
+@media (max-width:640px){.policy-modal-content{padding:40px 24px 32px}}

@@ -1,6 +1,740 @@
 // Dados extraídos de blackfriday.capsbr.com.br (Nov/2026)
 window.PRODUCTS = [
  {
+  "id": "C-001",
+  "slug": "hair-skin-nails",
+  "titulo": "Hair, Skin & Nails",
+  "nome": "Hair, Skin & Nails",
+  "tipo": "Cápsulas",
+  "categoria": "Beleza",
+  "tamanho": "60 cápsulas",
+  "maisPedido": false,
+  "descricao": "Fórmula em cápsulas pensada para apoiar a saúde de cabelos, pele e unhas, com ação antioxidante e suporte ao sistema imunológico.",
+  "beneficios": [
+   "Saúde de cabelos, pele e unhas",
+   "Ação antioxidante",
+   "Suporte ao sistema imunológico"
+  ],
+  "volumes": {
+   "100": [
+    20.9,
+    20.9
+   ],
+   "300": [
+    14.5,
+    14.5
+   ],
+   "500": [
+    13,
+    13
+   ],
+   "1000": [
+    12,
+    12
+   ]
+  },
+  "de": "R$ 12,00",
+  "por": "R$ 12,00",
+  "desconto": 0,
+  "porcao": "",
+  "porcoes": "",
+  "tabela": [],
+  "naoContem": ""
+ },
+ {
+  "id": "C-006",
+  "slug": "coenzima-q10-200mg",
+  "titulo": "Coenzima Q10 (200mg)",
+  "nome": "Coenzima Q10 (200mg)",
+  "tipo": "Cápsulas",
+  "categoria": "Energia",
+  "tamanho": "30 cápsulas",
+  "maisPedido": false,
+  "descricao": "Coenzima Q10 em alta concentração (200mg), com ação antioxidante e suporte à produção de energia celular.",
+  "beneficios": [
+   "Ação antioxidante",
+   "Suporte à produção de energia celular",
+   "Contribui para a saúde cardiovascular"
+  ],
+  "volumes": {
+   "500": [
+    25,
+    25
+   ],
+   "1000": [
+    18.5,
+    18.5
+   ],
+   "3000": [
+    16.5,
+    16.5
+   ]
+  },
+  "de": "R$ 16,50",
+  "por": "R$ 16,50",
+  "desconto": 0,
+  "porcao": "",
+  "porcoes": "",
+  "tabela": [],
+  "naoContem": ""
+ },
+ {
+  "id": "C-008",
+  "slug": "colageno-tipo-2",
+  "titulo": "Colágeno Tipo 2",
+  "nome": "Colágeno Tipo 2",
+  "tipo": "Cápsulas",
+  "categoria": "Articulações",
+  "tamanho": "30 cápsulas",
+  "maisPedido": false,
+  "descricao": "Colágeno Tipo 2 em cápsulas, com suporte à saúde das articulações e à manutenção da cartilagem.",
+  "beneficios": [
+   "Saúde das articulações",
+   "Elasticidade dos tecidos",
+   "Auxilia na manutenção da cartilagem"
+  ],
+  "volumes": {
+   "500": [
+    17.5,
+    17.5
+   ],
+   "1000": [
+    12.4,
+    12.4
+   ],
+   "3000": [
+    9.5,
+    9.5
+   ]
+  },
+  "de": "R$ 9,50",
+  "por": "R$ 9,50",
+  "desconto": 0,
+  "porcao": "",
+  "porcoes": "",
+  "tabela": [],
+  "naoContem": ""
+ },
+ {
+  "id": "C-010",
+  "slug": "colageno-tipo-ii-condroitina-glucosamina-vitamina-k2-magnesi",
+  "titulo": "Colágeno Tipo II, Condroitina, Glucosamina, Vitamina K2 & Magnésio",
+  "nome": "Colágeno Tipo II, Condroitina, Glucosamina, Vitamina K2 & Magnésio",
+  "tipo": "Cápsulas",
+  "categoria": "Articulações",
+  "tamanho": "60 comprimidos",
+  "maisPedido": false,
+  "descricao": "Blend de Colágeno Tipo II, Condroitina, Glucosamina, Vitamina K2 e Magnésio, com suporte à saúde das articulações e à manutenção da cartilagem.",
+  "beneficios": [
+   "Suporte à saúde das articulações",
+   "Contribui para a manutenção da cartilagem",
+   "Auxilia na saúde óssea"
+  ],
+  "volumes": {
+   "100": [
+    25.5,
+    25.5
+   ],
+   "300": [
+    20.9,
+    20.9
+   ],
+   "500": [
+    19.5,
+    19.5
+   ],
+   "1000": [
+    18,
+    18
+   ]
+  },
+  "de": "R$ 18,00",
+  "por": "R$ 18,00",
+  "desconto": 0,
+  "porcao": "",
+  "porcoes": "",
+  "tabela": [],
+  "naoContem": ""
+ },
+ {
+  "id": "C-014",
+  "slug": "magnesio-dimalato",
+  "titulo": "Magnésio Dimalato",
+  "nome": "Magnésio Dimalato",
+  "tipo": "Cápsulas",
+  "categoria": "Minerais",
+  "tamanho": "60 cápsulas",
+  "maisPedido": false,
+  "descricao": "Magnésio Dimalato em cápsulas, com suporte ao funcionamento muscular e ao metabolismo energético.",
+  "beneficios": [
+   "Equilíbrio de minerais essenciais",
+   "Suporte ao funcionamento muscular",
+   "Contribui para o metabolismo energético"
+  ],
+  "volumes": {
+   "500": [
+    17.9,
+    17.9
+   ],
+   "1000": [
+    13.7,
+    13.7
+   ],
+   "3000": [
+    11,
+    11
+   ]
+  },
+  "de": "R$ 11,00",
+  "por": "R$ 11,00",
+  "desconto": 0,
+  "porcao": "",
+  "porcoes": "",
+  "tabela": [],
+  "naoContem": ""
+ },
+ {
+  "id": "C-015",
+  "slug": "magnesio-quelato",
+  "titulo": "Magnésio Quelato",
+  "nome": "Magnésio Quelato",
+  "tipo": "Cápsulas",
+  "categoria": "Minerais",
+  "tamanho": "30 cápsulas",
+  "maisPedido": false,
+  "descricao": "Magnésio Quelato em cápsulas, com suporte ao funcionamento celular e à produção de energia.",
+  "beneficios": [
+   "Suporte ao funcionamento celular",
+   "Contribui para produção de energia",
+   "Auxilia na saúde óssea e dental"
+  ],
+  "volumes": {
+   "500": [
+    17,
+    17
+   ],
+   "1000": [
+    11.5,
+    11.5
+   ],
+   "3000": [
+    8.5,
+    8.5
+   ]
+  },
+  "de": "R$ 8,50",
+  "por": "R$ 8,50",
+  "desconto": 0,
+  "porcao": "",
+  "porcoes": "",
+  "tabela": [],
+  "naoContem": ""
+ },
+ {
+  "id": "L-004",
+  "slug": "oleo-de-semente-de-uva",
+  "titulo": "Óleo de Semente de Uva",
+  "nome": "Óleo de Semente de Uva",
+  "tipo": "Líquidos",
+  "categoria": "Óleos",
+  "tamanho": "30 ml · gotas",
+  "maisPedido": false,
+  "descricao": "Óleo de Semente de Uva em gotas, rico em antioxidantes (polifenóis), com contribuição para a saúde cardiovascular.",
+  "beneficios": [
+   "Rico em antioxidantes (polifenóis)",
+   "Contribui para a saúde cardiovascular",
+   "Ação antioxidante"
+  ],
+  "volumes": {
+   "100": [
+    14.9,
+    14.9
+   ],
+   "300": [
+    12.9,
+    12.9
+   ],
+   "500": [
+    11.9,
+    11.9
+   ],
+   "1000": [
+    9.9,
+    9.9
+   ]
+  },
+  "de": "R$ 9,90",
+  "por": "R$ 9,90",
+  "desconto": 0,
+  "porcao": "",
+  "porcoes": "",
+  "tabela": [],
+  "naoContem": ""
+ },
+ {
+  "id": "L-006",
+  "slug": "oleo-de-semente-de-abobora-com-vitamina-e",
+  "titulo": "Óleo de Semente de Abóbora com Vitamina E",
+  "nome": "Óleo de Semente de Abóbora com Vitamina E",
+  "tipo": "Líquidos",
+  "categoria": "Óleos",
+  "tamanho": "30 ml · gotas",
+  "maisPedido": false,
+  "descricao": "Óleo de Semente de Abóbora com Vitamina E em gotas, rico em Vitamina E, com suporte à saúde do trato urinário e ao bem-estar masculino.",
+  "beneficios": [
+   "Rico em Vitamina E, ação antioxidante",
+   "Suporte à saúde do trato urinário",
+   "Suporte ao bem-estar masculino"
+  ],
+  "volumes": {
+   "300": [
+    12.9,
+    12.9
+   ],
+   "500": [
+    11.5,
+    11.5
+   ],
+   "1000": [
+    9.5,
+    9.5
+   ]
+  },
+  "de": "R$ 9,50",
+  "por": "R$ 9,50",
+  "desconto": 0,
+  "porcao": "",
+  "porcoes": "",
+  "tabela": [],
+  "naoContem": ""
+ },
+ {
+  "id": "G-002",
+  "slug": "creatina-em-gomas-sabor-laranja",
+  "titulo": "Creatina em Gomas, sabor Laranja",
+  "nome": "Creatina em Gomas, sabor Laranja",
+  "tipo": "Gomas e Pastilhas",
+  "categoria": "Performance",
+  "tamanho": "90 gomas",
+  "maisPedido": false,
+  "descricao": "Creatina em gomas, sabor laranja, com suporte ao desempenho em alta intensidade e ao ganho de massa muscular.",
+  "beneficios": [
+   "Desempenho em alta intensidade",
+   "Suporte ao ganho de massa muscular",
+   "Auxilia na recuperação muscular"
+  ],
+  "volumes": {
+   "100": [
+    64.9,
+    64.9
+   ],
+   "300": [
+    61.9,
+    61.9
+   ],
+   "500": [
+    58.9,
+    58.9
+   ],
+   "1000": [
+    54.9,
+    54.9
+   ]
+  },
+  "de": "R$ 54,90",
+  "por": "R$ 54,90",
+  "desconto": 0,
+  "porcao": "",
+  "porcoes": "",
+  "tabela": [],
+  "naoContem": ""
+ },
+ {
+  "id": "G-003",
+  "slug": "creatina-em-gomas-sabor-maca-verde",
+  "titulo": "Creatina em Gomas, sabor Maçã Verde",
+  "nome": "Creatina em Gomas, sabor Maçã Verde",
+  "tipo": "Gomas e Pastilhas",
+  "categoria": "Performance",
+  "tamanho": "90 gomas",
+  "maisPedido": false,
+  "descricao": "Creatina em gomas, sabor maçã verde, com suporte ao desempenho em alta intensidade e ao ganho de massa muscular.",
+  "beneficios": [
+   "Desempenho em alta intensidade",
+   "Suporte ao ganho de massa muscular",
+   "Auxilia na recuperação muscular"
+  ],
+  "volumes": {
+   "100": [
+    64.9,
+    64.9
+   ],
+   "300": [
+    61.9,
+    61.9
+   ],
+   "500": [
+    58.9,
+    58.9
+   ],
+   "1000": [
+    54.9,
+    54.9
+   ]
+  },
+  "de": "R$ 54,90",
+  "por": "R$ 54,90",
+  "desconto": 0,
+  "porcao": "",
+  "porcoes": "",
+  "tabela": [],
+  "naoContem": ""
+ },
+ {
+  "id": "G-004",
+  "slug": "creatina-em-gomas-sabor-morango",
+  "titulo": "Creatina em Gomas, sabor Morango",
+  "nome": "Creatina em Gomas, sabor Morango",
+  "tipo": "Gomas e Pastilhas",
+  "categoria": "Performance",
+  "tamanho": "90 gomas",
+  "maisPedido": false,
+  "descricao": "Creatina em gomas, sabor morango, com suporte ao desempenho em alta intensidade e ao ganho de massa muscular.",
+  "beneficios": [
+   "Desempenho em alta intensidade",
+   "Suporte ao ganho de massa muscular",
+   "Auxilia na recuperação muscular"
+  ],
+  "volumes": {
+   "100": [
+    64.9,
+    64.9
+   ],
+   "300": [
+    61.9,
+    61.9
+   ],
+   "500": [
+    58.9,
+    58.9
+   ],
+   "1000": [
+    54.9,
+    54.9
+   ]
+  },
+  "de": "R$ 54,90",
+  "por": "R$ 54,90",
+  "desconto": 0,
+  "porcao": "",
+  "porcoes": "",
+  "tabela": [],
+  "naoContem": ""
+ },
+ {
+  "id": "G-005",
+  "slug": "hair-skin-em-pastilha-de-goma",
+  "titulo": "Hair & Skin em Pastilha de Goma",
+  "nome": "Hair & Skin em Pastilha de Goma",
+  "tipo": "Gomas e Pastilhas",
+  "categoria": "Beleza",
+  "tamanho": "30 gomas",
+  "maisPedido": false,
+  "descricao": "Hair & Skin em pastilha de goma, com suporte à saúde de cabelos e pele e ação antioxidante.",
+  "beneficios": [
+   "Saúde de cabelos e pele",
+   "Ação antioxidante",
+   "Suporte ao sistema imunológico"
+  ],
+  "volumes": {
+   "100": [
+    29.9,
+    29.9
+   ],
+   "300": [
+    26.9,
+    26.9
+   ],
+   "500": [
+    25.9,
+    25.9
+   ],
+   "1000": [
+    24.5,
+    24.5
+   ]
+  },
+  "de": "R$ 24,50",
+  "por": "R$ 24,50",
+  "desconto": 0,
+  "porcao": "",
+  "porcoes": "",
+  "tabela": [],
+  "naoContem": ""
+ },
+ {
+  "id": "G-007",
+  "slug": "melatonina-vegana-em-pastilha-de-goma",
+  "titulo": "Melatonina Vegana em Pastilha de Goma",
+  "nome": "Melatonina Vegana em Pastilha de Goma",
+  "tipo": "Gomas e Pastilhas",
+  "categoria": "Sono",
+  "tamanho": "30 gomas",
+  "maisPedido": false,
+  "descricao": "Melatonina vegana em pastilha de goma, com suporte à qualidade do sono e ao ajuste do relógio biológico.",
+  "beneficios": [
+   "Qualidade do sono",
+   "Ajuste do relógio biológico",
+   "Produto vegano"
+  ],
+  "volumes": {
+   "100": [
+    20.7,
+    20.7
+   ],
+   "300": [
+    18.7,
+    18.7
+   ],
+   "500": [
+    17.6,
+    17.6
+   ],
+   "1000": [
+    16.3,
+    16.3
+   ]
+  },
+  "de": "R$ 16,30",
+  "por": "R$ 16,30",
+  "desconto": 0,
+  "porcao": "",
+  "porcoes": "",
+  "tabela": [],
+  "naoContem": ""
+ },
+ {
+  "id": "G-008",
+  "slug": "melatonina-em-pastilha-de-goma",
+  "titulo": "Melatonina em Pastilha de Goma",
+  "nome": "Melatonina em Pastilha de Goma",
+  "tipo": "Gomas e Pastilhas",
+  "categoria": "Sono",
+  "tamanho": "30 gomas",
+  "maisPedido": false,
+  "descricao": "Melatonina em pastilha de goma, com suporte à qualidade do sono e à regulação do ciclo circadiano.",
+  "beneficios": [
+   "Qualidade do sono",
+   "Regulação do ciclo circadiano",
+   "Zero açúcar, adoçado com stevia"
+  ],
+  "volumes": {
+   "100": [
+    29.9,
+    29.9
+   ],
+   "300": [
+    26.9,
+    26.9
+   ],
+   "500": [
+    25.9,
+    25.9
+   ],
+   "1000": [
+    23.5,
+    23.5
+   ]
+  },
+  "de": "R$ 23,50",
+  "por": "R$ 23,50",
+  "desconto": 0,
+  "porcao": "",
+  "porcoes": "",
+  "tabela": [],
+  "naoContem": ""
+ },
+ {
+  "id": "G-009",
+  "slug": "pastilha-de-creatina-sabor-framboesa",
+  "titulo": "Pastilha de Creatina, sabor Framboesa",
+  "nome": "Pastilha de Creatina, sabor Framboesa",
+  "tipo": "Gomas e Pastilhas",
+  "categoria": "Performance",
+  "tamanho": "90 pastilhas",
+  "maisPedido": false,
+  "descricao": "Pastilha de creatina, sabor framboesa, com suporte ao ganho de força e massa muscular.",
+  "beneficios": [
+   "Ganho de força e massa muscular",
+   "Reposição energética muscular",
+   "Desempenho em alta intensidade"
+  ],
+  "volumes": {
+   "100": [
+    55.9,
+    55.9
+   ],
+   "300": [
+    48.5,
+    48.5
+   ],
+   "500": [
+    46.9,
+    46.9
+   ],
+   "1000": [
+    42.9,
+    42.9
+   ]
+  },
+  "de": "R$ 42,90",
+  "por": "R$ 42,90",
+  "desconto": 0,
+  "porcao": "",
+  "porcoes": "",
+  "tabela": [],
+  "naoContem": ""
+ },
+ {
+  "id": "S-002",
+  "slug": "creatina-soluvel",
+  "titulo": "Creatina Solúvel",
+  "nome": "Creatina Solúvel",
+  "tipo": "Solúveis",
+  "categoria": "Performance",
+  "tamanho": "pó · 300 g",
+  "maisPedido": false,
+  "descricao": "Creatina solúvel em pó, sem sabor e alta pureza, com suporte ao ganho de força e massa muscular.",
+  "beneficios": [
+   "Ganho de força e massa muscular",
+   "Reposição energética muscular",
+   "Sem sabor, alta pureza"
+  ],
+  "volumes": {
+   "100": [
+    50.9,
+    50.9
+   ],
+   "300": [
+    45.9,
+    45.9
+   ],
+   "500": [
+    43.9,
+    43.9
+   ],
+   "1000": [
+    40.9,
+    40.9
+   ]
+  },
+  "de": "R$ 40,90",
+  "por": "R$ 40,90",
+  "desconto": 0,
+  "porcao": "",
+  "porcoes": "",
+  "tabela": [],
+  "naoContem": ""
+ },
+ {
+  "id": "S-003",
+  "slug": "pre-treino-sem-cafeina",
+  "titulo": "Pré-treino Sem Cafeína",
+  "nome": "Pré-treino Sem Cafeína",
+  "tipo": "Solúveis",
+  "categoria": "Performance",
+  "tamanho": "pó · 280 g",
+  "maisPedido": false,
+  "descricao": "Pré-treino solúvel sem cafeína, com suporte ao desempenho em treinos de alta intensidade, indicado para quem tem sensibilidade à cafeína ou treina à noite.",
+  "beneficios": [
+   "Suporte ao desempenho em treinos de alta intensidade",
+   "Contribui para a resistência física",
+   "Sem cafeína"
+  ],
+  "volumes": {
+   "300": [
+    42.9,
+    42.9
+   ],
+   "500": [
+    41.9,
+    41.9
+   ],
+   "1000": [
+    40.9,
+    40.9
+   ],
+   "2000": [
+    39.9,
+    39.9
+   ],
+   "5000": [
+    38.9,
+    38.9
+   ],
+   "10000": [
+    37.9,
+    37.9
+   ]
+  },
+  "de": "R$ 37,90",
+  "por": "R$ 37,90",
+  "desconto": 0,
+  "porcao": "",
+  "porcoes": "",
+  "tabela": [],
+  "naoContem": ""
+ },
+ {
+  "id": "S-004",
+  "slug": "pre-treino-com-cafeina",
+  "titulo": "Pré-treino Com Cafeína",
+  "nome": "Pré-treino Com Cafeína",
+  "tipo": "Solúveis",
+  "categoria": "Performance",
+  "tamanho": "pó · 300 g",
+  "maisPedido": false,
+  "descricao": "Pré-treino solúvel com cafeína, com suporte ao desempenho em treinos de alta intensidade e redução do cansaço e fadiga.",
+  "beneficios": [
+   "Suporte ao desempenho em treinos de alta intensidade",
+   "Redução do cansaço e fadiga",
+   "Contribui para a resistência física"
+  ],
+  "volumes": {
+   "300": [
+    42.9,
+    42.9
+   ],
+   "500": [
+    41.9,
+    41.9
+   ],
+   "1000": [
+    40.9,
+    40.9
+   ],
+   "2000": [
+    39.9,
+    39.9
+   ],
+   "5000": [
+    38.9,
+    38.9
+   ],
+   "10000": [
+    37.9,
+    37.9
+   ]
+  },
+  "de": "R$ 37,90",
+  "por": "R$ 37,90",
+  "desconto": 0,
+  "porcao": "",
+  "porcoes": "",
+  "tabela": [],
+  "naoContem": ""
+ },
+ {
   "desconto": 16,
   "maisPedido": true,
   "tipo": "Líquidos",

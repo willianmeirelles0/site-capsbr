@@ -12,7 +12,11 @@
    ========================================================= */
 (() => {
   const SITE = window.SITE || {};
-  const ALL = (window.PRODUCTS || []).filter(p => p && p.volumes && Object.keys(p.volumes).length);
+  // Esta página (catálogo em PDF/link, com orçamento) ainda só tem textos e
+  // custo de rótulo prontos para Cápsulas e Líquidos. Gomas e Solúveis
+  // aparecem no catálogo do site (index.html/produto.html), mas ficam de
+  // fora daqui até alguém preparar os textos/custos dessas duas linhas.
+  const ALL = (window.PRODUCTS || []).filter(p => p && p.volumes && Object.keys(p.volumes).length && (p.tipo === 'Cápsulas' || p.tipo === 'Líquidos'));
   const WA = String(SITE.whatsapp || '5554997090147').replace(/\D/g, '') || '5554997090147';
   const COSTS = Object.assign({ rotuloCaps: 650, rotuloLiq: 600, rotuloLote: 500, anvisa: 300 }, SITE.costs || {});
   const sp = SITE.promo || {};
