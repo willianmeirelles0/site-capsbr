@@ -186,7 +186,15 @@ function drawLabel(cv, o) {
 
   /* ---- FRENTE (igual ao rótulo real: marca, filete, descrição, conteúdo) ---- */
   const isDrop = o.kind === 'drop';
+  const ACCENT = '#9cc7b9';
   const fx = W * .392, fw = W * .21;
+  // cabeçalho: quantidade no topo, alinhada à direita da coluna da marca (como
+  // no rótulo impresso real) — dentro do arco que a câmera enxerga de frente
+  if (!isDrop) {
+    const qty = String(o.line2 || '60 cápsulas').toUpperCase();
+    const qf = Math.min(H * .036, fitFont(ctx, qty, 600, FONT_M, H * .036, fw, .08));
+    text(ctx, qty, fx + fw, H * .075, qf, 600, FONT_M, ink, .08, 'right', .9);
+  }
   const b = (String(o.brand || '').trim() || 'Sua Marca').slice(0, 20);
   const br = brandLines(ctx, b, fw, H * (isDrop ? .2 : .13));
   const lh = br.fs * 1.08;
@@ -200,15 +208,21 @@ function drawLabel(cv, o) {
   const subs = isDrop ? ['SUPLEMENTO ALIMENTAR'] : ['SUPLEMENTO ALIMENTAR', generic ? (GENERIC_SUB[o.kind] || 'EM CÁPSULAS') : String(o.line1).toUpperCase()];
   const fsS = Math.min(H * (isDrop ? .05 : .056), fitFont(ctx, 'SUPLEMENTO ALIMENTAR', 400, FONT_B, H * .06, fw * .96, .02));
   let yy = barY + H * (isDrop ? .14 : .12);
-  subs.forEach((ln, i) => { const f = Math.min(fsS, fitFont(ctx, ln, 400, FONT_B, fsS, fw * .98, .02)); text(ctx, ln, fx, yy + i * fsS * 1.38, f, 400, FONT_B, ink, .02, 'left', .95); });
+  subs.forEach((ln, i) => { const f = Math.min(fsS, fitFont(ctx, ln, 400, FONT_B, fsS, fw * .98, .02)); text(ctx, ln, fx, yy + i * fsS * 1.38, f, 400, FONT_B, i === 1 && !isDrop ? ACCENT : ink, .02, 'left', .95); });
   if (isDrop) {
     const l1 = generic ? 'SABOR MORANGO' : String(o.line1).toUpperCase(), l2 = String(o.line2 || '30ml').replace(/\s*mL$/i, 'ml');
     yy += fsS * 1.9;
     text(ctx, l1, fx, yy, Math.min(fsS, fitFont(ctx, l1, 400, FONT_B, fsS, fw * .98, .02)), 400, FONT_B, ink, .02, 'left', .95);
     text(ctx, l2, fx, yy + fsS * 1.3, fsS, 400, FONT_B, ink, .02, 'left', .95);
   } else {
-    const foot = String(o.line2 || '60 cápsulas').toUpperCase();
-    text(ctx, foot, fx, H * .84, Math.min(H * .044, fitFont(ctx, foot, 400, FONT_B, H * .044, fw, .02)), 400, FONT_B, ink, .02, 'left', .95);
+    // rodapé: selos padrão (iguais em todo produto, como no rótulo impresso real)
+    const badges = ['FÓRMULA EXCLUSIVA', 'TESTE DE ESTABILIDADE', 'FEITO NO BRASIL'];
+    const by = H * .91, bw = W * .48, bx0 = W * .2, seg = bw / 3;
+    const bf = Math.min(H * .026, ...badges.map(bd => fitFont(ctx, bd, 600, FONT_M, H * .026, seg * .82, .03)));
+    badges.forEach((bd, i) => {
+      text(ctx, bd, bx0 + seg * (i + .5), by, bf, 600, FONT_M, ink, .03, 'center', .85);
+      if (i < 2) { ctx.fillStyle = ink; ctx.globalAlpha = .4; ctx.fillRect(bx0 + seg * (i + 1), by - bf * .95, Math.max(1, H * .0025), bf * 1.15); ctx.globalAlpha = 1; }
+    });
   }
 
   /* ---- LATERAL ESQUERDA: modo de uso ---- */
