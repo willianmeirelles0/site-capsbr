@@ -381,11 +381,16 @@ function makeBottle(opts, renderer) {
   // solúvel e o frasco de gotas são plástico opaco
   const glass = kind === 'caps' || kind === 'goma';
   const jar = kind === 'caps' || kind === 'goma' || kind === 'sol';
+  // teste de realismo: vidro com refração de verdade (transmission), só na
+  // cápsula por enquanto — se aprovar, aplicamos em goma também
+  const realGlass = kind === 'caps';
   const root = new THREE.Group(), spin = new THREE.Group(); root.add(spin);
-  const white = glass
-    ? new THREE.MeshPhysicalMaterial({ color: '#ffffff', roughness: .03, metalness: 0, clearcoat: 1, clearcoatRoughness: .02, specularIntensity: 1, envMapIntensity: 2.2, side: THREE.DoubleSide, transparent: true, opacity: .2, depthWrite: false })
-    : new THREE.MeshPhysicalMaterial({ color: '#f7f7f5', roughness: .26, clearcoat: 1, clearcoatRoughness: .12, side: THREE.DoubleSide, transparent: true });
-  if (glass) { white.userData.base = .2; white.userData.glass = true; }
+  const white = realGlass
+    ? new THREE.MeshPhysicalMaterial({ color: '#ffffff', roughness: .04, metalness: 0, clearcoat: 1, clearcoatRoughness: .03, transmission: 1, thickness: .55, ior: 1.5, specularIntensity: 1, envMapIntensity: 1.3, side: THREE.FrontSide, transparent: true })
+    : glass
+      ? new THREE.MeshPhysicalMaterial({ color: '#ffffff', roughness: .03, metalness: 0, clearcoat: 1, clearcoatRoughness: .02, specularIntensity: 1, envMapIntensity: 2.2, side: THREE.DoubleSide, transparent: true, opacity: .2, depthWrite: false })
+      : new THREE.MeshPhysicalMaterial({ color: '#f7f7f5', roughness: .26, clearcoat: 1, clearcoatRoughness: .12, side: THREE.DoubleSide, transparent: true });
+  if (glass) { white.userData.base = realGlass ? 1 : .2; white.userData.glass = true; }
   const capM = new THREE.MeshPhysicalMaterial({ color: '#fbfbfa', roughness: .4, clearcoat: .5, clearcoatRoughness: .3, transparent: true });
   const body = new THREE.Mesh(g.body, white); spin.add(body);
   if (glass) body.renderOrder = 2;
