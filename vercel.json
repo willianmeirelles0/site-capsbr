@@ -5,6 +5,13 @@
   "installCommand": null,
   "cleanUrls": false,
   "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "catalogo.capsbr.com.br" }],
+      "destination": "/catalogo.html"
+    }
+  ],
   "functions": {
     "api/**/*.js": {
       "includeFiles": "{assets/js/data.js,admin/validate.js}",
