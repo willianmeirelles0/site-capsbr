@@ -1003,11 +1003,14 @@ function builder() {
   const lay = { caps: { x: 0, s: FOCUS_S.caps, a: 1 }, drop: { ...OFF }, goma: { ...OFF }, sol: { ...OFF } };
   let ready = false;
   fontsLoaded.then(() => {
-    pot.paint(); drop.paint(); goma.paint(); sol.paint(); ready = true;
-    // só "caps" começa visível; os outros 3 só desenham de verdade (e só aí
-    // compilam os shaders) na primeira vez que o visitante troca de aba —
-    // travando bem ali. Pré-compila os 3 num frame ocioso.
+    // só "caps" (pot) aparece de cara; pintar o rótulo dos outros 3 também
+    // é trabalho pesado de canvas (texto em alta resolução) — pintar os 4 de
+    // uma vez trava bem na hora que essa seção entra na tela num scroll
+    // rápido. Só o pote visível pinta na hora; o resto fica pra um momento
+    // ocioso, junto com a pré-compilação dos shaders.
+    pot.paint(); ready = true;
     const warm = () => {
+      drop.paint(); goma.paint(); sol.paint();
       [drop, goma, sol].forEach(b => { b.root.visible = true; });
       S.renderer.compile(S.scene, S.camera);
       [drop, goma, sol].forEach(b => { b.root.visible = false; });
