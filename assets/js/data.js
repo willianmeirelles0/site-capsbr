@@ -1662,12 +1662,12 @@ window.PRODUCTS = [
    [
     "Ácido clorogênico (mg)",
     "60",
-    "—"
+    ""
    ],
    [
     "Antocianinas (mg)",
     "2",
-    "—"
+    ""
    ]
   ],
   "naoContem": "Não contém quantidades significativas de Valor energético, Carboidratos, Açúcares totais, Açúcares adicionados, Proteínas, Gorduras totais, Gorduras saturadas, Gorduras trans, Fibras alimentares e Sódio.",

@@ -89,9 +89,9 @@
       <div class="dk-grid"></div><div class="dk-glow"></div>
       <div class="cover__top"><span class="dk-logo" role="img" aria-label="CapsBR"></span><div class="cover__ed">Catálogo ${today.getFullYear()}<br>Edição ${esc(edition)}</div></div>
       <div class="cover__body">
-        <div class="cover__tags"><span class="tag"><span class="dot"></span>Fábrica de marca própria</span>${PROMO.on && state.precos ? `<span class="tag cover__promo">${esc(PROMO.name)} · até ${PROMO.max}% off até ${PROMO.endDMY.slice(0, 5)}</span>` : ''}</div>
+        <div class="cover__tags"><span class="tag"><span class="dot"></span>Marca própria de suplementos</span>${PROMO.on && state.precos ? `<span class="tag cover__promo">${esc(PROMO.name)} · até ${PROMO.max}% off até ${PROMO.endDMY.slice(0, 5)}</span>` : ''}</div>
         <h1 class="display">${title}</h1>
-        <p class="lead">Fórmulas prontas, validadas e com teste de estabilidade. Você escolhe, a gente fabrica com o rótulo da sua marca e entrega pronto pra vender.</p>
+        <p class="lead">Fórmulas prontas, validadas e com teste de estabilidade. Você escolhe, a gente cuida da produção com o rótulo da sua marca e entrega pronto pra vender.</p>
         ${state.para ? `<div class="cover__for"><span>Preparado para</span><b>${esc(state.para)}</b></div>` : ''}
       </div>
       <div class="cover__art${showCaps && showLiq ? '' : ' is-solo'}" aria-hidden="true">
@@ -115,7 +115,7 @@
         <div class="eyebrow"><span class="num">01</span><span class="line"></span><span class="mono">Sobre a CapsBR</span></div>
         <h2 class="display h2">Sua linha de suplementos, <span class="accent">sem montar uma fábrica.</span></h2>
       </div>
-      <p class="lead">A CapsBR Nutracêuticos fabrica cápsulas e líquidos com a marca de quem quer empreender no mercado de suplementos. Do pó da fórmula ao lote aprovado, cada etapa acontece na nossa linha, com controle de qualidade em todo frasco.</p>
+      <p class="lead">A CapsBR Nutracêuticos coloca no mercado cápsulas e líquidos com a marca de quem quer empreender no mundo dos suplementos. Do pó da fórmula ao lote aprovado, cuidamos de cada etapa da produção, com controle de qualidade em todo frasco.</p>
     </div>
     <div class="sec-label"><span class="mono">Incluso em todo pedido</span></div>
     <div class="inc">
@@ -170,7 +170,7 @@
         <div class="dv__txt">
           <span class="dv__num">${pad(n)}</span>
           <h2 class="display">${g.label}</h2>
-          <p class="lead">${liq ? 'Frasco com conta-gotas de 30 mL, cheio e lacrado na nossa linha. Absorção rápida e dose fácil de ajustar.' : 'Pote de vidro com 30 ou 60 cápsulas, dosadas, encapsuladas e envasadas com controle em cada etapa.'}</p>
+          <p class="lead">${liq ? 'Frasco com conta-gotas de 30 mL, cheio e lacrado com controle em cada etapa. Absorção rápida e dose fácil de ajustar.' : 'Pote de vidro com 30 ou 60 cápsulas, dosadas, encapsuladas e envasadas com controle em cada etapa.'}</p>
           <div class="dv__tags"><span class="tag"><span class="dot"></span>${liq ? 'Conta-gotas 30 mL' : 'Pote de vidro'}</span><span class="tag">${pad(g.items.length)} fórmulas</span></div>
         </div>
         <div class="dv__art${liq ? ' is-liq' : ''}" aria-hidden="true"><div class="dv__disc"></div><img src="${liq ? IMG.liq : IMG.caps}" alt=""></div>
@@ -202,7 +202,7 @@
       </div>` : `
       <div class="pr">
         <div class="pr__h"><span class="mono">Volumes disponíveis</span></div>
-        <div class="pr__ask">Valores sob consulta, direto com a fábrica.</div>
+        <div class="pr__ask">Valores sob consulta, direto com a CapsBR.</div>
         <p>Quanto maior o volume, menor o valor por unidade.</p>
         <div class="pr__vols">${vs.map(v => `<span>${nf(v)} un.</span>`).join('')}</div>
         <p class="pr__inc">Já inclui <b>rótulo personalizado, teste de estabilidade e tabela nutricional</b>.</p>
@@ -309,7 +309,7 @@
         <p class="lead">Escolha as fórmulas, mande os códigos no WhatsApp e receba a cotação com rótulo, ANVISA e prazo, tudo numa conversa.</p>
         <a class="back__btn" href="${link}" target="_blank" rel="noopener">
           <span class="back__ic">${WAIC}</span>
-          <span class="back__t"><small>Fale com a fábrica no WhatsApp</small><b>${phone}</b></span>
+          <span class="back__t"><small>Fale com a CapsBR no WhatsApp</small><b>${phone}</b></span>
           <span class="back__ar">${ARROW}</span>
         </a>
         <div class="back__lines">

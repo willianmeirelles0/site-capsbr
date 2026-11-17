@@ -29,11 +29,11 @@
 
   // foto recortada do produto, sem fundo (PNG com transparência)
   const CUT_BY_TIPO = {
-    'Líquidos': { src: 'liquidos-recorte.png', w: 279, h: 820 },
+    'Líquidos': { src: 'liquidos-recorte.png', w: 520, h: 820 },
     'Gomas e Pastilhas': { src: 'gomas-recorte.png', w: 502, h: 820 },
     'Solúveis': { src: 'soluveis-recorte.png', w: 544, h: 820 },
   };
-  const cut = CUT_BY_TIPO[p.tipo] || { src: 'capsulas-recorte.png', w: 572, h: 820 };
+  const cut = CUT_BY_TIPO[p.tipo] || { src: 'capsulas-recorte.png', w: 514, h: 820 };
   const photo = $('.js-photo'); if (photo) photo.innerHTML = `<img src="assets/img/${cut.src}" alt="${p.titulo}, ${isLiq ? 'frasco conta-gotas' : 'pote'} com a sua marca" width="${cut.w}" height="${cut.h}" fetchpriority="high" decoding="async">`;
   if (isLiq && photo) photo.classList.add('is-liq');
 
