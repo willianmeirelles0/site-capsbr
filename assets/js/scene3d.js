@@ -893,7 +893,14 @@ function opener(selector, st, { baseScale = .74, withBottle = false } = {}) {
   if (withBottle) {
     pot = makeBottle({ kind: 'caps', brand: 'SUA MARCA', line1: 'Suplemento alimentar', line2: '60 cápsulas', theme: 'teal', rows: sampleRows('caps'), porcao: 'Porção de 2 cápsulas (1 g)', porcoes: 'Porções por embalagem: 30' }, S.renderer);
     S.scene.add(pot.root); pot.setAlpha(0);
-    fontsLoaded.then(() => pot.paint());
+    fontsLoaded.then(() => {
+      pot.paint();
+      // o pote fica invisible (root.visible=false) até o scroll chegar nele;
+      // sem isso, o GPU só compila os shaders do vidro/rótulo/cápsulas na hora
+      // exata que ele aparece, travando bem ali. Pré-compila num frame ocioso.
+      const warm = () => { pot.root.visible = true; S.renderer.compile(S.scene, S.camera); pot.root.visible = false; };
+      'requestIdleCallback' in window ? requestIdleCallback(warm, { timeout: 2000 }) : setTimeout(warm, 400);
+    });
   }
   // cápsulas caindo dentro do pote aberto (coordenadas locais do pote)
   const NF = 14, tmp = new THREE.Object3D();
@@ -995,7 +1002,18 @@ function builder() {
   Object.keys(layouts).forEach(k => { Object.keys(bottles).forEach(n => { layouts[k][n] = n === k ? { x: 0, s: FOCUS_S[n], a: 1 } : OFF; }); });
   const lay = { caps: { x: 0, s: FOCUS_S.caps, a: 1 }, drop: { ...OFF }, goma: { ...OFF }, sol: { ...OFF } };
   let ready = false;
-  fontsLoaded.then(() => { pot.paint(); drop.paint(); goma.paint(); sol.paint(); ready = true; });
+  fontsLoaded.then(() => {
+    pot.paint(); drop.paint(); goma.paint(); sol.paint(); ready = true;
+    // só "caps" começa visível; os outros 3 só desenham de verdade (e só aí
+    // compilam os shaders) na primeira vez que o visitante troca de aba —
+    // travando bem ali. Pré-compila os 3 num frame ocioso.
+    const warm = () => {
+      [drop, goma, sol].forEach(b => { b.root.visible = true; });
+      S.renderer.compile(S.scene, S.camera);
+      [drop, goma, sol].forEach(b => { b.root.visible = false; });
+    };
+    'requestIdleCallback' in window ? requestIdleCallback(warm, { timeout: 2000 }) : setTimeout(warm, 400);
+  });
   addEventListener('builder:change', e => {
     const d = e.detail || {};
     if (d.brand !== undefined) Object.values(bottles).forEach(b => b.set({ brand: d.brand }));
