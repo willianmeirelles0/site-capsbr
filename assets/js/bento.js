@@ -145,46 +145,55 @@
   }
 
   /* =====================================================
-     2. ESTABILIDADE: câmara climática
+     2. MISTURA DA MATÉRIA-PRIMA: tanque + agitador
      ===================================================== */
-  function stab(svg) {
-    const id = 'bxS';
-    svg.setAttribute('viewBox', '0 0 320 300');
-    let pots = '';
-    [[118, 152], [160, 152], [202, 152], [118, 226], [160, 226], [202, 226]].forEach(([x, y]) => {
-      const g = glassPot(id, 32, 40, { brand: 'MARCA', sub: '' });
-      pots += `<g transform="translate(${x} ${y})">${g.markup}<g transform="translate(0 0)">${g.capMarkup}</g></g>`;
-    });
-    let air = ''; for (let i = 0; i < 4; i++) air += `<path class="air" d="M92 ${88 + i * 36} C 130 ${78 + i * 36}, 170 ${98 + i * 36}, 228 ${86 + i * 36}" stroke="${C.mint}" stroke-width="1.4" fill="none" stroke-dasharray="10 14" opacity=".7"/>`;
+  function mix(svg) {
+    const id = 'bxM';
+    svg.setAttribute('viewBox', '0 0 480 360');
+    let grains = ''; for (let i = 0; i < 46; i++) { const a = rnd() * Math.PI * 2, r = 10 + rnd() * 72; grains += `<circle class="gr" cx="${f1(Math.cos(a) * r)}" cy="${f1(Math.sin(a) * r * .42)}" r="${f1(1.2 + rnd() * 2.2)}" fill="${rnd() > .5 ? '#d9ccb2' : '#efe6d6'}"/>`; }
+    let powder = ''; for (let i = 0; i < 26; i++) powder += `<circle cx="${210 + rnd() * 60}" cy="${22 + rnd() * 40}" r="${.8 + rnd() * 1.6}" fill="${rnd() > .5 ? '#d9ccb2' : '#fff'}" opacity=".85"/>`;
     svg.innerHTML = defs(id) + `
-      <rect x="62" y="18" width="196" height="264" rx="16" fill="url(#${id}st)" stroke="${C.line}" stroke-width="1.2"/>
-      <rect x="76" y="30" width="168" height="34" rx="8" fill="${C.deep}"/>
-      <text class="temp" x="88" y="53" fill="#fff" style="${FONT};font-size:14px;font-weight:600">40,0°C</text>
-      <text class="ur" x="166" y="53" fill="${C.mint}" style="${FONT};font-size:14px;font-weight:600">75%UR</text>
-      <rect x="76" y="72" width="168" height="168" rx="10" fill="#eef5f2" stroke="${C.line}"/>
-      ${air}
-      <line x1="80" y1="153" x2="240" y2="153" stroke="${C.line}" stroke-width="2"/>
-      <line x1="80" y1="227" x2="240" y2="227" stroke="${C.line}" stroke-width="2"/>
-      <g style="transform:scale(1)">${pots}</g>
-      <rect x="82" y="78" width="10" height="156" rx="5" fill="#fff" opacity=".5"/>
-      <rect x="76" y="248" width="168" height="22" rx="6" fill="#fff" stroke="${C.line}"/>
-      <rect class="bar" x="80" y="252" width="0" height="14" rx="4" fill="${C.teal2}"/>
-      <text class="day" x="160" y="263" text-anchor="middle" fill="${C.deep}" style="${FONT};font-size:8.5px;letter-spacing:.08em">DIA 000 / 180</text>
-      <rect x="272" y="60" width="14" height="170" rx="7" fill="#fff" stroke="${C.line}"/>
-      <rect class="th" x="276" y="140" width="6" height="86" rx="3" fill="#3f9a7f"/>
-      <circle cx="279" cy="236" r="11" fill="#3f9a7f" stroke="#fff" stroke-width="2"/>`;
-    const R = { air: [...svg.querySelectorAll('.air')], temp: svgEl(svg, '.temp'), ur: svgEl(svg, '.ur'), bar: svgEl(svg, '.bar'), day: svgEl(svg, '.day'), th: svgEl(svg, '.th') };
-    const T = 9;
+      <line x1="10" y1="331" x2="470" y2="331" stroke="${C.line}" stroke-dasharray="2 5"/>
+      <rect x="20" y="322" width="440" height="10" rx="5" fill="url(#${id}bl)"/>
+      <!-- funil de matéria-prima -->
+      <clipPath id="${id}hp"><path d="M198 18 H282 L254 76 H226Z"/></clipPath>
+      <g clip-path="url(#${id}hp)"><rect class="powder" x="190" y="30" width="100" height="46" fill="#efe6d6"/>${powder}</g>
+      <path d="M198 18 H282 L254 76 H226Z" fill="url(#${id}cy)" fill-opacity=".35" stroke="${C.line}" stroke-width="1.2"/>
+      <rect x="192" y="12" width="96" height="9" rx="4" fill="url(#${id}st)" stroke="${C.line}"/>
+      <rect x="232" y="76" width="16" height="14" fill="url(#${id}cy)" stroke="${C.line}"/>
+      <!-- tanque de mistura -->
+      <g transform="translate(240 206)">
+        <ellipse cx="0" cy="96" rx="96" ry="16" fill="#0b2b27" opacity=".12"/>
+        <path d="M-96 -70 V60 Q-96 96 0 96 Q96 96 96 60 V-70Z" fill="url(#${id}st)" stroke="${C.line}" stroke-width="1.4"/>
+        <ellipse cx="0" cy="-70" rx="96" ry="20" fill="url(#${id}cy)" stroke="${C.line}"/>
+        <clipPath id="${id}tk"><path d="M-88 -58 V54 Q-88 86 0 86 Q88 86 88 54 V-58Z"/></clipPath>
+        <g clip-path="url(#${id}tk)">
+          <rect x="-88" y="-20" width="176" height="110" fill="#eef5f2"/>
+          <g class="grains" transform="translate(0 24)">${grains}</g>
+        </g>
+        <line x1="0" y1="-68" x2="0" y2="60" stroke="${C.glass}" stroke-width="5" stroke-linecap="round"/>
+        <g class="paddle" transform="translate(0 24)">
+          <line x1="-62" y1="0" x2="62" y2="0" stroke="${C.teal2}" stroke-width="7" stroke-linecap="round"/>
+          <line x1="0" y1="-30" x2="0" y2="30" stroke="${C.teal2}" stroke-width="7" stroke-linecap="round"/>
+        </g>
+        <ellipse cx="0" cy="-70" rx="22" ry="7" fill="url(#${id}cy)" stroke="${C.line}"/>
+      </g>
+      <!-- painel -->
+      <rect x="352" y="118" width="82" height="52" rx="8" fill="${C.deep}"/>
+      <text x="362" y="136" fill="${C.mint}" style="${FONT};font-size:8px;letter-spacing:.1em">LOTE</text>
+      <text class="cnt" x="362" y="158" fill="#fff" style="${FONT};font-size:17px;font-weight:600">0,0kg</text>
+      <circle class="led" cx="424" cy="130" r="3.5" fill="#3f9a7f"/>`;
+    const R = { grains: svgEl(svg, '.grains'), paddle: svgEl(svg, '.paddle'), powder: svgEl(svg, '.powder'), cnt: svgEl(svg, '.cnt'), led: svgEl(svg, '.led') };
+    const T = 6;
     return t => {
-      R.air.forEach((el, i) => attr(el, 'stroke-dashoffset', f1(-(t * 30 + i * 9) % 24)));
-      const p = (t % T) / T, d = Math.round(p * 180);
-      attr(R.bar, 'width', f1(160 * p));
-      txt(R.day, `DIA ${String(d).padStart(3, '0')} / 180`);
-      const wob = Math.sin(t * 1.7) * .15 + Math.sin(t * 4.1) * .05;
-      txt(R.temp, `${(40 + wob).toFixed(1).replace('.', ',')}°C`);
-      txt(R.ur, `${Math.round(75 + Math.sin(t * .9) * .8)}%UR`);
-      const h = 86 + wob * 40;
-      attr(R.th, 'y', f1(226 - h)); attr(R.th, 'height', f1(h));
+      const p = t % T;
+      const spin = t * 140;
+      attr(R.paddle, 'transform', `translate(0 24) rotate(${f1(spin)})`);
+      attr(R.grains, 'transform', `translate(0 24) rotate(${f1(-spin * .6)})`);
+      const fill = seg(p, .2, 3.6);
+      attr(R.powder, 'y', f1(26 + fill * 30));
+      txt(R.cnt, (fill * 18).toFixed(1).replace('.', ',') + 'kg');
+      attr(R.led, 'opacity', p > .2 && p < 5.6 ? (Math.sin(t * 14) > 0 ? 1 : .3) : 1);
     };
   }
 
@@ -387,7 +396,7 @@
     };
   }
 
-  const W = { enc, stab, env, rot, qc, laudo };
+  const W = { enc, mix, env, rot, qc, laudo };
   const runs = els.map(svg => {
     const fn = W[svg.dataset.w]; if (!fn) return null;
     const r = { frame: fn(svg), on: false, t: Math.random() * 2 };
