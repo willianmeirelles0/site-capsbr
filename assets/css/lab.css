@@ -165,6 +165,12 @@
 .story__sticky{position:sticky;top:120px;align-self:start}
 .story .h2 .accent{color:var(--orange)}
 .counters{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:48px}
+@media (max-width:520px){
+  /* 3 cards em grade de 2 colunas sobra 1 sozinho numa linha torta, e o texto
+     mais longo ("R$ 390 mil") espreme e quebra em 3 linhas: empilha tudo */
+  .counters{grid-template-columns:1fr}
+  .counter b{font-size:36px}
+}
 .counter{padding:24px;border-radius:var(--r-md);background:#fff;border:1px solid #e5ddd2}
 .counter b{display:block;font-family:var(--f-display);font-size:44px;font-weight:500;letter-spacing:-.04em;line-height:1}
 .counter b em{font-style:normal;color:var(--orange)}
@@ -231,10 +237,18 @@
 .cta .h1{max-width:12ch;margin:24px auto 32px}
 .cta__bg{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 .cta__bg .cap3d{position:absolute;--c1:#ffffff;--c2:#efe6d6;opacity:.14}
-.countdown{display:inline-flex;gap:10px;margin:8px 0 44px}
+.countdown{display:inline-flex;gap:10px;margin:8px 0 44px;max-width:100%}
 .countdown div{min-width:84px;padding:14px 10px;border-radius:var(--r-md);background:var(--on-orange);color:var(--orange)}
 .countdown b{display:block;font-family:var(--f-display);font-size:38px;font-weight:600;letter-spacing:-.03em;line-height:1}
 .countdown span{font-size:11px;color:#5f8f83;font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.08em}
+@media (max-width:420px){
+  /* os 4 blocos cabem exatos a 390px, sem folga: no celular viram flex pra
+     encolher com segurança (telas menores, zoom, barra do navegador) */
+  .countdown{display:flex;width:100%;gap:6px}
+  .countdown div{flex:1;min-width:0;padding:12px 4px}
+  .countdown b{font-size:26px}
+  .countdown span{font-size:9px;letter-spacing:.03em}
+}
 .cta .btn--dark{background:var(--on-orange);color:var(--orange)}
 .cta .btn--dark .arrow{background:var(--orange);color:var(--on-orange)}
 

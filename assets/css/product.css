@@ -179,6 +179,7 @@
 .pd-buy__size .mono{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
 .pd-buy__size b{font-weight:600}
 .pd-qty{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1.35fr);gap:4px;padding:4px;border-radius:20px;background:#fff;border:1px solid var(--border)}
+.pd-qty__b--custom{grid-column:1/-1}
 .pd-qty__b{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0;padding:12px 6px;border:0;background:transparent;border-radius:16px;cursor:pointer;color:var(--text);transition:color .25s,background-color .25s,box-shadow .25s;-webkit-tap-highlight-color:transparent}
 .pd-qty__b b{font-family:var(--f-display);font-size:19px;font-weight:600;letter-spacing:-.03em}
 .pd-qty__b span{font-size:11px;color:var(--muted);transition:color .35s}

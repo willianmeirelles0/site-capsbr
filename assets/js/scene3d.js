@@ -16,7 +16,10 @@ const WEAK = (navigator.hardwareConcurrency || 8) <= 2 || (navigator.deviceMemor
 const LOW = MOBILE || WEAK;
 // telas retina: renderiza nítido (até 2x); só aparelhos realmente fracos ficam em 1.5x
 // celular: 1.5x já fica nítido e gasta ~45% menos GPU que 2x
-const DPR = Math.min(window.devicePixelRatio || 1, WEAK ? 1.25 : MOBILE ? 1.5 : 2);
+// celular de verdade (DPR 3) renderizando a 1.5x ficava visivelmente mole
+// perto do resto da UI nítida; o watchdog de FPS abaixo já puxa pra baixo
+// sozinho se a tela for fraca demais pra aguentar 2x
+const DPR = Math.min(window.devicePixelRatio || 1, WEAK ? 1.25 : 2);
 const TEX = 2048;
 const stages = [];
 let quality = 1;
