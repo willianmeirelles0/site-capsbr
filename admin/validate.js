@@ -124,14 +124,17 @@ export function normalizeSite(raw) {
   const whatsapp = String(s.whatsapp ?? d.whatsapp).replace(/\D/g, '');
   if (!/^\d{10,15}$/.test(whatsapp)) at('whatsapp', 'WhatsApp com DDI e DDD, só números (ex.: 5554997090147).');
 
+  // A campanha vem desligada por padrão (sem Black Friday); só exige nome/data/%
+  // quando alguém realmente liga o interruptor "Campanha ativa" no painel.
   const pr = s.promo && typeof s.promo === 'object' ? s.promo : {};
+  const enabled = pr.enabled === true;
   const name = clean(pr.name ?? d.promo.name, 40);
-  if (!name) at('promo.name', 'Dê um nome para a campanha.');
+  if (enabled && !name) at('promo.name', 'Dê um nome para a campanha.');
   const endD = new Date(pr.end ?? d.promo.end);
-  if (isNaN(endD.getTime())) at('promo.end', 'Data de término inválida.');
+  if (enabled && isNaN(endD.getTime())) at('promo.end', 'Data de término inválida.');
   const max = Math.round(toNumber(pr.max ?? d.promo.max));
-  if (!(max >= 0 && max <= 99)) at('promo.max', 'Desconto máximo entre 0 e 99%.');
-  const promo = { enabled: pr.enabled !== false, name, end: isNaN(endD.getTime()) ? d.promo.end : endD.toISOString(), max: max >= 0 && max <= 99 ? max : d.promo.max };
+  if (enabled && !(max >= 0 && max <= 99)) at('promo.max', 'Desconto máximo entre 0 e 99%.');
+  const promo = { enabled, name, end: isNaN(endD.getTime()) ? d.promo.end : endD.toISOString(), max: max >= 0 && max <= 99 ? max : d.promo.max };
 
   const announce = (Array.isArray(s.announce) ? s.announce : d.announce)
     .map(t => clean(t, 90)).filter(Boolean).slice(0, LIMITS.announce);
