@@ -354,6 +354,7 @@ function openEditor(index, blank) {
   renderVolRows(Object.entries(p.volumes || {}).map(([q, [de, por]]) => [q, typeof de === 'number' ? money(de) : de, typeof por === 'number' ? money(por) : por]));
   f.fornNome.value = p.fornecedor?.nome || '';
   f.fornAnvisa.value = typeof p.fornecedor?.anvisa === 'number' ? money(p.fornecedor.anvisa) : (p.fornecedor?.anvisa || '');
+  f.fornArteGratis.checked = !!p.fornecedor?.arteGratis;
   renderFornRotRows(Object.entries(p.fornecedor?.rotulo || {}).map(([q, preco]) => [q, typeof preco === 'number' ? money(preco) : preco]));
   renderListInputs('#benList', p.beneficios?.length ? p.beneficios : [''], 120, 'Benefício');
   renderNutRows(p.tabela || []);
@@ -429,7 +430,7 @@ function readForm() {
     categoria: f.categoria.value, tamanho: f.tamanho.value, destaque: f.destaque.value, ativo: f.ativo.checked,
     descricao: f.descricao.value, beneficios: listValues('#benList'),
     volumes, desconto: f.desconto.value.trim(),
-    fornecedor: { nome: f.fornNome.value, anvisa: f.fornAnvisa.value.trim(), rotulo: fornRot },
+    fornecedor: { nome: f.fornNome.value, anvisa: f.fornAnvisa.value.trim(), rotulo: fornRot, arteGratis: f.fornArteGratis.checked },
     porcao: f.porcao.value, porcoes: f.porcoes.value,
     tabela: $$('#nutBody tr').map(tr => $$('input', tr).map(i => i.value)),
     naoContem: f.naoContem.value,

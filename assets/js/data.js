@@ -309,6 +309,14 @@ window.PRODUCTS = [
   "tamanho": "pó · 300 g",
   "destaque": "",
   "ativo": true,
+  "fornecedor": {
+   "nome": "Alphafitus",
+   "anvisa": 350,
+   "rotulo": {
+    "1000": 700
+   },
+   "arteGratis": true
+  },
   "descricao": "Um dos suplementos mais estudados para quem busca evolução física. Atua na regeneração de energia muscular, contribuindo para o aumento de força, volume e desempenho em treinos intensos. Produzida com matéria-prima de alta qualidade e laudo de pureza.",
   "beneficios": [
    "Contribui para o desempenho físico em treinos intensos",
@@ -362,7 +370,8 @@ window.PRODUCTS = [
    "anvisa": 350,
    "rotulo": {
     "1000": 700
-   }
+   },
+   "arteGratis": true
   },
   "descricao": "Fórmula pré-treino livre de cafeína, combinando beta-alanina, L-arginina, taurina e D-ribose com vitaminas B6 e B12. Pensada para quem busca apoio ao desempenho físico e disposição no treino sem o efeito estimulante da cafeína — indicada para treinos noturnos ou para quem tem sensibilidade a estimulantes.",
   "beneficios": [
@@ -472,7 +481,8 @@ window.PRODUCTS = [
    "anvisa": 350,
    "rotulo": {
     "1000": 700
-   }
+   },
+   "arteGratis": true
   },
   "descricao": "Fórmula pré-treino com cafeína, beta-alanina, arginina, magnésio e zinco, reforçada com extrato de café verde. Pensada para quem busca mais energia, foco e desempenho físico antes de treinos intensos.",
   "beneficios": [

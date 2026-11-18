@@ -127,7 +127,8 @@ export function normalizeProduct(raw, i = 0) {
   const frRotKeys = Object.keys(frRotSrc).filter(k => frRotSrc[k] !== '' && frRotSrc[k] != null);
   const frAnvisaRaw = fr.anvisa;
   const hasAnvisa = frAnvisaRaw !== '' && frAnvisaRaw != null;
-  if (frNome || frRotKeys.length || hasAnvisa) {
+  const arteGratis = fr.arteGratis === true;
+  if (frNome || frRotKeys.length || hasAnvisa || arteGratis) {
     if (!frNome) at('fornecedor', 'Informe o nome do fornecedor, ou limpe os campos de fornecedor deste produto.');
     let anvisa;
     if (hasAnvisa) {
@@ -147,6 +148,7 @@ export function normalizeProduct(raw, i = 0) {
     fornecedor = { nome: frNome || '(sem nome)' };
     if (hasAnvisa && anvisa > 0) fornecedor.anvisa = anvisa;
     if (Object.keys(rotulo).length) fornecedor.rotulo = rotulo;
+    if (arteGratis) fornecedor.arteGratis = true;
   }
 
   const out = {

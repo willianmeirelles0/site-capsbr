@@ -204,18 +204,19 @@
   /* ---------- Orçamento ao vivo (seleção de volume + rótulo por fórmula) ---------- */
   const sel = {};
   const ARTE_MIN = COSTS.arteMin, ARTE_PRECO = COSTS.artePreco;
-  const arteFor = v => v >= ARTE_MIN ? 0 : ARTE_PRECO;
   // Fornecedores com cobrança própria (ex.: Alphafitus) substituem a tabela
-  // de rótulo e/ou a notificação ANVISA padrão deste produto específico.
+  // de rótulo, a notificação ANVISA e/ou a regra da arte do rótulo padrão
+  // deste produto específico.
   const rotTableFor = p => (p.fornecedor && p.fornecedor.rotulo) || COSTS.rotulo[p.tipo] || COSTS.rotulo['Cápsulas'];
   const rotQtysFor = p => Object.keys(rotTableFor(p)).map(Number).sort((a, b) => a - b);
   const anvisaFor = p => (p.fornecedor && p.fornecedor.anvisa) || COSTS.anvisa;
+  const arteFor = (p, v) => (p.fornecedor && p.fornecedor.arteGratis) ? 0 : (v >= ARTE_MIN ? 0 : ARTE_PRECO);
   const calcFor = (p, v, rq) => {
     const unit = priceAt(p, v);
     const fab = unit * v;
     const rot = rotTableFor(p)[rq];
     const anvisa = anvisaFor(p);
-    const arte = arteFor(v);
+    const arte = arteFor(p, v);
     return { unit, fab, rot, anvisa, arte, total: fab + rot + anvisa + arte };
   };
   const quoteMsg = (p, v, rq, c) => [
@@ -248,7 +249,7 @@
         <div class="pr__row"><span>Fabricação<small>${nf(v)} un. × ${brl(c.unit)}</small></span><b>${brl(c.fab)}</b></div>
         <div class="pr__row"><span>Impressão de rótulos<small>${nf(rq)} unidades</small></span><b>${brl(c.rot)}</b></div>
         <div class="pr__row"><span>Notificação ANVISA</span><b>${brl(c.anvisa)}</b></div>
-        <div class="pr__row"><span>Arte do rótulo<small>${v >= ARTE_MIN ? `a partir de ${nf(ARTE_MIN)} un.` : `abaixo de ${nf(ARTE_MIN)} un.`}</small></span><b>${c.arte ? brl(c.arte) : 'Cortesia'}</b></div>
+        <div class="pr__row"><span>Arte do rótulo<small>${(p.fornecedor && p.fornecedor.arteGratis) ? 'sempre cortesia com este fornecedor' : v >= ARTE_MIN ? `a partir de ${nf(ARTE_MIN)} un.` : `abaixo de ${nf(ARTE_MIN)} un.`}</small></span><b>${c.arte ? brl(c.arte) : 'Cortesia'}</b></div>
       </div>
       <div class="pr__tot"><span>Total estimado</span><b>${brl(c.total)}</b></div>
       <p class="pr__inc">Já inclui <b>rótulo personalizado, teste de estabilidade e tabela nutricional</b>. Frete não incluso.</p>
@@ -333,7 +334,8 @@
         <div class="sim__l">
           <span class="mono">Exemplo de pedido</span>
           <h3>${nf(exV)} unidades de ${esc(ex.titulo)}</h3>
-          <p>Simulação com os valores deste catálogo. A cotação final é confirmada com você no WhatsApp, junto com a aprovação do rótulo.</p>
+          ${ex.fornecedor ? `<span class="sim__forn">Fornecedor ${esc(ex.fornecedor.nome)} · condição própria</span>` : ''}
+          <p>Simulação com os valores deste catálogo. A cotação final é confirmada com você no WhatsApp, junto com a aprovação do rótulo.${ex.fornecedor ? ' Esta fórmula vem de um fornecedor com rótulo, ANVISA e/ou arte em condição diferente do padrão acima.' : ''}</p>
           <div class="sim__per"><b>${brl(c.total / exV)}</b><span>custo final por unidade,<br>com tudo incluído</span></div>
         </div>
         <div class="sim__r">
@@ -362,8 +364,8 @@
           <div class="cost__rot">${ORDER.map(t => `<div class="cost__rotrow"><b>${t}</b><span>500 un. <em>${brl(COSTS.rotulo[t][500])}</em></span><span>1.000 un. <em>${brl(COSTS.rotulo[t][1000])}</em></span></div>`).join('')}</div>
           <p>Por linha e quantidade de rótulos impressos.${list.some(p => p.fornecedor) ? ' Algumas fórmulas têm fornecedor com condição própria, confirmada na página de cada uma.' : ''}</p>
         </div>
-        <div class="cost__it"><span class="inc__ic">${IC.shield}</span><span class="cost__k">Notificação ANVISA</span><div class="cost__v"><b>${brl(COSTS.anvisa)}</b><small>por produto</small></div><p>Conduzida pela CapsBR no mesmo fluxo do pedido.</p></div>
-        <div class="cost__it"><span class="inc__ic">${IC.sign.replace('viewBox="0 0 48 48"', 'viewBox="4 2 40 44"')}</span><span class="cost__k">Arte do rótulo</span><div class="cost__v"><b>Cortesia</b><small>a partir de ${nf(ARTE_MIN)} un.</small></div><div class="cost__v"><b>${brl(ARTE_PRECO)}</b><small>abaixo de ${nf(ARTE_MIN)} un.</small></div><p>Ou envie a sua arte pronta para aprovação.</p></div>
+        <div class="cost__it"><span class="inc__ic">${IC.shield}</span><span class="cost__k">Notificação ANVISA</span><div class="cost__v"><b>${brl(COSTS.anvisa)}</b><small>por produto</small></div><p>Conduzida pela CapsBR no mesmo fluxo do pedido.${list.some(p => p.fornecedor && p.fornecedor.anvisa) ? ' Algumas fórmulas têm fornecedor com valor próprio, confirmado na página de cada uma.' : ''}</p></div>
+        <div class="cost__it"><span class="inc__ic">${IC.sign.replace('viewBox="0 0 48 48"', 'viewBox="4 2 40 44"')}</span><span class="cost__k">Arte do rótulo</span><div class="cost__v"><b>Cortesia</b><small>a partir de ${nf(ARTE_MIN)} un.</small></div><div class="cost__v"><b>${brl(ARTE_PRECO)}</b><small>abaixo de ${nf(ARTE_MIN)} un.</small></div><p>Ou envie a sua arte pronta para aprovação.${list.some(p => p.fornecedor && p.fornecedor.arteGratis) ? ' Algumas fórmulas têm fornecedor com arte sempre cortesia, confirmado na página de cada uma.' : ''}</p></div>
       </div>
       ${sim}
       <div class="sec-label"><span class="mono">Perguntas frequentes</span></div>

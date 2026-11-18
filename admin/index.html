@@ -244,6 +244,7 @@
           <label class="field"><span>Nome do fornecedor</span><input type="text" name="fornNome" maxlength="40" placeholder="Alphafitus"></label>
           <label class="field"><span>Notificação ANVISA específica <em class="opt">opcional</em></span><div class="affix affix--pre"><em>R$</em><input type="text" inputmode="decimal" name="fornAnvisa"></div></label>
         </div>
+        <label class="switch-row mt"><input type="checkbox" name="fornArteGratis"><span class="switch"></span><span><b>Arte do rótulo sempre cortesia</b><small>Ignora a regra padrão de quantidade mínima ("Custos do pedido") e nunca cobra a arte deste produto.</small></span></label>
         <small class="err" data-perr="fornecedor"></small>
         <div class="dsec__head mt"><span class="label">Impressão de rótulos (substitui a tabela padrão) <em class="opt">opcional</em></span><button type="button" class="btn btn--sm btn--ghost" id="addFornRot">+ Quantidade</button></div>
         <p class="help">Sem nenhuma linha aqui, este produto usa a tabela padrão de "Custos do pedido" normalmente.</p>

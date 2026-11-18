@@ -3,7 +3,7 @@
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const { brl, waLink, productFor, photoFor, minPrice, priceAt, COSTS, nutriRows, bottleData, esc } = window.Caps;
-  const arteFor = v => v >= COSTS.arteMin ? 0 : COSTS.artePreco;
+  const arteFor = v => (p.fornecedor && p.fornecedor.arteGratis) ? 0 : (v >= COSTS.arteMin ? 0 : COSTS.artePreco);
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const P = window.PRODUCTS;
   const slug = new URLSearchParams(location.search).get('p');
