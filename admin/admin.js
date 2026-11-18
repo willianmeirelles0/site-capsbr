@@ -3,7 +3,7 @@
    Edita um rascunho local do catálogo; "Salvar e publicar" valida
    e grava no servidor (PUT /api/admin/catalog).
    ========================================================= */
-import { TIPOS, ROTULO_QTYS, LIMITS, clean, slugify, toNumber, brl, maxDiscount, normalizeProduct, normalizeCatalog } from './validate.js';
+import { TIPOS, ROTULO_QTYS, DESTAQUES, LIMITS, clean, slugify, toNumber, brl, maxDiscount, normalizeProduct, normalizeCatalog } from './validate.js';
 
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -246,7 +246,7 @@ function renderProducts() {
     const keys = Object.keys(p.volumes || {}).map(Number).sort((a, b) => a - b);
     const last = keys.length ? p.volumes[keys[keys.length - 1]] : null;
     const img = IMG_BY_TIPO[p.tipo] || 'capsulas';
-    return `<tr data-i="${i}" class="${errs.length ? 'is-err' : ''}">
+    return `<tr data-i="${i}" class="${errs.length ? 'is-err' : ''}${p.ativo === false ? ' is-off' : ''}">
       <td><div class="ord"><span>${i + 1}</span>
         <button class="icon-btn" data-act="up" title="Subir" ${i === 0 || filtering ? 'disabled' : ''}>↑</button>
         <button class="icon-btn" data-act="down" title="Descer" ${i === list.length - 1 || filtering ? 'disabled' : ''}>↓</button></div></td>
@@ -254,7 +254,8 @@ function renderProducts() {
       <td>${esc(p.tipo)} · <span class="muted">${esc(p.categoria)}</span></td>
       <td class="num">${last ? `<b>${brl(last[1])}</b><br><small class="muted"><s>${brl(last[0])}</s> · ${fmtInt(keys[keys.length - 1])} un.</small>` : '<span class="muted">sem preço</span>'}</td>
       <td class="num">${p.desconto ? `-${p.desconto}%` : '<span class="muted">sem selo</span>'}</td>
-      <td class="c-hot"><label class="switch-row mini-switch" title="Mais pedido"><input type="checkbox" data-act="hot" ${p.maisPedido ? 'checked' : ''}><span class="switch"></span></label></td>
+      <td>${p.destaque ? esc(p.destaque) : '<span class="muted">sem destaque</span>'}</td>
+      <td class="c-hot"><label class="switch-row mini-switch" title="Ativo no catálogo"><input type="checkbox" data-act="ativo" ${p.ativo !== false ? 'checked' : ''}><span class="switch"></span></label></td>
       <td><div class="acts">
         <button class="icon-btn" data-act="edit" title="Editar">✎</button>
         <button class="icon-btn" data-act="dup" title="Duplicar">⧉</button>
@@ -286,7 +287,7 @@ $('#pTable tbody').addEventListener('click', async e => {
     const c = clone(p);
     c.titulo = (p.titulo + ' (cópia)').slice(0, 80); c.nome = c.titulo;
     c.id = nextId(p.tipo); c.slug = uniqueSlug(slugify(c.titulo));
-    c.maisPedido = false;
+    c.destaque = ''; c.ativo = false;
     list.splice(i + 1, 0, c); refresh();
     openEditor(i + 1);
     toast('Produto duplicado. Ajuste o nome e o código.', 'ok');
@@ -299,9 +300,9 @@ $('#pTable tbody').addEventListener('click', async e => {
   }
 });
 $('#pTable tbody').addEventListener('change', e => {
-  if (e.target.dataset.act !== 'hot') return;
+  if (e.target.dataset.act !== 'ativo') return;
   const i = +e.target.closest('tr').dataset.i;
-  state.draft.products[i].maisPedido = e.target.checked;
+  state.draft.products[i].ativo = e.target.checked;
   refresh();
 });
 
@@ -330,7 +331,7 @@ $('#newBtn').addEventListener('click', () => {
   const tipo = state.tipo || 'Cápsulas';
   openEditor(-1, {
     id: nextId(tipo), slug: '', titulo: '', nome: '', tipo, categoria: '', tamanho: tipo === 'Líquidos' ? '30 mL' : '60 cápsulas',
-    maisPedido: false, descricao: '', beneficios: [''], volumes: { 300: ['', ''], 500: ['', ''], 1000: ['', ''] }, desconto: '',
+    destaque: '', ativo: false, descricao: '', beneficios: [''], volumes: { 300: ['', ''], 500: ['', ''], 1000: ['', ''] }, desconto: '',
     porcao: '', porcoes: '', tabela: [], naoContem: '',
   });
 });
@@ -343,7 +344,7 @@ function openEditor(index, blank) {
   const f = form.elements;
   f.titulo.value = p.titulo; f.nome.value = p.nome && p.nome !== p.titulo ? p.nome : '';
   f.id.value = p.id; f.slug.value = p.slug; f.tipo.value = TIPOS.includes(p.tipo) ? p.tipo : TIPOS[0];
-  f.categoria.value = p.categoria; f.tamanho.value = p.tamanho; f.maisPedido.checked = !!p.maisPedido;
+  f.categoria.value = p.categoria; f.tamanho.value = p.tamanho; f.destaque.value = DESTAQUES.includes(p.destaque) ? p.destaque : ''; f.ativo.checked = p.ativo !== false;
   f.descricao.value = p.descricao; f.porcao.value = p.porcao || ''; f.porcoes.value = p.porcoes || ''; f.naoContem.value = p.naoContem || '';
   // desconto: vazio quando igual ao automático
   const auto = maxDiscount(numVolumes(p.volumes));
@@ -425,7 +426,7 @@ function readForm() {
   });
   return {
     titulo: f.titulo.value, nome: f.nome.value, id: f.id.value, slug: f.slug.value, tipo: f.tipo.value,
-    categoria: f.categoria.value, tamanho: f.tamanho.value, maisPedido: f.maisPedido.checked,
+    categoria: f.categoria.value, tamanho: f.tamanho.value, destaque: f.destaque.value, ativo: f.ativo.checked,
     descricao: f.descricao.value, beneficios: listValues('#benList'),
     volumes, desconto: f.desconto.value.trim(),
     fornecedor: { nome: f.fornNome.value, anvisa: f.fornAnvisa.value.trim(), rotulo: fornRot },

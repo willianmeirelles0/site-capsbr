@@ -11,7 +11,8 @@ window.PRODUCTS = [
   "tipo": "Cápsulas",
   "categoria": "Minerais",
   "tamanho": "60 cápsulas",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Combina três formas de magnésio (bisglicinato, dimalato e óxido) para unir boa absorção a um efeito mais duradouro ao longo do dia. Pensado para quem busca apoio muscular, saúde óssea e mais disposição na rotina.",
   "beneficios": [
    "Contribui para o funcionamento muscular",
@@ -58,7 +59,8 @@ window.PRODUCTS = [
   "tipo": "Cápsulas",
   "categoria": "Minerais",
   "tamanho": "60 cápsulas",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Combina cinco formas de magnésio (dimalato, bisglicinato, citrato malato, óxido e ascorbato) em uma só fórmula, pensada para alta absorção e efeito prolongado ao longo do dia. Apoia o funcionamento muscular e a saúde óssea, contribuindo para mais disposição na rotina e para o equilíbrio geral do organismo.",
   "beneficios": [
    "Contribui para o funcionamento muscular",
@@ -105,7 +107,8 @@ window.PRODUCTS = [
   "tipo": "Cápsulas",
   "categoria": "Metabolismo",
   "tamanho": "60 cápsulas",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Une extrato de laranja moro, café verde e vitamina C em uma fórmula pensada para o dia a dia, com foco no metabolismo energético, na ação antioxidante e no equilíbrio nutricional geral.",
   "beneficios": [
    "Apoia o metabolismo energético",
@@ -162,7 +165,8 @@ window.PRODUCTS = [
   "tipo": "Cápsulas",
   "categoria": "Energia",
   "tamanho": "30 cápsulas",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Cápsulas de coenzima Q10 em dose concentrada, um antioxidante que participa da produção de energia nas células. Indicado para quem busca mais disposição no dia a dia.",
   "beneficios": [
    "Ação antioxidante",
@@ -205,7 +209,8 @@ window.PRODUCTS = [
   "tipo": "Cápsulas",
   "categoria": "Bem-estar",
   "tamanho": "30 cápsulas",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Une L-triptofano, que contribui para um sono mais reparador e para o equilíbrio emocional, com coenzima Q10, que apoia a produção de energia celular e a proteção das células. Uma combinação pensada para descanso, disposição e bem-estar geral.",
   "beneficios": [
    "Ação antioxidante",
@@ -258,7 +263,8 @@ window.PRODUCTS = [
   "tipo": "Cápsulas",
   "categoria": "Articulações",
   "tamanho": "30 cápsulas",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Contribui para a saúde das articulações, ajudando a proteger a cartilagem e a amenizar o impacto de movimentos do dia a dia. Apoia a manutenção da estrutura articular ao longo do tempo.",
   "beneficios": [
    "Apoia a saúde das articulações",
@@ -301,7 +307,8 @@ window.PRODUCTS = [
   "tipo": "Solúveis",
   "categoria": "Performance",
   "tamanho": "pó · 300 g",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Um dos suplementos mais estudados para quem busca evolução física. Atua na regeneração de energia muscular, contribuindo para o aumento de força, volume e desempenho em treinos intensos. Produzida com matéria-prima de alta qualidade e laudo de pureza.",
   "beneficios": [
    "Contribui para o desempenho físico em treinos intensos",
@@ -348,7 +355,8 @@ window.PRODUCTS = [
   "tipo": "Solúveis",
   "categoria": "Performance",
   "tamanho": "pó · 280 g",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "fornecedor": {
    "nome": "Alphafitus",
    "anvisa": 350,
@@ -457,7 +465,8 @@ window.PRODUCTS = [
   "tipo": "Solúveis",
   "categoria": "Performance",
   "tamanho": "pó · 300 g",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "fornecedor": {
    "nome": "Alphafitus",
    "anvisa": 350,
@@ -581,7 +590,8 @@ window.PRODUCTS = [
   "tipo": "Gomas e Pastilhas",
   "categoria": "Performance",
   "tamanho": "90 gomas",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Creatina em formato de goma, pensada para tornar o consumo diário mais prático e saboroso. É um dos suplementos mais estudados e recomendados por médicos e nutricionistas para apoio à performance física.",
   "beneficios": [
    "Contribui para o desempenho físico e o ganho de massa magra",
@@ -664,7 +674,8 @@ window.PRODUCTS = [
   "tipo": "Gomas e Pastilhas",
   "categoria": "Performance",
   "tamanho": "90 gomas",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Creatina em formato de goma, pensada para tornar o consumo diário mais prático e saboroso. É um dos suplementos mais estudados e recomendados por médicos e nutricionistas para apoio à performance física.",
   "beneficios": [
    "Contribui para o desempenho físico e o ganho de massa magra",
@@ -747,7 +758,8 @@ window.PRODUCTS = [
   "tipo": "Gomas e Pastilhas",
   "categoria": "Performance",
   "tamanho": "90 gomas",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Creatina em formato de goma, pensada para tornar o consumo diário mais prático e saboroso. É um dos suplementos mais estudados e recomendados por médicos e nutricionistas para apoio à performance física.",
   "beneficios": [
    "Contribui para o desempenho físico e o ganho de massa magra",
@@ -830,7 +842,8 @@ window.PRODUCTS = [
   "tipo": "Cápsulas",
   "categoria": "Articulações",
   "tamanho": "60 cápsulas",
-  "maisPedido": true,
+  "destaque": "Mais pedido",
+  "ativo": true,
   "descricao": "Combina cúrcuma, colágeno tipo II, MSM, zinco e as vitaminas D3 e K2 em uma fórmula pensada para o conforto articular, a lubrificação das articulações e a saúde óssea, com o suporte antioxidante da cúrcuma e apoio ao sistema imunológico.",
   "beneficios": [
    "Contribui para o fortalecimento dos tecidos musculares",
@@ -927,7 +940,8 @@ window.PRODUCTS = [
   "tipo": "Cápsulas",
   "categoria": "Articulações",
   "tamanho": "60 comprimidos",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Formulado em comprimidos, reúne magnésio, colágeno tipo II não desnaturado, condroitina, glucosamina e vitamina K2 em uma combinação pensada para a rotina de cuidado de ossos, músculos e articulações.",
   "beneficios": [
    "Apoia a saúde dos ossos e das articulações",
@@ -994,7 +1008,8 @@ window.PRODUCTS = [
   "tipo": "Cápsulas",
   "categoria": "Metabolismo",
   "tamanho": "60 cápsulas",
-  "maisPedido": true,
+  "destaque": "Mais pedido",
+  "ativo": true,
   "descricao": "Combina cafeína anidra, extrato de laranja moro, guaraná, vitaminas e cromo em uma fórmula voltada ao metabolismo energético e à rotina de controle de peso, com suporte ao metabolismo de gorduras e ao equilíbrio glicêmico.",
   "beneficios": [
    "Apoia o metabolismo",
@@ -1066,7 +1081,8 @@ window.PRODUCTS = [
   "tipo": "Líquidos",
   "categoria": "Energia",
   "tamanho": "30 mL",
-  "maisPedido": true,
+  "destaque": "Mais pedido",
+  "ativo": true,
   "descricao": "Fórmula líquida pensada para apoiar o desempenho físico e mental, trazendo mais energia para a rotina e contribuindo para o equilíbrio hormonal masculino.",
   "beneficios": [
    "Contribui para mais energia",
@@ -1138,7 +1154,8 @@ window.PRODUCTS = [
   "tipo": "Cápsulas",
   "categoria": "Energia",
   "tamanho": "60 cápsulas",
-  "maisPedido": true,
+  "destaque": "Mais pedido",
+  "ativo": true,
   "descricao": "Reúne arginina, cafeína, magnésio, zinco e vitaminas do complexo B em uma fórmula pensada para apoiar o foco, a concentração e o desempenho físico e mental, somando efeito termogênico à rotina de treinos.",
   "beneficios": [
    "Contribui para a resistência física",
@@ -1271,7 +1288,8 @@ window.PRODUCTS = [
   "tipo": "Gomas e Pastilhas",
   "categoria": "Beleza",
   "tamanho": "30 gomas",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Une colágeno e vitaminas em um formato de goma prático, reunindo nutrientes que participam de diversas funções metabólicas do organismo e contribuem com ação antioxidante.",
   "beneficios": [
    "Contribui para a saúde de cabelo e pele",
@@ -1383,7 +1401,8 @@ window.PRODUCTS = [
   "tipo": "Cápsulas",
   "categoria": "Beleza",
   "tamanho": "60 cápsulas",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Fórmula com biotina em dose elevada, associada a um complexo de vitaminas e minerais. Reúne nutrientes que participam de diversas funções metabólicas do organismo e contribuem com uma ação antioxidante.",
   "beneficios": [
    "Contribui para a saúde de cabelos, pele e unhas",
@@ -1515,7 +1534,8 @@ window.PRODUCTS = [
   "tipo": "Cápsulas",
   "categoria": "Minerais",
   "tamanho": "60 cápsulas",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Formulado com dimagnésio malato, uma forma de magnésio com boa biodisponibilidade. Contribui para o equilíbrio dos eletrólitos e para a função muscular, além de apoiar o metabolismo energético e a disposição no dia a dia.",
   "beneficios": [
    "Contribui para o equilíbrio mineral",
@@ -1558,7 +1578,8 @@ window.PRODUCTS = [
   "tipo": "Cápsulas",
   "categoria": "Minerais",
   "tamanho": "30 cápsulas",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Contribui para a mineralização de ossos e dentes, apoiando também o funcionamento dos sinais nervosos e a contração muscular. Atua como cofator enzimático na produção de energia e participa da manutenção óssea do corpo.",
   "beneficios": [
    "Apoia a saúde celular",
@@ -1616,7 +1637,8 @@ window.PRODUCTS = [
   "tipo": "Cápsulas",
   "categoria": "Cognição",
   "tamanho": "30 cápsulas",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Contribui para a resposta dos sinais nervosos e para as contrações musculares, apoiando o crescimento e a reparação dos tecidos após o esforço físico. Colabora com o fortalecimento de ossos e estruturas musculares.",
   "beneficios": [
    "Auxilia a formação óssea",
@@ -1669,7 +1691,8 @@ window.PRODUCTS = [
   "tipo": "Líquidos",
   "categoria": "Sono",
   "tamanho": "30 mL",
-  "maisPedido": true,
+  "destaque": "Mais pedido",
+  "ativo": true,
   "descricao": "A melatonina é o hormônio associado à regulação do sono. Contribui para o ajuste do relógio biológico, sendo útil também para lidar com os efeitos da mudança de fuso horário.",
   "beneficios": [
    "Contribui para a melhora do sono",
@@ -1716,7 +1739,8 @@ window.PRODUCTS = [
   "tipo": "Gomas e Pastilhas",
   "categoria": "Sono",
   "tamanho": "30 gomas",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "A melatonina é o hormônio associado à regulação do sono. Contribui para o ajuste do relógio biológico, sendo útil também para lidar com os efeitos da mudança de fuso horário.",
   "beneficios": [
    "Contribui para a melhora do sono",
@@ -1793,7 +1817,8 @@ window.PRODUCTS = [
   "tipo": "Cápsulas",
   "categoria": "Performance",
   "tamanho": "60 cápsulas",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Formulado com cafeína, carnitina, taurina e tirosina em concentrações elevadas, pensado para apoiar o estado de alerta, a concentração e a disposição antes do treino.",
   "beneficios": [
    "Contribui para a produção de neurotransmissores",
@@ -1876,7 +1901,8 @@ window.PRODUCTS = [
   "tipo": "Líquidos",
   "categoria": "Óleos",
   "tamanho": "30 mL",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Óleo funcional rico em ácidos graxos, indicado para compor a rotina de cuidados com a pele e os cabelos, contribuindo com ação antioxidante para o organismo.",
   "beneficios": [
    "Fonte de ácidos graxos essenciais",
@@ -1933,7 +1959,8 @@ window.PRODUCTS = [
   "tipo": "Líquidos",
   "categoria": "Óleos",
   "tamanho": "30 mL",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Combina óleo de semente de uva e vitamina E em uma fórmula para a rotina de cuidados com a beleza, contribuindo para a saúde da pele e dos cabelos e para a proteção antioxidante das células no dia a dia.",
   "beneficios": [
    "Fonte de vitamina E com ação antioxidante",
@@ -1990,7 +2017,8 @@ window.PRODUCTS = [
   "tipo": "Líquidos",
   "categoria": "Óleos",
   "tamanho": "30 mL",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Reúne óleos de linhaça dourada, borragem e prímula, tradicionalmente associados ao cuidado da mulher, com vitamina E. Contribui para o conforto no período pré-menstrual e na menopausa, além de oferecer ação antioxidante.",
   "beneficios": [
    "Fonte de vitamina E com ação antioxidante",
@@ -2047,7 +2075,8 @@ window.PRODUCTS = [
   "tipo": "Líquidos",
   "categoria": "Óleos",
   "tamanho": "30 mL",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Combina óleo de semente de abóbora com vitamina E, tradicionalmente associado ao conforto urinário masculino, somando suporte à manutenção de níveis saudáveis de colesterol.",
   "beneficios": [
    "Tradicionalmente associado ao conforto urinário masculino",
@@ -2100,7 +2129,8 @@ window.PRODUCTS = [
   "tipo": "Gomas e Pastilhas",
   "categoria": "Performance",
   "tamanho": "90 pastilhas",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Creatina em formato de pastilha, pensada para tornar o consumo diário mais prático e saboroso. É um dos suplementos mais estudados e recomendados por médicos e nutricionistas para apoio à performance física.",
   "beneficios": [
    "Contribui para o desempenho físico e o ganho de massa magra",
@@ -2178,7 +2208,8 @@ window.PRODUCTS = [
   "tipo": "Cápsulas",
   "categoria": "Metabolismo",
   "tamanho": "60 cápsulas",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Formulado para apoiar o metabolismo de gorduras, o metabolismo energético e o equilíbrio do índice glicêmico, contribuindo com a rotina de controle de peso.",
   "beneficios": [
    "Apoia o equilíbrio da glicemia",
@@ -2225,7 +2256,8 @@ window.PRODUCTS = [
   "tipo": "Líquidos",
   "categoria": "Vitaminas",
   "tamanho": "30 mL",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Formulada com metilcobalamina, a forma ativa da vitamina B12, que apoia a produção de hemoglobina (responsável pelo transporte de oxigênio no corpo) e participa da produção de aminoácidos que protegem diversas funções do organismo. Contribui também para a síntese de neurotransmissores e a saúde dos nervos.",
   "beneficios": [
    "Apoia a formação de células sanguíneas",
@@ -2274,7 +2306,8 @@ window.PRODUCTS = [
   "tipo": "Líquidos",
   "categoria": "Vitaminas",
   "tamanho": "30 mL",
-  "maisPedido": false,
+  "destaque": "",
+  "ativo": true,
   "descricao": "Combinação líquida de vitamina D3 e K2, indicada para quem busca suporte adicional à saúde dos ossos e ao sistema imunológico, ajudando a manter níveis adequados de cálcio no sangue.",
   "beneficios": [
    "Contribui para a manutenção dos ossos",

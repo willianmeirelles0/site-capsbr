@@ -66,13 +66,13 @@
       <div class="toolbar">
         <div class="search"><input type="search" id="q" placeholder="Buscar por nome, código ou categoria" aria-label="Buscar"></div>
         <div class="seg" id="fTipo" role="tablist">
-          <button class="is-active" data-v="">Todos</button><button data-v="Cápsulas">Cápsulas</button><button data-v="Líquidos">Líquidos</button>
+          <button class="is-active" data-v="">Todos</button><button data-v="Cápsulas">Cápsulas</button><button data-v="Líquidos">Líquidos</button><button data-v="Gomas e Pastilhas">Gomas e Pastilhas</button><button data-v="Solúveis">Solúveis</button>
         </div>
         <button class="btn btn--primary" id="newBtn">+ Novo produto</button>
       </div>
       <div class="table-wrap">
         <table class="table" id="pTable">
-          <thead><tr><th class="c-ord">Ordem</th><th>Produto</th><th>Tipo · Categoria</th><th class="num">A partir de</th><th class="num">Selo</th><th class="c-hot">Mais pedido</th><th class="c-act"></th></tr></thead>
+          <thead><tr><th class="c-ord">Ordem</th><th>Produto</th><th>Tipo · Categoria</th><th class="num">A partir de</th><th class="num">Selo</th><th>Destaque</th><th class="c-hot">Ativo</th><th class="c-act"></th></tr></thead>
           <tbody></tbody>
         </table>
         <p class="empty" id="pEmpty" hidden>Nenhum produto encontrado.</p>
@@ -222,7 +222,8 @@
           <label class="field"><span>Tipo</span><select name="tipo"><option>Cápsulas</option><option>Líquidos</option><option>Gomas e Pastilhas</option><option>Solúveis</option></select><small class="err" data-perr="tipo"></small></label>
           <label class="field"><span>Categoria</span><input type="text" name="categoria" maxlength="40" list="catList"><datalist id="catList"></datalist><small class="err" data-perr="categoria"></small></label>
           <label class="field"><span>Tamanho</span><input type="text" name="tamanho" maxlength="40" placeholder="60 cápsulas"><small class="err" data-perr="tamanho"></small></label>
-          <label class="switch-row"><input type="checkbox" name="maisPedido"><span class="switch"></span><span><b>Mais pedido</b><small>Mostra o selo no card.</small></span></label>
+          <label class="field"><span>Destaque no card</span><select name="destaque"><option value="">Nenhum</option><option>Mais pedido</option><option>Lançamento</option><option>Novidade</option><option>Promoção</option></select><small class="help">Mostra uma etiqueta no card do produto.</small></label>
+          <label class="switch-row"><input type="checkbox" name="ativo" checked><span class="switch"></span><span><b>Ativo no catálogo</b><small>Desligue para esconder este produto do site sem excluí-lo.</small></span></label>
         </div>
       </div>
 

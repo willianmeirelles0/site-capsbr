@@ -8,7 +8,7 @@
     hero: { intro: 0, scroll: 0 },
     caps: { y: .64, rot: 35, scale: .82, spin: 0, tumble: 0, open: 0, out: 0, bottle: 0, fill: 0, capOn: 0 },
   };
-  const P = window.PRODUCTS;
+  const P = window.PRODUCTS.filter(p => p.ativo !== false);
   const lite = document.documentElement.classList.contains('is-lite');
   const reduce = lite || matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = (s, r = document) => r.querySelector(s);
@@ -29,9 +29,9 @@
   /* ---------- Products ---------- */
   const grid = $('.js-grid');
   const cardsHTML = () => P.map(p => `
-    <a class="spot pcard" href="produto.html?p=${esc(p.slug)}" data-tipo="${esc(p.tipo)}" data-hot="${p.maisPedido}">
+    <a class="spot pcard" href="produto.html?p=${esc(p.slug)}" data-tipo="${esc(p.tipo)}" data-hot="${p.destaque === 'Mais pedido'}">
       <div class="pcard__top"><span class="tag tag--code" data-scramble>${esc(p.id)}</span></div>
-      ${p.maisPedido ? '<span class="pcard__hot">Mais pedido</span>' : ''}
+      ${p.destaque ? `<span class="pcard__hot">${esc(p.destaque)}</span>` : ''}
       <div class="pcard__img pcard__img--photo">${photoFor(p)}</div>
       <div class="pcard__cat">${esc(p.tipo)} · ${esc(p.categoria)}</div>
       <h3>${esc(p.titulo)}</h3>
@@ -49,7 +49,7 @@
     { k: 'Líquidos', l: 'Líquidos', n: P.filter(p => p.tipo === 'Líquidos').length },
     { k: 'Gomas e Pastilhas', l: 'Gomas & Pastilhas', n: P.filter(p => p.tipo === 'Gomas e Pastilhas').length },
     { k: 'Solúveis', l: 'Solúveis', n: P.filter(p => p.tipo === 'Solúveis').length },
-    { k: 'hot', l: 'Mais pedidos', n: P.filter(p => p.maisPedido).length },
+    { k: 'hot', l: 'Mais pedidos', n: P.filter(p => p.destaque === 'Mais pedido').length },
   ].filter(f => f.n > 0 || f.k === 'all');
   const fbox = $('.js-filters');
   fbox.innerHTML = filters.map((f, i) => `<button class="chip${i ? '' : ' is-active'}" data-k="${f.k}">${f.l}<sup>${f.n}</sup></button>`).join('');

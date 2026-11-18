@@ -12,7 +12,7 @@
    ========================================================= */
 (() => {
   const SITE = window.SITE || {};
-  const ALL = (window.PRODUCTS || []).filter(p => p && p.volumes && Object.keys(p.volumes).length);
+  const ALL = (window.PRODUCTS || []).filter(p => p && p.ativo !== false && p.volumes && Object.keys(p.volumes).length);
   const WA = String(SITE.whatsapp || '5554997090147').replace(/\D/g, '') || '5554997090147';
   const COSTS = Object.assign({
     rotulo: {
@@ -285,7 +285,7 @@
         <div class="pp__stage">
           <div class="pp__rings"><i></i><i></i><i></i></div>
           <span class="code">${esc(p.id)}</span>
-          ${p.maisPedido ? '<span class="pp__hot">Mais pedido</span>' : ''}
+          ${p.destaque ? `<span class="pp__hot">${esc(p.destaque)}</span>` : ''}
           <img class="${imgFor(p.tipo).cls}" src="${imgFor(p.tipo).src}" alt="${esc(p.titulo)}, ${imgFor(p.tipo).alt}" loading="lazy">
           <span class="pp__size">${esc(p.tamanho)}</span>
         </div>
@@ -428,7 +428,7 @@
   function render() {
     const list = ALL.filter(p => state.linha === 'todas' || p.tipo === TIPO_BY_LINHA[state.linha]);
     if (!list.length) { root.innerHTML = '<p class="loading">Nenhuma fórmula encontrada.</p>'; return; }
-    const sortHot = arr => [...arr].sort((a, b) => (b.maisPedido === true) - (a.maisPedido === true));
+    const sortHot = arr => [...arr].sort((a, b) => (b.destaque === 'Mais pedido') - (a.destaque === 'Mais pedido'));
     const groups = ORDER.map(t => ({ key: LINHA_BY_TIPO[t], label: t, items: sortHot(list.filter(p => p.tipo === t)) })).filter(g => g.items.length);
     document.documentElement.classList.toggle('no-prices', !state.precos);
     root.innerHTML = [

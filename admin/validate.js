@@ -6,6 +6,7 @@
 
 export const TIPOS = ['Cápsulas', 'Líquidos', 'Gomas e Pastilhas', 'Solúveis'];
 export const ROTULO_QTYS = [500, 1000];
+export const DESTAQUES = ['', 'Mais pedido', 'Lançamento', 'Novidade', 'Promoção'];
 export const LIMITS = { products: 200, volumes: 10, beneficios: 10, tabela: 40, announce: 12 };
 export const DEFAULT_SITE = {
   whatsapp: '5554997090147',
@@ -150,7 +151,8 @@ export function normalizeProduct(raw, i = 0) {
 
   const out = {
     id, slug, titulo, nome, tipo, categoria, tamanho,
-    maisPedido: !!p.maisPedido,
+    destaque: DESTAQUES.includes(p.destaque) ? p.destaque : '',
+    ativo: p.ativo !== false,
     descricao, beneficios,
     volumes: ordered,
     de: brl(first[0]), por: brl(first[1]), desconto,

@@ -147,6 +147,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--teal);box-shadow:0 0 
 .table tbody tr{transition:background .15s}
 .table tbody tr:hover{background:#fbfaf6}
 .table tr.is-err td:first-child{box-shadow:inset 3px 0 0 var(--red)}
+.table tr.is-off{opacity:.5}
+.table tr.is-off:hover{opacity:.8}
 .num{text-align:right !important;font-variant-numeric:tabular-nums}
 .c-ord{width:84px}.c-hot{width:110px;text-align:center !important}.c-act{width:130px}
 .table td.c-hot{text-align:center}

@@ -59,7 +59,8 @@
   set('.js-crumb', p.titulo);
   set('.js-code', p.id); set('.js-code2', p.id);
   set('.js-cat', `${p.tipo} · ${p.categoria}`);
-  $('.js-hot').hidden = !p.maisPedido;
+  $('.js-hot').hidden = !p.destaque;
+  set('.js-hot', p.destaque);
   set('.js-title', p.titulo);
   set('.js-nome', p.nome !== p.titulo ? p.nome : '');
   set('.js-desc', p.descricao);
@@ -191,11 +192,11 @@
   update(true);
 
   /* ---------- Relacionados ---------- */
-  const rel = P.filter(x => x !== p).sort((a, b) => (b.tipo === p.tipo) - (a.tipo === p.tipo) || (b.categoria === p.categoria) - (a.categoria === p.categoria) || b.maisPedido - a.maisPedido).slice(0, 4);
+  const rel = P.filter(x => x !== p && x.ativo !== false).sort((a, b) => (b.tipo === p.tipo) - (a.tipo === p.tipo) || (b.categoria === p.categoria) - (a.categoria === p.categoria) || !!b.destaque - !!a.destaque).slice(0, 4);
   $('.js-rel').innerHTML = rel.map(x => `
     <a class="spot pcard" href="produto.html?p=${esc(x.slug)}" data-reveal>
       <div class="pcard__top"><span class="tag tag--code" data-scramble>${esc(x.id)}</span></div>
-      ${x.maisPedido ? '<span class="pcard__hot">Mais pedido</span>' : ''}
+      ${x.destaque ? `<span class="pcard__hot">${esc(x.destaque)}</span>` : ''}
       <div class="pcard__img pcard__img--photo">${photoFor(x)}</div>
       <div class="pcard__cat">${esc(x.tipo)} · ${esc(x.categoria)}</div>
       <h3>${esc(x.titulo)}</h3>
