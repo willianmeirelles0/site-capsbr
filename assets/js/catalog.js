@@ -334,7 +334,7 @@
         <div class="sim__l">
           <span class="mono">Exemplo de pedido</span>
           <h3>${nf(exV)} unidades de ${esc(ex.titulo)}</h3>
-          ${ex.fornecedor ? `<span class="sim__forn">Fornecedor ${esc(ex.fornecedor.nome)} · condição própria</span>` : ''}
+          ${ex.fornecedor ? `<span class="sim__forn">Condição própria deste fornecedor</span>` : ''}
           <p>Simulação com os valores deste catálogo. A cotação final é confirmada com você no WhatsApp, junto com a aprovação do rótulo.${ex.fornecedor ? ' Esta fórmula vem de um fornecedor com rótulo, ANVISA e/ou arte em condição diferente do padrão acima.' : ''}</p>
           <div class="sim__per"><b>${brl(c.total / exV)}</b><span>custo final por unidade,<br>com tudo incluído</span></div>
         </div>
