@@ -1,5 +1,7 @@
 // Precos sincronizados com a planilha vitrine-capsbr-precos-promocoes (aba Precos) em 2026-11-18
 // S-003/S-004 mantidos com o preco confirmado pela Alphafitus (a planilha ainda tem o valor antigo)
+// G-007 (Melatonina Vegana) removido e G-008 renumerado para G-007 em 2026-11-18
+// S-002 (Creatina Soluvel) atualizado conforme tabela enviada por Willian em 2026-11-18
 window.PRODUCTS = [
  {
   "id": "C-002",
@@ -116,16 +118,16 @@ window.PRODUCTS = [
     20.9
    ],
    "300": [
-    16.0,
-    16.0
+    16,
+    16
    ],
    "500": [
-    14.0,
-    14.0
+    14,
+    14
    ],
    "1000": [
-    13.0,
-    13.0
+    13,
+    13
    ]
   },
   "de": "R$ 13,00",
@@ -169,8 +171,8 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "500": [
-    25.0,
-    25.0
+    25,
+    25
    ],
    "1000": [
     18.5,
@@ -307,25 +309,25 @@ window.PRODUCTS = [
    "Fornece energia para esforços de explosão e alta intensidade"
   ],
   "volumes": {
-   "100": [
-    50.9,
-    50.9
-   ],
    "300": [
-    45.9,
-    45.9
+    34.9,
+    34.9
    ],
    "500": [
-    43.9,
-    43.9
+    31.9,
+    31.9
    ],
    "1000": [
-    40.9,
-    40.9
+    29.9,
+    29.9
+   ],
+   "2000": [
+    27.9,
+    27.9
    ]
   },
-  "de": "R$ 40,90",
-  "por": "R$ 40,90",
+  "de": "R$ 27,90",
+  "por": "R$ 27,90",
   "desconto": 0,
   "porcao": "Porção de 3 g (1 colher-medida)",
   "porcoes": "Porções por embalagem: 100",
@@ -827,12 +829,12 @@ window.PRODUCTS = [
     20.9
    ],
    "300": [
-    16.0,
-    16.0
+    16,
+    16
    ],
    "500": [
-    15.0,
-    15.0
+    15,
+    15
    ],
    "1000": [
     13.5,
@@ -932,8 +934,8 @@ window.PRODUCTS = [
     19.5
    ],
    "1000": [
-    18.0,
-    18.0
+    18,
+    18
    ]
   },
   "de": "R$ 18,00",
@@ -991,16 +993,16 @@ window.PRODUCTS = [
     20.9
    ],
    "300": [
-    16.0,
-    16.0
+    16,
+    16
    ],
    "500": [
-    15.0,
-    15.0
+    15,
+    15
    ],
    "1000": [
-    13.0,
-    13.0
+    13,
+    13
    ]
   },
   "de": "R$ 13,00",
@@ -1384,12 +1386,12 @@ window.PRODUCTS = [
     14.5
    ],
    "500": [
-    13.0,
-    13.0
+    13,
+    13
    ],
    "1000": [
-    12.0,
-    12.0
+    12,
+    12
    ]
   },
   "de": "R$ 12,00",
@@ -1516,8 +1518,8 @@ window.PRODUCTS = [
     13.7
    ],
    "3000": [
-    11.0,
-    11.0
+    11,
+    11
    ]
   },
   "de": "R$ 11,00",
@@ -1551,8 +1553,8 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "500": [
-    17.0,
-    17.0
+    17,
+    17
    ],
    "1000": [
     11.5,
@@ -1694,78 +1696,6 @@ window.PRODUCTS = [
  },
  {
   "id": "G-007",
-  "slug": "melatonina-vegana-em-pastilha-de-goma",
-  "titulo": "Melatonina Vegana em Pastilha de Goma",
-  "nome": "Melatonina Vegana em Pastilha de Goma",
-  "tipo": "Gomas e Pastilhas",
-  "categoria": "Sono",
-  "tamanho": "30 gomas",
-  "maisPedido": false,
-  "descricao": "A melatonina é o hormônio associado à regulação do sono. Contribui para o ajuste do relógio biológico, sendo útil também para lidar com os efeitos da mudança de fuso horário.",
-  "beneficios": [
-   "Contribui para a melhora do sono",
-   "Ajuda a regular o ciclo circadiano",
-   "Apoia o ajuste em mudanças de fuso horário"
-  ],
-  "volumes": {
-   "100": [
-    20.7,
-    20.7
-   ],
-   "300": [
-    18.7,
-    18.7
-   ],
-   "500": [
-    17.6,
-    17.6
-   ],
-   "1000": [
-    16.3,
-    16.3
-   ]
-  },
-  "de": "R$ 16,30",
-  "por": "R$ 16,30",
-  "desconto": 0,
-  "porcao": "Porção de 3 g (1 unidade)",
-  "porcoes": "Porções por embalagem: 30",
-  "tabela": [
-   [
-    "Valor energético (kcal)",
-    "10",
-    "1"
-   ],
-   [
-    "Carboidratos (g)",
-    "2,6",
-    "1"
-   ],
-   [
-    "Açúcares totais (g)",
-    "1,8",
-    "*"
-   ],
-   [
-    "Açúcares adicionados (g)",
-    "1,8",
-    "4"
-   ],
-   [
-    "Sódio (mg)",
-    "9",
-    "0"
-   ],
-   [
-    "Melatonina (mg)",
-    "0,21",
-    "*"
-   ]
-  ],
-  "naoContem": "Não contém quantidades significativas de Proteínas, Gorduras totais, Gorduras saturadas, Gorduras trans e Fibras alimentares."
- },
- {
-  "id": "G-008",
   "slug": "melatonina-em-pastilha-de-goma",
   "titulo": "Melatonina em Pastilha de Goma",
   "nome": "Melatonina em Pastilha de Goma",
@@ -2247,16 +2177,16 @@ window.PRODUCTS = [
     20.9
    ],
    "300": [
-    16.0,
-    16.0
+    16,
+    16
    ],
    "500": [
-    14.0,
-    14.0
+    14,
+    14
    ],
    "1000": [
-    13.0,
-    13.0
+    13,
+    13
    ]
   },
   "de": "R$ 13,00",
@@ -2347,16 +2277,16 @@ window.PRODUCTS = [
     15.3
    ],
    "1000": [
-    12.0,
-    12.0
+    12,
+    12
    ],
    "2000": [
     11.5,
     11.5
    ],
    "3000": [
-    10.0,
-    10.0
+    10,
+    10
    ]
   },
   "de": "R$ 10,00",
