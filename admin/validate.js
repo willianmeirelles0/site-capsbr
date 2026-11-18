@@ -8,7 +8,7 @@ export const TIPOS = ['Cápsulas', 'Líquidos', 'Gomas e Pastilhas', 'Solúveis'
 export const LIMITS = { products: 200, volumes: 10, beneficios: 10, tabela: 40, announce: 12 };
 export const DEFAULT_SITE = {
   whatsapp: '5554997090147',
-  promo: { enabled: true, name: 'Black Friday', end: '2026-11-30T23:59:59-03:00', max: 37 },
+  promo: { enabled: false, name: '', end: '2000-01-01T00:00:00-03:00', max: 0 },
   announceBanner: '',
   announce: ['Marca própria a partir de 300 unidades', 'Teste de estabilidade em todo produto', 'Notificação ANVISA no mesmo fluxo', 'Produção em 15 a 45 dias'],
   costs: { rotuloCaps: 650, rotuloLiq: 600, rotuloLote: 500, anvisa: 300 },

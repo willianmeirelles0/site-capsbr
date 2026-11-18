@@ -13,17 +13,12 @@
     cream:  { label: '#f3efe6', ink: '#1a1612', sub: 'rgba(26,22,18,.6)' },
     graphite: { label: '#2b2b30', ink: '#f5f5f4', sub: 'rgba(245,245,244,.6)' },
   };
-  /* ---------- Campanha (Black Friday) ----------
-     Tudo que é promocional depende de PROMO.on. Depois de PROMO.end o site
-     volta sozinho para a versão "sempre vale": preços normais, sem contador. */
-  const sp = SITE.promo || {};
-  const PROMO = { name: sp.name || 'Black Friday', end: sp.end || '2026-11-30T23:59:59-03:00', max: +sp.max || 37, enabled: sp.enabled !== false };
-  { const d = new Date(PROMO.end); PROMO.endDM = d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', timeZone: 'America/Sao_Paulo' }); PROMO.endDMY = d.toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' }); }
-  PROMO.on = PROMO.enabled && Date.now() < new Date(PROMO.end).getTime() && !/promo=off/.test(location.search);
-  document.documentElement.classList.toggle('promo-on', PROMO.on);
-  document.documentElement.classList.toggle('promo-off', !PROMO.on);
-  // quem estiver com a página aberta na hora que a promoção acaba recebe a versão sem promoção
-  if (PROMO.on) { const ms = new Date(PROMO.end).getTime() - Date.now(); if (ms < 2147483000) setTimeout(() => location.reload(), ms + 1500); }
+  /* ---------- Campanha promocional (desativada) ----------
+     A Black Friday da CapsBR roda num site à parte; este site nunca mostra
+     promoção. PROMO existe só porque priceAt()/waLink() ainda referenciam
+     PROMO.on - mantido sempre false. */
+  const PROMO = { name: '', end: '2000-01-01T00:00:00-03:00', max: 0, enabled: false, on: false, endDM: '', endDMY: '' };
+  document.documentElement.classList.add('promo-off');
 
   let uid = 0;
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -130,7 +125,7 @@ ${line(38, 238, l2, 8, 124, 600, FONT_B, t.sub, .06)}
   }
 
   const brl = n => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-  const waLink = msg => `https://wa.me/${WA}?text=${encodeURIComponent((PROMO.on ? '[BF26] ' : '') + msg)}`;
+  const waLink = msg => `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
   const productFor = p => bottle({
     kind: p.tipo === 'Líquidos' ? 'drop' : 'caps',
     brand: 'Sua Marca',
@@ -166,23 +161,13 @@ ${line(38, 238, l2, 8, 124, 600, FONT_B, t.sub, .06)}
   }).replace(/'/g, '&#39;');
   window.Caps = { bottle, brl, waLink, productFor, photoFor, minPrice, maxDe, priceAt, THEMES, PROMO, COSTS, SITE, esc, parseRow, nutriRows, bottleData };
 
-  /* ---------- Textos da campanha e barra de avisos (editáveis no painel) ---------- */
-  if (PROMO.on && (PROMO.name !== 'Black Friday' || PROMO.max !== 37 || PROMO.endDMY !== '30/11/2026')) {
-    const rep = t => t.replace(/30\/11\/2026/g, PROMO.endDMY).replace(/30\/11/g, PROMO.endDM).replace(/37%/g, PROMO.max + '%').replace(/Black Friday/g, PROMO.name);
-    const tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-    for (let n; (n = tw.nextNode());) { const v = rep(n.nodeValue); if (v !== n.nodeValue) n.nodeValue = v; }
-  }
+  /* ---------- Barra de avisos (editável no painel) ---------- */
   const track = document.querySelector('.announce__track');
   if (track && Array.isArray(SITE.announce) && SITE.announce.length) {
-    const promoTxt = `${PROMO.name} CapsBR: até ${PROMO.max}% off até ${PROMO.endDM}`;
-    const row = `<span data-promo>${esc(SITE.announceBanner || promoTxt)}</span>` + SITE.announce.map(t => `<span>${esc(t)}</span>`).join('');
+    const row = SITE.announce.map(t => `<span>${esc(t)}</span>`).join('');
     track.innerHTML = row + row;
   }
   document.querySelectorAll('.js-anvisa').forEach(el => el.textContent = brl(COSTS.anvisa));
-
-  /* ---------- Promo: mostra/esconde blocos ---------- */
-  document.querySelectorAll('[data-promo]').forEach(el => { if (!PROMO.on) el.remove(); });
-  document.querySelectorAll('[data-nopromo]').forEach(el => { if (PROMO.on) el.remove(); });
 
   /* ---------- Bootstrap interactions ---------- */
   document.documentElement.classList.remove('no-js');
@@ -337,18 +322,6 @@ ${line(38, 238, l2, 8, 124, 600, FONT_B, t.sub, .06)}
     const f = document.querySelector('.footer');
     if (!f || reduce) return;
     gsap.from(f.querySelectorAll('.footer__brand, .footer__grid > div, .footer__badges span'), { y: 30, opacity: 0, stagger: .06, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: f, start: 'top 90%' } });
-  };
-
-  // Countdown to campaign end
-  window.Caps.countdown = (el, end = PROMO.end) => {
-    if (!el) return;
-    const T = new Date(end).getTime();
-    const tick = () => {
-      let s = Math.max(0, Math.floor((T - Date.now()) / 1000));
-      const v = [Math.floor(s / 86400), Math.floor(s % 86400 / 3600), Math.floor(s % 3600 / 60), s % 60];
-      el.querySelectorAll('b').forEach((b, i) => b.textContent = String(v[i]).padStart(2, '0'));
-    };
-    tick(); setInterval(tick, 1000);
   };
 
   // Hover-scramble on mono labels

@@ -2,7 +2,7 @@
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-  const { brl, waLink, productFor, photoFor, minPrice, maxDe, priceAt, PROMO, COSTS, nutriRows, bottleData } = window.Caps;
+  const { brl, waLink, productFor, photoFor, minPrice, priceAt, COSTS, nutriRows, bottleData } = window.Caps;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const P = window.PRODUCTS;
   const slug = new URLSearchParams(location.search).get('p');
@@ -21,7 +21,6 @@
   set('.js-title', p.titulo);
   set('.js-nome', p.nome !== p.titulo ? p.nome : '');
   set('.js-desc', p.descricao);
-  set('.js-off', `-${p.desconto}%`);
   set('.js-size', p.tamanho);
   set('.js-word', `${p.categoria} · `.repeat(6));
   set('.js-porcao', p.porcao); set('.js-porcoes', p.porcoes);
@@ -114,7 +113,7 @@
         `*Produto:* ${p.titulo} (${p.id})`,
         `*Quantidade:* ${nf(vol)} unidades`,
         `*Embalagem:* ${p.tamanho}`,
-        `*Preço:* ${brl(por)}/un.${PROMO.on ? ` (${PROMO.name}, de ${brl(de)})` : ''}`,
+        `*Preço:* ${brl(por)}/un.`,
         `*Lote:* ${brl(sub)} + rótulos ${brl(rot)} + ANVISA ${brl(ANV)}`,
         `*Total estimado:* ${brl(total)} (sem frete)`,
       ]));
@@ -136,14 +135,14 @@
   const rel = P.filter(x => x !== p).sort((a, b) => (b.tipo === p.tipo) - (a.tipo === p.tipo) || (b.categoria === p.categoria) - (a.categoria === p.categoria) || b.maisPedido - a.maisPedido).slice(0, 4);
   $('.js-rel').innerHTML = rel.map(x => `
     <a class="spot pcard" href="produto.html?p=${x.slug}" data-reveal>
-      <div class="pcard__top"><span class="tag tag--code" data-scramble>${x.id}</span>${PROMO.on ? `<span class="pcard__off">-${x.desconto}%</span>` : ''}</div>
+      <div class="pcard__top"><span class="tag tag--code" data-scramble>${x.id}</span></div>
       ${x.maisPedido ? '<span class="pcard__hot">Mais pedido</span>' : ''}
       <div class="pcard__img pcard__img--photo">${photoFor(x)}</div>
       <div class="pcard__cat">${x.tipo} · ${x.categoria}</div>
       <h3>${x.titulo}</h3>
       <div class="pcard__size">${x.tamanho}</div>
       <div class="pcard__foot">
-        <div class="pcard__price"><small>a partir de</small>${PROMO.on ? `<s>${brl(maxDe(x))}</s>` : ''}<b>${brl(minPrice(x))}<em> /un.</em></b></div>
+        <div class="pcard__price"><small>a partir de</small><b>${brl(minPrice(x))}<em> /un.</em></b></div>
         <span class="pcard__go">${arrow}</span>
       </div>
     </a>`).join('');
@@ -151,7 +150,6 @@
   /* ---------- CTA ---------- */
   $('.js-cta-bg').innerHTML = [[8, 20, -30, 90], [82, 15, 40, 120], [15, 75, 70, 70], [88, 70, -20, 100]].map(([x, y, r, w], i) =>
     `<div class="cap3d js-cap-img" data-variant="light" style="left:${x}%;top:${y}%;--w:${w * .4}px;--h:${w}px;transform:rotate(${r}deg)" data-speed="${[.8, -.6, .5, -.9][i]}"><div class="cap3d__half cap3d__half--top"></div><div class="cap3d__half cap3d__half--bot"></div></div>`).join('');
-  window.Caps.countdown($('.js-countdown'));
   window.Caps.footer();
 
   /* ---------- Animações gerais ---------- */

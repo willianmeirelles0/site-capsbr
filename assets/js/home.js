@@ -2,7 +2,7 @@
    Visual Lab · Home (animações)
    ========================================================= */
 (() => {
-  const { bottle, brl, waLink, productFor, photoFor, minPrice, maxDe, PROMO } = window.Caps;
+  const { bottle, brl, waLink, productFor, photoFor, minPrice } = window.Caps;
   // estado lido pelo módulo 3D (scene3d.js)
   const S3 = window.Caps.S3 = {
     hero: { intro: 0, scroll: 0 },
@@ -18,7 +18,7 @@
   const arrow = '<svg viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H4M13 1v9" stroke="currentColor" stroke-width="1.8"/></svg>';
 
   /* ---------- WhatsApp links ---------- */
-  $$('.js-wa').forEach(a => a.href = waLink(PROMO.on ? 'Olá! Quero terceirizar a produção da minha marca de suplementos com a CapsBR e conhecer as condições da ' + PROMO.name + '.' : 'Olá! Quero terceirizar a produção da minha marca de suplementos com a CapsBR.'));
+  $$('.js-wa').forEach(a => a.href = waLink('Olá! Quero terceirizar a produção da minha marca de suplementos com a CapsBR.'));
 
   /* ---------- Marquees ---------- */
   const names = P.map(p => p.titulo);
@@ -30,14 +30,14 @@
   const grid = $('.js-grid');
   const cardsHTML = () => P.map(p => `
     <a class="spot pcard" href="produto.html?p=${p.slug}" data-tipo="${p.tipo}" data-hot="${p.maisPedido}">
-      <div class="pcard__top"><span class="tag tag--code" data-scramble>${p.id}</span>${PROMO.on ? `<span class="pcard__off">-${p.desconto}%</span>` : ''}</div>
+      <div class="pcard__top"><span class="tag tag--code" data-scramble>${p.id}</span></div>
       ${p.maisPedido ? '<span class="pcard__hot">Mais pedido</span>' : ''}
       <div class="pcard__img pcard__img--photo">${photoFor(p)}</div>
       <div class="pcard__cat">${p.tipo} · ${p.categoria}</div>
       <h3>${p.titulo}</h3>
       <div class="pcard__size">${p.tamanho}</div>
       <div class="pcard__foot">
-        <div class="pcard__price"><small>a partir de</small>${PROMO.on ? `<s>${brl(maxDe(p))}</s>` : ''}<b>${brl(minPrice(p))}<em> /un.</em></b></div>
+        <div class="pcard__price"><small>a partir de</small><b>${brl(minPrice(p))}<em> /un.</em></b></div>
         <span class="pcard__go">${arrow}</span>
       </div>
     </a>`).join('');
@@ -123,13 +123,11 @@
     ['Posso fechar mais de uma fórmula de uma vez?', 'Pode, e vale a pena: monte seu kit escolhendo 2 ou mais fórmulas e envie tudo numa única mensagem no WhatsApp, pra fechar de uma vez só.'],
     ['Como funciona para fechar o pedido?', 'Você escolhe a fórmula e o volume aqui no site, fala direto com a CapsBR no WhatsApp, recebe a cotação e o contrato, e assim que o rótulo é aprovado, sua marca entra em produção.'],
   ];
-  if (PROMO.on) faq.push([`Até quando vale a condição de ${PROMO.name}?`, `Até ${PROMO.endDMY}, ou enquanto durar o volume reservado para a campanha, o que vier primeiro. Depois disso, os produtos voltam para o preço normal do catálogo.`]);
   const fx = $('.js-faq');
   fx.innerHTML = faq.map(([q, a]) => `<div class="acc__item" data-reveal><button class="acc__q" aria-expanded="false">${q}<span class="acc__ic"></span></button><div class="acc__a"><p>${a}</p></div></div>`).join('');
   window.Caps.accordion(fx);
 
-  /* ---------- Countdown & CTA background ---------- */
-  window.Caps.countdown($('.js-countdown'));
+  /* ---------- CTA background ---------- */
   const ctaBg = $('.js-cta-bg');
   ctaBg.innerHTML = [[8, 20, -30, 90], [82, 15, 40, 120], [15, 75, 70, 70], [88, 70, -20, 100], [50, 92, 10, 60]].map(([x, y, r, w]) =>
     `<div class="cap3d js-cap-img" data-variant="light" style="left:${x}%;top:${y}%;--w:${w * .4}px;--h:${w}px;transform:rotate(${r}deg)" data-speed="${(Math.random() * 2 - 1).toFixed(2)}"><div class="cap3d__half cap3d__half--top"></div><div class="cap3d__half cap3d__half--bot"></div></div>`).join('');

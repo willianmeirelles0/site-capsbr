@@ -31,10 +31,8 @@
   ];
   const TIPO_BY_LINHA = { capsulas: 'Cápsulas', liquidos: 'Líquidos', gomas: 'Gomas e Pastilhas', soluveis: 'Solúveis' };
   const LINHA_BY_TIPO = { 'Cápsulas': 'capsulas', 'Líquidos': 'liquidos', 'Gomas e Pastilhas': 'gomas', 'Solúveis': 'soluveis' };
-  const sp = SITE.promo || {};
-  const PROMO = { name: sp.name || 'Black Friday', end: sp.end || '2026-11-30T23:59:59-03:00', max: +sp.max || 37, enabled: sp.enabled !== false };
-  PROMO.on = PROMO.enabled && Date.now() < new Date(PROMO.end).getTime() && !/promo=off/.test(location.search);
-  PROMO.endDMY = new Date(PROMO.end).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+  // A Black Friday roda num site à parte; este catálogo nunca mostra promoção.
+  const PROMO = { on: false };
 
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -110,7 +108,7 @@
       <div class="dk-grid"></div><div class="dk-glow"></div>
       <div class="cover__top"><span class="dk-logo" role="img" aria-label="CapsBR"></span><div class="cover__ed">Catálogo ${today.getFullYear()}<br>Edição ${esc(edition)}</div></div>
       <div class="cover__body">
-        <div class="cover__tags"><span class="tag"><span class="dot"></span>Marca própria de suplementos</span>${PROMO.on && state.precos ? `<span class="tag cover__promo">${esc(PROMO.name)} · até ${PROMO.max}% off até ${PROMO.endDMY.slice(0, 5)}</span>` : ''}</div>
+        <div class="cover__tags"><span class="tag"><span class="dot"></span>Marca própria de suplementos</span></div>
         <h1 class="display">${title}</h1>
         <p class="lead">Fórmulas prontas, validadas e com teste de estabilidade. Você escolhe, a gente cuida da produção com o rótulo da sua marca e entrega pronto pra vender.</p>
         ${state.para ? `<div class="cover__for"><span>Preparado para</span><b>${esc(state.para)}</b></div>` : ''}
@@ -240,7 +238,7 @@
     const vs = vols(p);
     const c = calcFor(p, v, rq);
     return `<div class="pr" data-pid="${esc(p.id)}">
-      <div class="pr__h"><span class="mono">Monte o seu pedido</span>${PROMO.on && p.desconto ? `<span class="pr__badge">${esc(PROMO.name)} · -${p.desconto}%</span>` : ''}</div>
+      <div class="pr__h"><span class="mono">Monte o seu pedido</span></div>
       <div class="pr__sub">Volume do pedido</div>
       <div class="pr__pills" role="group" aria-label="Volume do pedido">
         ${vs.map(vv => `<button type="button" class="pr__pill${vv === v ? ' is-on' : ''}" data-vol="${vv}" aria-pressed="${vv === v}">${nf(vv)} un.</button>`).join('')}
@@ -292,7 +290,6 @@
           ${p.maisPedido ? '<span class="pp__hot">Mais pedido</span>' : ''}
           <img class="${imgFor(p.tipo).cls}" src="${imgFor(p.tipo).src}" alt="${esc(p.titulo)}, ${imgFor(p.tipo).alt}" loading="lazy">
           <span class="pp__size">${esc(p.tamanho)}</span>
-          ${PROMO.on && state.precos && p.desconto ? `<span class="pp__off"><span><small>até</small>-${p.desconto}%</span></span>` : ''}
         </div>
         <div class="pp__info">
           <div class="pp__cat"><span class="tag"><span class="dot"></span>${esc(p.tipo)} · ${esc(p.categoria)}</span></div>
@@ -367,7 +364,7 @@
           <p>Por linha e quantidade de rótulos impressos.</p>
         </div>
         <div class="cost__it"><span class="inc__ic">${IC.shield}</span><span class="cost__k">Notificação ANVISA</span><div class="cost__v"><b>${brl(COSTS.anvisa)}</b><small>por produto</small></div><p>Conduzida pela CapsBR no mesmo fluxo do pedido.</p></div>
-        <div class="cost__it"><span class="inc__ic">${IC.sign.replace('viewBox="0 0 48 48"', 'viewBox="4 2 40 44"')}</span><span class="cost__k">Arte do rótulo</span><div class="cost__v"><b>${PROMO.on ? 'Cortesia' : 'Sob consulta'}</b></div><p>${PROMO.on ? `Condição de ${esc(PROMO.name)} até ${PROMO.endDMY}.` : 'Ou envie a sua arte pronta para aprovação.'}</p></div>
+        <div class="cost__it"><span class="inc__ic">${IC.sign.replace('viewBox="0 0 48 48"', 'viewBox="4 2 40 44"')}</span><span class="cost__k">Arte do rótulo</span><div class="cost__v"><b>Sob consulta</b></div><p>Ou envie a sua arte pronta para aprovação.</p></div>
       </div>
       ${sim}
       <div class="sec-label"><span class="mono">Perguntas frequentes</span></div>
@@ -398,7 +395,7 @@
         <div class="back__badges"><span class="tag">Notificação ANVISA</span><span class="tag">Teste de estabilidade</span><span class="tag">Tabela nutricional validada</span></div>
         <div class="back__legal">
           <span>© ${today.getFullYear()} CapsBR Nutracêuticos Ltda.<br>CNPJ 68.259.906/0001-69</span>
-          <span>Valores por unidade sujeitos à confirmação na cotação final e à aprovação do rótulo.${PROMO.on && state.precos ? ` Condições de ${esc(PROMO.name)} válidas até ${PROMO.endDMY}.` : ''}<br>Imagens ilustrativas. Catálogo gerado em ${today.toLocaleDateString('pt-BR')}.</span>
+          <span>Valores por unidade sujeitos à confirmação na cotação final e à aprovação do rótulo.<br>Imagens ilustrativas. Catálogo gerado em ${today.toLocaleDateString('pt-BR')}.</span>
         </div>
       </div>
     </section>`;
