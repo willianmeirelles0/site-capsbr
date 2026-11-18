@@ -12,8 +12,49 @@
   const arrow = '<svg viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H4M13 1v9" stroke="currentColor" stroke-width="1.8"/></svg>';
   const set = (sel, v, html) => $$(sel).forEach(el => html ? el.innerHTML = v : el.textContent = v);
 
+  // Meta Pixel: ViewContent desta fórmula (tracking.js lê isso ao iniciar o pixel,
+  // seja na carga da página ou só quando o visitante aceitar os cookies depois).
+  window.__capsViewContent = { content_ids: [p.id], content_name: p.titulo, content_category: p.tipo, content_type: 'product', currency: 'BRL', value: minPrice(p) };
+
   /* ---------- Conteúdo ---------- */
   document.title = `${p.titulo} · CapsBR`;
+
+  /* ---------- SEO: meta tags + JSON-LD específicos desta fórmula ---------- */
+  const CARD_BY_TIPO = { 'Líquidos': 'liquidos-card.jpg', 'Gomas e Pastilhas': 'gomas-card.jpg', 'Solúveis': 'soluveis-card.jpg' };
+  const pageUrl = `https://www.capsbr.com.br/produto.html?p=${encodeURIComponent(p.slug)}`;
+  const ogImage = `https://www.capsbr.com.br/assets/img/${CARD_BY_TIPO[p.tipo] || 'capsulas-card.jpg'}`;
+  const seoDesc = `${p.descricao} ${p.tamanho}, a partir de ${brl(minPrice(p))}/un. Rótulo personalizado, teste de estabilidade e notificação ANVISA inclusos.`.slice(0, 300);
+  const metaAttr = (sel, attr, v) => { const el = $(sel); if (el) el.setAttribute(attr, v); };
+  metaAttr('meta[name="description"]', 'content', seoDesc);
+  metaAttr('.js-canonical', 'href', pageUrl);
+  metaAttr('.js-og-url', 'content', pageUrl);
+  metaAttr('.js-og-title', 'content', `${p.titulo} · CapsBR`);
+  metaAttr('.js-og-desc', 'content', seoDesc);
+  metaAttr('.js-og-image', 'content', ogImage);
+  metaAttr('.js-tw-title', 'content', `${p.titulo} · CapsBR`);
+  metaAttr('.js-tw-desc', 'content', seoDesc);
+  metaAttr('.js-tw-image', 'content', ogImage);
+  const ld = document.createElement('script');
+  ld.type = 'application/ld+json';
+  ld.textContent = JSON.stringify({
+    '@context': 'https://schema.org', '@type': 'Product',
+    name: p.titulo, description: p.descricao, sku: p.id, image: ogImage, url: pageUrl,
+    brand: { '@type': 'Brand', name: 'CapsBR' },
+    offers: { '@type': 'Offer', priceCurrency: 'BRL', price: minPrice(p).toFixed(2), availability: 'https://schema.org/InStock', url: pageUrl },
+  });
+  document.head.appendChild(ld);
+  const ldCrumb = document.createElement('script');
+  ldCrumb.type = 'application/ld+json';
+  ldCrumb.textContent = JSON.stringify({
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://www.capsbr.com.br/' },
+      { '@type': 'ListItem', position: 2, name: 'Fórmulas', item: 'https://www.capsbr.com.br/index.html#formulas' },
+      { '@type': 'ListItem', position: 3, name: p.titulo, item: pageUrl },
+    ],
+  });
+  document.head.appendChild(ldCrumb);
+
   const vols = Object.keys(p.volumes).map(Number).sort((a, b) => a - b);
   set('.js-crumb', p.titulo);
   set('.js-code', p.id); set('.js-code2', p.id);
@@ -39,7 +80,12 @@
 
   const msgBase = `Olá! Vim pelo site da CapsBR e tenho interesse na fórmula ${p.titulo} (${p.id}) com a minha marca.`;
   $$('.js-wa').forEach(a => a.href = waLink('Olá! Quero terceirizar a produção da minha marca de suplementos com a CapsBR.'));
-  $$('.js-wa-prod').forEach(a => a.href = waLink(msgBase));
+  $$('.js-wa-prod').forEach(a => {
+    a.href = waLink(msgBase);
+    a.dataset.fbContentIds = p.id;
+    a.dataset.fbContentName = p.titulo;
+    a.dataset.fbValue = minPrice(p);
+  });
 
   /* ---------- Tabela nutricional (sem linhas zeradas) ---------- */
   const rows = nutriRows(p);
@@ -96,7 +142,10 @@
       say($('.js-c-rot'), 'A consultar');
       say($('.js-arte'), 'Cortesia');
       say($('.js-c-total'), 'Valores a consultar');
-      $$('.js-wa-calc').forEach(a => a.href = msg([`*Produto:* ${p.titulo} (${p.id})`, `*Quantidade:* ${nf(q)} unidades`, `*Embalagem:* ${p.tamanho}`, '*Valores:* a consultar (acima de 1.000 un.)', '*Arte do rótulo:* Cortesia']));
+      $$('.js-wa-calc').forEach(a => {
+        a.href = msg([`*Produto:* ${p.titulo} (${p.id})`, `*Quantidade:* ${nf(q)} unidades`, `*Embalagem:* ${p.tamanho}`, '*Valores:* a consultar (acima de 1.000 un.)', '*Arte do rótulo:* Cortesia']);
+        a.dataset.fbContentIds = p.id; a.dataset.fbContentName = p.titulo;
+      });
       if (ctaTxt) ctaTxt.textContent = `Quero ${nf(q)} unidades`;
     } else {
       const de = p.volumes[vol][0], por = priceAt(p, vol);
@@ -113,15 +162,18 @@
       say($('.js-arte'), arte ? brl(arte) : 'Cortesia');
       tween($('.js-c-total'), total);
       fix($('.js-c-eco'), eco);
-      $$('.js-wa-calc').forEach(a => a.href = msg([
-        `*Produto:* ${p.titulo} (${p.id})`,
-        `*Quantidade:* ${nf(vol)} unidades`,
-        `*Embalagem:* ${p.tamanho}`,
-        `*Preço:* ${brl(por)}/un.`,
-        `*Lote:* ${brl(sub)} + rótulos ${brl(rot)} + ANVISA ${brl(ANV)}${arte ? ` + arte do rótulo ${brl(arte)}` : ''}`,
-        `*Arte do rótulo:* ${arte ? brl(arte) : 'Cortesia'}`,
-        `*Total estimado:* ${brl(total)} (sem frete)`,
-      ]));
+      $$('.js-wa-calc').forEach(a => {
+        a.href = msg([
+          `*Produto:* ${p.titulo} (${p.id})`,
+          `*Quantidade:* ${nf(vol)} unidades`,
+          `*Embalagem:* ${p.tamanho}`,
+          `*Preço:* ${brl(por)}/un.`,
+          `*Lote:* ${brl(sub)} + rótulos ${brl(rot)} + ANVISA ${brl(ANV)}${arte ? ` + arte do rótulo ${brl(arte)}` : ''}`,
+          `*Arte do rótulo:* ${arte ? brl(arte) : 'Cortesia'}`,
+          `*Total estimado:* ${brl(total)} (sem frete)`,
+        ]);
+        a.dataset.fbContentIds = p.id; a.dataset.fbContentName = p.titulo; a.dataset.fbValue = total;
+      });
       if (ctaTxt) ctaTxt.textContent = `Quero ${nf(vol)} unidades`;
     }
     if (ctaSub) ctaSub.textContent = 'Abre o WhatsApp com esta quantidade e cotação';

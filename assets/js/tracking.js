@@ -27,6 +27,9 @@
     /* eslint-enable */
     window.fbq('init', META_PIXEL_ID);
     window.fbq('track', 'PageView');
+    // Página de produto: ViewContent com o item exato (definido por product.js
+    // antes deste script rodar, mesmo que o consentimento só venha depois).
+    if (window.__capsViewContent) window.fbq('track', 'ViewContent', window.__capsViewContent);
   }
 
   function iniciarGoogleTracking() {
@@ -83,11 +86,18 @@
 
   // Evento padrão da Meta: 'Contact' é para contato direto (WhatsApp) sem
   // passar pelo formulário. 'Lead' fica só pra submissão do formulário.
+  // Quando o botão carrega data-fb-* (página de produto ou catálogo), manda
+  // junto qual fórmula e o valor da cotação — sinal mais forte pra otimização.
   document.addEventListener('click', e => {
     const a = e.target.closest('a[href*="wa.me"]');
     if (!a) return;
-    if (typeof window.fbq === 'function') window.fbq('track', 'Contact');
-    if (typeof window.gtag === 'function') window.gtag('event', 'contact_whatsapp', { event_category: 'engajamento' });
+    const d = a.dataset;
+    const params = {};
+    if (d.fbContentIds) { params.content_ids = [d.fbContentIds]; params.content_type = 'product'; params.currency = 'BRL'; }
+    if (d.fbContentName) params.content_name = d.fbContentName;
+    if (d.fbValue) params.value = Number(d.fbValue);
+    if (typeof window.fbq === 'function') window.fbq('track', 'Contact', params);
+    if (typeof window.gtag === 'function') window.gtag('event', 'contact_whatsapp', { event_category: 'engajamento', ...params });
   });
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);

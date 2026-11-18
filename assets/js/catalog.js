@@ -252,7 +252,7 @@
   };
   const ctaBlock = (p, v, rq) => {
     const c = calcFor(p, v, rq);
-    return `<a class="cta" id="cta-${esc(p.id)}" href="${wa(quoteMsg(p, v, rq, c))}" target="_blank" rel="noopener">
+    return `<a class="cta" id="cta-${esc(p.id)}" href="${wa(quoteMsg(p, v, rq, c))}" target="_blank" rel="noopener" data-fb-content-ids="${esc(p.id)}" data-fb-content-name="${esc(p.titulo)}" data-fb-value="${c.total}">
       <span class="cta__t"><b>Quero essa fórmula com a minha marca</b><span>${nf(v)} unidades · ${nf(rq)} rótulos · total estimado ${brl(c.total)}, já escrito na mensagem.</span></span>
       <span class="cta__btn"><span class="cta__ic">${WAIC}</span>Pedir cotação<span class="cta__ar">${ARROW}</span></span>
     </a>`;
