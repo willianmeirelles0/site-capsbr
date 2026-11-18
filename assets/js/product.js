@@ -108,7 +108,9 @@
   }).join('');
 
   /* ---------- Preço por volume (seletor + composição do investimento) ---------- */
-  const ROT = isLiq ? COSTS.rotuloLiq : COSTS.rotuloCaps, LOTE = Math.max(1, COSTS.rotuloLote | 0), ANV = COSTS.anvisa;
+  const ROT = isLiq ? COSTS.rotuloLiq : COSTS.rotuloCaps, LOTE = Math.max(1, COSTS.rotuloLote | 0);
+  const ANV = (p.fornecedor && p.fornecedor.anvisa) || COSTS.anvisa;
+  set('.js-anvisa', brl(ANV)); // shared.js só preenche com o valor padrão; aqui sobrescrevemos com o do fornecedor deste produto, se houver
   // faixas fixas 300 / 500 / 1.000 + Personalizado (acima de 1.000, valores a consultar)
   const std = vols.filter(v => v <= 1000);
   let vol = std[0], custom = false, customQ = 2000;

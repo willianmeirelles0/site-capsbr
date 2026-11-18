@@ -3,7 +3,7 @@
    Edita um rascunho local do catálogo; "Salvar e publicar" valida
    e grava no servidor (PUT /api/admin/catalog).
    ========================================================= */
-import { TIPOS, LIMITS, clean, slugify, toNumber, brl, maxDiscount, normalizeProduct, normalizeCatalog } from './validate.js';
+import { TIPOS, ROTULO_QTYS, LIMITS, clean, slugify, toNumber, brl, maxDiscount, normalizeProduct, normalizeCatalog } from './validate.js';
 
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -351,6 +351,9 @@ function openEditor(index, blank) {
   f.desconto.placeholder = String(auto);
   $('#catList').innerHTML = [...new Set(state.draft.products.map(x => x.categoria).filter(Boolean))].sort().map(c => `<option value="${esc(c)}">`).join('');
   renderVolRows(Object.entries(p.volumes || {}).map(([q, [de, por]]) => [q, typeof de === 'number' ? money(de) : de, typeof por === 'number' ? money(por) : por]));
+  f.fornNome.value = p.fornecedor?.nome || '';
+  f.fornAnvisa.value = typeof p.fornecedor?.anvisa === 'number' ? money(p.fornecedor.anvisa) : (p.fornecedor?.anvisa || '');
+  renderFornRotRows(Object.entries(p.fornecedor?.rotulo || {}).map(([q, preco]) => [q, typeof preco === 'number' ? money(preco) : preco]));
   renderListInputs('#benList', p.beneficios?.length ? p.beneficios : [''], 120, 'Benefício');
   renderNutRows(p.tabela || []);
   $('#drawer').hidden = false;
@@ -379,6 +382,13 @@ function updateVolOffs() {
     else { cell.textContent = ''; cell.classList.remove('is-bad'); }
   });
 }
+function renderFornRotRows(rows) {
+  $('#fornRotBody').innerHTML = rows.map(([q, preco]) => `<tr>
+    <td><div class="affix"><input type="text" inputmode="numeric" data-fr="q" value="${esc(q)}" maxlength="7" aria-label="Quantidade de rótulos"><em>un.</em></div></td>
+    <td><div class="affix affix--pre"><em>R$</em><input type="text" inputmode="decimal" data-fr="preco" value="${esc(preco)}" maxlength="10" aria-label="Preço"></div></td>
+    <td><button type="button" class="icon-btn icon-btn--del" data-rm title="Remover quantidade">✕</button></td></tr>`).join('');
+  $('#addFornRot').disabled = rows.length >= LIMITS.volumes;
+}
 function renderNutRows(rows) {
   $('#nutBody').innerHTML = rows.map(r => `<tr>
     <td><input type="text" data-n="0" value="${esc(r[0])}" maxlength="60" aria-label="Nutriente"></td>
@@ -402,11 +412,17 @@ function readForm() {
     const q = parseInt($('[data-v=q]', tr).value.replace(/\D/g, ''), 10);
     if (q > 0 && volumes[q] === undefined) volumes[q] = [$('[data-v=de]', tr).value, $('[data-v=por]', tr).value];
   });
+  const fornRot = {};
+  $$('#fornRotBody tr').forEach(tr => {
+    const q = parseInt($('[data-fr=q]', tr).value.replace(/\D/g, ''), 10);
+    if (q > 0 && fornRot[q] === undefined) fornRot[q] = $('[data-fr=preco]', tr).value;
+  });
   return {
     titulo: f.titulo.value, nome: f.nome.value, id: f.id.value, slug: f.slug.value, tipo: f.tipo.value,
     categoria: f.categoria.value, tamanho: f.tamanho.value, maisPedido: f.maisPedido.checked,
     descricao: f.descricao.value, beneficios: listValues('#benList'),
     volumes, desconto: f.desconto.value.trim(),
+    fornecedor: { nome: f.fornNome.value, anvisa: f.fornAnvisa.value.trim(), rotulo: fornRot },
     porcao: f.porcao.value, porcoes: f.porcoes.value,
     tabela: $$('#nutBody tr').map(tr => $$('input', tr).map(i => i.value)),
     naoContem: f.naoContem.value,
@@ -449,6 +465,7 @@ function validateForm(show = true) {
   // limites das listas
   $('#addBen').disabled = $$('#benList li').length >= LIMITS.beneficios;
   $('#addVol').disabled = $$('#volBody tr').length >= LIMITS.volumes;
+  $('#addFornRot').disabled = $$('#fornRotBody tr').length >= LIMITS.volumes;
   $('#addRow').disabled = $$('#nutBody tr').length >= LIMITS.tabela;
   return { product, errors };
 }
@@ -493,6 +510,14 @@ $('#addVol').addEventListener('click', () => {
   $$('#volBody tr').at(-1).querySelector('[data-v=de]').focus();
   validateForm(showErr || !ed.isNew);
 });
+$('#addFornRot').addEventListener('click', () => {
+  const rows = $$('#fornRotBody tr').map(tr => ['q', 'preco'].map(k => $(`[data-fr=${k}]`, tr).value));
+  const used = rows.map(r => toNumber(r[0]) || 0);
+  rows.push([String(used.includes(1000) ? '' : 1000), '']);
+  renderFornRotRows(rows);
+  $$('#fornRotBody tr').at(-1).querySelector('[data-fr=preco]').focus();
+  validateForm(showErr || !ed.isNew);
+});
 $('#addBen').addEventListener('click', () => {
   const vals = listValues('#benList'); vals.push('');
   renderListInputs('#benList', vals, 120, 'Benefício');
@@ -510,6 +535,9 @@ $('#autoOff').addEventListener('click', () => { form.elements.desconto.value = '
 form.addEventListener('focusout', e => {
   const v = e.target.dataset && e.target.dataset.v;
   if (v === 'de' || v === 'por') { const n = toNumber(e.target.value); if (n > 0) e.target.value = money(Math.round(n * 100) / 100); updateVolOffs(); }
+  const fr = e.target.dataset && e.target.dataset.fr;
+  if (fr === 'preco') { const n = toNumber(e.target.value); if (n > 0) e.target.value = money(Math.round(n * 100) / 100); }
+  if (e.target.name === 'fornAnvisa') { const n = toNumber(e.target.value); if (n > 0) e.target.value = money(Math.round(n * 100) / 100); }
 });
 
 form.addEventListener('submit', e => {
@@ -548,6 +576,11 @@ const getPath = (o, p) => p.split('.').reduce((a, k) => (a == null ? a : a[k]), 
 const setPath = (o, p, v) => { const ks = p.split('.'); const last = ks.pop(); const t = ks.reduce((a, k) => (a[k] ??= {}), o); t[last] = v; };
 const BRT = 3 * 3600 * 1000;
 const toBRT = iso => { const d = new Date(iso); return isNaN(d) ? ['', ''] : new Date(d.getTime() - BRT).toISOString().slice(0, 16).split('T'); };
+
+$('#rotTableBody').innerHTML = TIPOS.map(tipo => `<tr>
+  <td>${esc(tipo)}</td>
+  ${ROTULO_QTYS.map(q => `<td class="num"><div class="affix affix--pre"><em>R$</em><input type="text" inputmode="decimal" data-site="costs.rotulo.${esc(tipo)}.${q}" data-money aria-label="${esc(tipo)}, ${q} un."></div></td>`).join('')}
+</tr>`).join('');
 
 function renderSite() {
   const s = state.draft.site;

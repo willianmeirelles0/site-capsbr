@@ -349,6 +349,13 @@ window.PRODUCTS = [
   "categoria": "Performance",
   "tamanho": "pó · 280 g",
   "maisPedido": false,
+  "fornecedor": {
+   "nome": "Alphafitus",
+   "anvisa": 350,
+   "rotulo": {
+    "1000": 700
+   }
+  },
   "descricao": "Fórmula pré-treino livre de cafeína, combinando beta-alanina, L-arginina, taurina e D-ribose com vitaminas B6 e B12. Pensada para quem busca apoio ao desempenho físico e disposição no treino sem o efeito estimulante da cafeína — indicada para treinos noturnos ou para quem tem sensibilidade a estimulantes.",
   "beneficios": [
    "Contribui para o desempenho físico em treinos intensos",
@@ -451,6 +458,13 @@ window.PRODUCTS = [
   "categoria": "Performance",
   "tamanho": "pó · 300 g",
   "maisPedido": false,
+  "fornecedor": {
+   "nome": "Alphafitus",
+   "anvisa": 350,
+   "rotulo": {
+    "1000": 700
+   }
+  },
   "descricao": "Fórmula pré-treino com cafeína, beta-alanina, arginina, magnésio e zinco, reforçada com extrato de café verde. Pensada para quem busca mais energia, foco e desempenho físico antes de treinos intensos.",
   "beneficios": [
    "Contribui para o aumento do estado de alerta e a redução da sensação de fadiga (cafeína)",

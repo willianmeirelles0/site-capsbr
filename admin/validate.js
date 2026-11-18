@@ -5,13 +5,25 @@
    ========================================================= */
 
 export const TIPOS = ['Cápsulas', 'Líquidos', 'Gomas e Pastilhas', 'Solúveis'];
+export const ROTULO_QTYS = [500, 1000];
 export const LIMITS = { products: 200, volumes: 10, beneficios: 10, tabela: 40, announce: 12 };
 export const DEFAULT_SITE = {
   whatsapp: '5554997090147',
   promo: { enabled: false, name: '', end: '2000-01-01T00:00:00-03:00', max: 0 },
   announceBanner: '',
   announce: ['Marca própria a partir de 300 unidades', 'Teste de estabilidade em todo produto', 'Notificação ANVISA no mesmo fluxo', 'Produção em 15 a 45 dias'],
-  costs: { rotuloCaps: 650, rotuloLiq: 600, rotuloLote: 500, anvisa: 300 },
+  costs: {
+    // calculadora da página de produto (por lote)
+    rotuloCaps: 650, rotuloLiq: 600, rotuloLote: 500, anvisa: 300,
+    // calculadora do catálogo de leads (por linha e quantidade de rótulos)
+    rotulo: {
+      'Cápsulas': { 500: 650, 1000: 750 },
+      'Líquidos': { 500: 600, 1000: 650 },
+      'Gomas e Pastilhas': { 500: 650, 1000: 750 },
+      'Solúveis': { 500: 790, 1000: 950 },
+    },
+    arteMin: 300, artePreco: 150,
+  },
 };
 
 // texto limpo: sem tags, sem caracteres de controle, espaços normalizados
@@ -57,7 +69,7 @@ export function normalizeProduct(raw, i = 0) {
   let slug = slugify(p.slug || titulo);
   if (!slug) at('slug', 'Endereço inválido.');
   const tipo = TIPOS.includes(p.tipo) ? p.tipo : '';
-  if (!tipo) at('tipo', 'Escolha Cápsulas ou Líquidos.');
+  if (!tipo) at('tipo', 'Escolha o tipo do produto.');
   const categoria = clean(p.categoria, 40);
   if (!categoria) at('categoria', 'Informe a categoria.');
   const tamanho = clean(p.tamanho, 40);
@@ -100,6 +112,38 @@ export function normalizeProduct(raw, i = 0) {
     .map(r => Array.isArray(r) ? [clean(r[0], 60), clean(r[1], 20), clean(r[2], 20)] : null)
     .filter(r => r && r[0]).slice(0, LIMITS.tabela);
 
+  // fornecedor com cobrança própria (opcional): substitui ANVISA e/ou a
+  // tabela de impressão de rótulos do catálogo de leads para este produto.
+  // Sem nome preenchido, o produto usa os valores padrão normalmente.
+  let fornecedor = null;
+  const fr = p.fornecedor && typeof p.fornecedor === 'object' ? p.fornecedor : {};
+  const frNome = clean(fr.nome, 40);
+  const frRotSrc = fr.rotulo && typeof fr.rotulo === 'object' ? fr.rotulo : {};
+  const frRotKeys = Object.keys(frRotSrc).filter(k => frRotSrc[k] !== '' && frRotSrc[k] != null);
+  const frAnvisaRaw = fr.anvisa;
+  const hasAnvisa = frAnvisaRaw !== '' && frAnvisaRaw != null;
+  if (frNome || frRotKeys.length || hasAnvisa) {
+    if (!frNome) at('fornecedor', 'Informe o nome do fornecedor, ou limpe os campos de fornecedor deste produto.');
+    let anvisa;
+    if (hasAnvisa) {
+      anvisa = round2(toNumber(frAnvisaRaw));
+      if (!(anvisa > 0 && anvisa <= 1000000)) at('fornecedor', 'Notificação ANVISA do fornecedor: valor inválido.');
+    }
+    const rotulo = {};
+    if (frRotKeys.length > LIMITS.volumes) at('fornecedor', `No máximo ${LIMITS.volumes} quantidades de rótulo por fornecedor.`);
+    frRotKeys.slice(0, LIMITS.volumes).forEach(k => {
+      const q = Math.round(toNumber(k));
+      const price = round2(toNumber(frRotSrc[k]));
+      if (!(q >= 1 && q <= 1000000)) { at('fornecedor', `Quantidade de rótulo inválida: ${k}.`); return; }
+      if (rotulo[q]) { at('fornecedor', `Quantidade de rótulo repetida: ${q}.`); return; }
+      if (!(price > 0 && price <= 1000000)) { at('fornecedor', `Preço de rótulo inválido em ${q} un.`); return; }
+      rotulo[q] = price;
+    });
+    fornecedor = { nome: frNome || '(sem nome)' };
+    if (hasAnvisa && anvisa > 0) fornecedor.anvisa = anvisa;
+    if (Object.keys(rotulo).length) fornecedor.rotulo = rotulo;
+  }
+
   const out = {
     id, slug, titulo, nome, tipo, categoria, tamanho,
     maisPedido: !!p.maisPedido,
@@ -111,6 +155,7 @@ export function normalizeProduct(raw, i = 0) {
     tabela,
     naoContem: clean(p.naoContem, 600),
   };
+  if (fornecedor) out.fornecedor = fornecedor;
   return { product: out, errors };
 }
 
@@ -151,6 +196,29 @@ export function normalizeSite(raw) {
   const lote = Math.round(toNumber(c.rotuloLote ?? d.costs.rotuloLote));
   if (!(lote >= 1 && lote <= 100000)) at('costs.rotuloLote', 'Lote de rótulos: informe um número inteiro maior que zero.');
   costs.rotuloLote = lote >= 1 && lote <= 100000 ? lote : d.costs.rotuloLote;
+
+  // catálogo de leads: preço de impressão por linha e quantidade de rótulos
+  const cr = c.rotulo && typeof c.rotulo === 'object' ? c.rotulo : {};
+  costs.rotulo = {};
+  let rotuloBad = false;
+  TIPOS.forEach(tipo => {
+    const src = cr[tipo] && typeof cr[tipo] === 'object' ? cr[tipo] : {};
+    const row = {};
+    ROTULO_QTYS.forEach(q => {
+      const n = round2(toNumber(src[q] ?? d.costs.rotulo[tipo][q]));
+      if (!(n > 0 && n <= 1000000)) rotuloBad = true;
+      row[q] = n > 0 && n <= 1000000 ? n : d.costs.rotulo[tipo][q];
+    });
+    costs.rotulo[tipo] = row;
+  });
+  if (rotuloBad) at('costs.rotulo', 'Impressão de rótulos: todos os valores (por linha e quantidade) precisam ser maiores que zero.');
+
+  const arteMin = Math.round(toNumber(c.arteMin ?? d.costs.arteMin));
+  if (!(arteMin >= 1 && arteMin <= 1000000)) at('costs.arteMin', 'Informe a partir de quantas unidades a arte é cortesia.');
+  costs.arteMin = arteMin >= 1 && arteMin <= 1000000 ? arteMin : d.costs.arteMin;
+  const artePreco = round2(toNumber(c.artePreco ?? d.costs.artePreco));
+  if (!(artePreco >= 0 && artePreco <= 1000000)) at('costs.artePreco', 'Valor da arte do rótulo inválido.');
+  costs.artePreco = artePreco >= 0 && artePreco <= 1000000 ? artePreco : d.costs.artePreco;
 
   return { site: { whatsapp, promo, announceBanner, announce, costs }, errors };
 }

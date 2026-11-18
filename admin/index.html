@@ -101,7 +101,7 @@
     <!-- VALORES -->
     <section class="view" data-view="valores" hidden>
       <div class="card">
-        <h3>Custos do pedido</h3>
+        <h3>Custos do pedido (página de produto)</h3>
         <p class="muted">Usados na calculadora da página de cada produto ("composição do investimento") e na mensagem enviada pelo WhatsApp.</p>
         <div class="grid2">
           <label class="field"><span>Rótulos para cápsulas (por lote)</span><div class="affix affix--pre"><em>R$</em><input type="text" inputmode="decimal" data-site="costs.rotuloCaps" data-money></div><small class="err" data-err="costs.rotuloCaps"></small></label>
@@ -110,6 +110,19 @@
           <label class="field"><span>Notificação ANVISA (por pedido)</span><div class="affix affix--pre"><em>R$</em><input type="text" inputmode="decimal" data-site="costs.anvisa" data-money></div><small class="err" data-err="costs.anvisa"></small></label>
         </div>
         <div class="example" id="costExample"></div>
+      </div>
+      <div class="card">
+        <h3>Impressão de rótulos (catálogo de leads)</h3>
+        <p class="muted">Usado na calculadora de "Monte o seu pedido" do catalogo.html, por linha de produto e quantidade de rótulos. Um fornecedor específico cadastrado no produto (aba Produtos) substitui estes valores só para aquele produto.</p>
+        <div class="table-wrap"><table class="table" id="rotTable">
+          <thead><tr><th>Linha</th><th class="num">500 un.</th><th class="num">1.000 un.</th></tr></thead>
+          <tbody id="rotTableBody"></tbody>
+        </table></div>
+        <small class="err" data-err="costs.rotulo"></small>
+        <div class="grid2 mt">
+          <label class="field"><span>Arte do rótulo é cortesia a partir de</span><div class="affix"><input type="text" inputmode="numeric" data-site="costs.arteMin"><em>un.</em></div><small class="err" data-err="costs.arteMin"></small></label>
+          <label class="field"><span>Valor da arte do rótulo abaixo disso</span><div class="affix affix--pre"><em>R$</em><input type="text" inputmode="decimal" data-site="costs.artePreco" data-money></div><small class="err" data-err="costs.artePreco"></small></label>
+        </div>
       </div>
     </section>
 
@@ -206,7 +219,7 @@
           <label class="field field--full"><span>Nome completo <em class="opt">opcional</em></span><input type="text" name="nome" maxlength="120"><small class="help">Aparece abaixo do título na página do produto, quando for diferente.</small></label>
           <label class="field"><span>Código</span><input type="text" name="id" maxlength="16" class="mono" placeholder="C-017"><small class="help" id="idHint"></small><small class="err" data-perr="id"></small></label>
           <label class="field"><span>Endereço da página</span><div class="affix affix--pre"><em>?p=</em><input type="text" name="slug" maxlength="60" class="mono"></div><small class="help">Gerado pelo nome. Mudar quebra links já compartilhados.</small><small class="err" data-perr="slug"></small></label>
-          <label class="field"><span>Tipo</span><select name="tipo"><option>Cápsulas</option><option>Líquidos</option></select><small class="err" data-perr="tipo"></small></label>
+          <label class="field"><span>Tipo</span><select name="tipo"><option>Cápsulas</option><option>Líquidos</option><option>Gomas e Pastilhas</option><option>Solúveis</option></select><small class="err" data-perr="tipo"></small></label>
           <label class="field"><span>Categoria</span><input type="text" name="categoria" maxlength="40" list="catList"><datalist id="catList"></datalist><small class="err" data-perr="categoria"></small></label>
           <label class="field"><span>Tamanho</span><input type="text" name="tamanho" maxlength="40" placeholder="60 cápsulas"><small class="err" data-perr="tamanho"></small></label>
           <label class="switch-row"><input type="checkbox" name="maisPedido"><span class="switch"></span><span><b>Mais pedido</b><small>Mostra o selo no card.</small></span></label>
@@ -221,6 +234,19 @@
         <div class="grid2 mt">
           <label class="field"><span>Selo de desconto no card</span><div class="affix"><input type="text" inputmode="numeric" name="desconto" maxlength="2"><em>%</em></div><small class="help"><button type="button" class="linkish" id="autoOff"></button></small><small class="err" data-perr="desconto"></small></label>
         </div>
+      </div>
+
+      <div class="dsec">
+        <div class="dsec__head"><h4>Fornecedor com condição própria <em class="opt">opcional</em></h4></div>
+        <p class="help">Preencha só se este produto tiver um fornecedor com cobrança diferente do padrão (ex.: Alphafitus). Com o nome preenchido, os valores abaixo substituem a notificação ANVISA e/ou a tabela de impressão de rótulos deste produto no catálogo de leads (catalogo.html). Se cadastrar só uma quantidade de rótulo (ex.: 1.000), a outra (500) não aparece para este produto.</p>
+        <div class="grid2">
+          <label class="field"><span>Nome do fornecedor</span><input type="text" name="fornNome" maxlength="40" placeholder="Alphafitus"></label>
+          <label class="field"><span>Notificação ANVISA específica <em class="opt">opcional</em></span><div class="affix affix--pre"><em>R$</em><input type="text" inputmode="decimal" name="fornAnvisa"></div></label>
+        </div>
+        <small class="err" data-perr="fornecedor"></small>
+        <div class="dsec__head mt"><span class="label">Impressão de rótulos (substitui a tabela padrão) <em class="opt">opcional</em></span><button type="button" class="btn btn--sm btn--ghost" id="addFornRot">+ Quantidade</button></div>
+        <p class="help">Sem nenhuma linha aqui, este produto usa a tabela padrão de "Custos do pedido" normalmente.</p>
+        <table class="vtable"><thead><tr><th>Quantidade de rótulos</th><th>Preço</th><th></th></tr></thead><tbody id="fornRotBody"></tbody></table>
       </div>
 
       <div class="dsec">

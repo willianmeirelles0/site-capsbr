@@ -14,7 +14,6 @@
   const SITE = window.SITE || {};
   const ALL = (window.PRODUCTS || []).filter(p => p && p.volumes && Object.keys(p.volumes).length);
   const WA = String(SITE.whatsapp || '5554997090147').replace(/\D/g, '') || '5554997090147';
-  const ROTULO_QTYS = [500, 1000];
   const COSTS = Object.assign({
     rotulo: {
       'Cápsulas': { 500: 650, 1000: 750 },
@@ -206,11 +205,16 @@
   const sel = {};
   const ARTE_MIN = COSTS.arteMin, ARTE_PRECO = COSTS.artePreco;
   const arteFor = v => v >= ARTE_MIN ? 0 : ARTE_PRECO;
+  // Fornecedores com cobrança própria (ex.: Alphafitus) substituem a tabela
+  // de rótulo e/ou a notificação ANVISA padrão deste produto específico.
+  const rotTableFor = p => (p.fornecedor && p.fornecedor.rotulo) || COSTS.rotulo[p.tipo] || COSTS.rotulo['Cápsulas'];
+  const rotQtysFor = p => Object.keys(rotTableFor(p)).map(Number).sort((a, b) => a - b);
+  const anvisaFor = p => (p.fornecedor && p.fornecedor.anvisa) || COSTS.anvisa;
   const calcFor = (p, v, rq) => {
     const unit = priceAt(p, v);
     const fab = unit * v;
-    const rot = (COSTS.rotulo[p.tipo] || COSTS.rotulo['Cápsulas'])[rq];
-    const anvisa = COSTS.anvisa;
+    const rot = rotTableFor(p)[rq];
+    const anvisa = anvisaFor(p);
     const arte = arteFor(v);
     return { unit, fab, rot, anvisa, arte, total: fab + rot + anvisa + arte };
   };
@@ -238,7 +242,7 @@
       </div>
       <div class="pr__sub">Quantidade de rótulos</div>
       <div class="pr__pills" role="group" aria-label="Quantidade de rótulos">
-        ${ROTULO_QTYS.map(rqq => `<button type="button" class="pr__pill${rqq === rq ? ' is-on' : ''}" data-rot="${rqq}" aria-pressed="${rqq === rq}">${nf(rqq)} un.</button>`).join('')}
+        ${rotQtysFor(p).map(rqq => `<button type="button" class="pr__pill${rqq === rq ? ' is-on' : ''}" data-rot="${rqq}" aria-pressed="${rqq === rq}">${nf(rqq)} un.</button>`).join('')}
       </div>
       <div class="pr__calc">
         <div class="pr__row"><span>Fabricação<small>${nf(v)} un. × ${brl(c.unit)}</small></span><b>${brl(c.fab)}</b></div>
@@ -262,7 +266,8 @@
     const rows = nutriRows(p);
     const vd = r => /^\d/.test(String(r.vd).trim()) ? `${r.vd}%` : '**';
     const vs = vols(p);
-    if (!sel[p.id] || !vs.includes(sel[p.id].vol)) sel[p.id] = { vol: vs[0], rot: 500 };
+    const rqs = rotQtysFor(p);
+    if (!sel[p.id] || !vs.includes(sel[p.id].vol) || !rqs.includes(sel[p.id].rot)) sel[p.id] = { vol: vs[0], rot: rqs[0] };
     const { vol: v0, rot: r0 } = sel[p.id];
     const cleanPorcao = s => String(s || '').replace(/^Porção de\s*/i, '');
     const cleanPorcoes = s => String(s || '').replace(/^Porções por embalagem:\s*/i, '');
@@ -319,10 +324,11 @@
     // exemplo calculado com o produto de menor preço em 500 un. (ou a menor faixa disponível)
     const ex = [...list].sort((a, b) => minPrice(a) - minPrice(b))[0];
     const exV = ex ? (vols(ex).includes(500) ? 500 : vols(ex)[0]) : 0;
+    const exRq = ex ? (rotQtysFor(ex).includes(500) ? 500 : rotQtysFor(ex)[0]) : 500;
     const minVol = Math.min(...list.flatMap(vols));
     let sim = '';
     if (ex && state.precos) {
-      const c = calcFor(ex, exV, 500);
+      const c = calcFor(ex, exV, exRq);
       sim = `<div class="sim">
         <div class="sim__l">
           <span class="mono">Exemplo de pedido</span>
@@ -332,8 +338,8 @@
         </div>
         <div class="sim__r">
           <div class="sim__row"><span>Fabricação<small>${nf(exV)} un. × ${brl(c.unit)}</small></span><b>${brl(c.fab)}</b></div>
-          <div class="sim__row"><span>Impressão de rótulos<small>500 unidades</small></span><b>${brl(c.rot)}</b></div>
-          <div class="sim__row"><span>Notificação ANVISA<small>por produto</small></span><b>${brl(COSTS.anvisa)}</b></div>
+          <div class="sim__row"><span>Impressão de rótulos<small>${nf(exRq)} unidades</small></span><b>${brl(c.rot)}</b></div>
+          <div class="sim__row"><span>Notificação ANVISA<small>por produto</small></span><b>${brl(c.anvisa)}</b></div>
           <div class="sim__row"><span>Arte do rótulo</span><b>${c.arte ? brl(c.arte) : 'Cortesia'}</b></div>
           <div class="sim__tot"><span>Investimento total</span><b>${brl(c.total)}</b></div>
         </div>
@@ -354,7 +360,7 @@
       <div class="cost">
         <div class="cost__it cost__it--rot"><span class="inc__ic">${IC.label}</span><span class="cost__k">Impressão de rótulos</span>
           <div class="cost__rot">${ORDER.map(t => `<div class="cost__rotrow"><b>${t}</b><span>500 un. <em>${brl(COSTS.rotulo[t][500])}</em></span><span>1.000 un. <em>${brl(COSTS.rotulo[t][1000])}</em></span></div>`).join('')}</div>
-          <p>Por linha e quantidade de rótulos impressos.</p>
+          <p>Por linha e quantidade de rótulos impressos.${list.some(p => p.fornecedor) ? ' Algumas fórmulas têm fornecedor com condição própria, confirmada na página de cada uma.' : ''}</p>
         </div>
         <div class="cost__it"><span class="inc__ic">${IC.shield}</span><span class="cost__k">Notificação ANVISA</span><div class="cost__v"><b>${brl(COSTS.anvisa)}</b><small>por produto</small></div><p>Conduzida pela CapsBR no mesmo fluxo do pedido.</p></div>
         <div class="cost__it"><span class="inc__ic">${IC.sign.replace('viewBox="0 0 48 48"', 'viewBox="4 2 40 44"')}</span><span class="cost__k">Arte do rótulo</span><div class="cost__v"><b>Cortesia</b><small>a partir de ${nf(ARTE_MIN)} un.</small></div><div class="cost__v"><b>${brl(ARTE_PRECO)}</b><small>abaixo de ${nf(ARTE_MIN)} un.</small></div><p>Ou envie a sua arte pronta para aprovação.</p></div>
