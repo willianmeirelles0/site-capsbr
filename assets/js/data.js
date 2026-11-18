@@ -1,6 +1,5 @@
-// Dados sincronizados com blackfriday.capsbr.com.br (vitrinecapsbr) em 2026-11-18
-// S-003/S-004: precos de Pre-treino atualizados conforme tabela enviada por Willian em 2026-11-18
-// S-001 (Beta-Alanina) e G-001 (Chiclete Multivitaminico) removidos a pedido do Willian em 2026-11-18
+// Precos sincronizados com a planilha vitrine-capsbr-precos-promocoes (aba Precos) em 2026-11-18
+// S-003/S-004 mantidos com o preco confirmado pela Alphafitus (a planilha ainda tem o valor antigo)
 window.PRODUCTS = [
  {
   "id": "C-002",
@@ -19,24 +18,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "100": [
-    18,
-    18
+    20.9,
+    20.9
    ],
    "300": [
-    15.95,
-    15.95
+    16.9,
+    16.9
    ],
    "500": [
-    12.65,
-    12.65
+    14.9,
+    14.9
    ],
    "1000": [
-    10,
-    10
+    13.9,
+    13.9
    ]
   },
-  "de": "R$ 10,00",
-  "por": "R$ 10,00",
+  "de": "R$ 13,90",
+  "por": "R$ 13,90",
   "desconto": 0,
   "porcao": "Porção de 0,5 g (1 cápsula)",
   "porcoes": "Porções por embalagem: 60",
@@ -66,24 +65,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "100": [
-    18,
-    18
+    21.9,
+    21.9
    ],
    "300": [
-    16.5,
-    16.5
+    17.9,
+    17.9
    ],
    "500": [
-    15,
-    15
+    16.9,
+    16.9
    ],
    "1000": [
-    13.5,
-    13.5
+    14.9,
+    14.9
    ]
   },
-  "de": "R$ 13,50",
-  "por": "R$ 13,50",
+  "de": "R$ 14,90",
+  "por": "R$ 14,90",
   "desconto": 0,
   "porcao": "Porção de 1,2 g (2 cápsulas)",
   "porcoes": "Porções por embalagem: 30",
@@ -113,24 +112,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "100": [
-    18,
-    18
+    20.9,
+    20.9
    ],
    "300": [
-    17.55,
-    17.55
+    16.0,
+    16.0
    ],
    "500": [
-    15.3,
-    15.3
+    14.0,
+    14.0
    ],
    "1000": [
-    13.15,
-    13.15
+    13.0,
+    13.0
    ]
   },
-  "de": "R$ 13,15",
-  "por": "R$ 13,15",
+  "de": "R$ 13,00",
+  "por": "R$ 13,00",
   "desconto": 0,
   "porcao": "Porção de 1,3 g (2 cápsulas)",
   "porcoes": "Porções por embalagem: 30",
@@ -154,54 +153,6 @@ window.PRODUCTS = [
   "naoContem": "Não contém quantidades significativas de Valor energético, Carboidratos, Açúcares totais, Açúcares adicionados, Proteínas, Gorduras totais, Gorduras saturadas, Gorduras trans, Fibras alimentares e Sódio."
  },
  {
-  "id": "C-005",
-  "slug": "coenzima-q10-100mg-e-vitamina-e",
-  "titulo": "Coenzima Q10 (100mg) e Vitamina E",
-  "nome": "Coenzima Q10 (100mg) e Vitamina E",
-  "tipo": "Cápsulas",
-  "categoria": "Energia",
-  "tamanho": "30 cápsulas",
-  "maisPedido": false,
-  "descricao": "Combina coenzima Q10 e vitamina E, dois antioxidantes que atuam de forma complementar na proteção contra os radicais livres. Apoia a produção de energia celular, contribuindo para mais disposição, desempenho físico e proteção do organismo contra o estresse oxidativo.",
-  "beneficios": [
-   "Ação antioxidante",
-   "Apoia a saúde celular",
-   "Contribui para mais energia no dia a dia"
-  ],
-  "volumes": {
-   "500": [
-    21.3,
-    21.3
-   ],
-   "1000": [
-    16.55,
-    16.55
-   ],
-   "3000": [
-    14.2,
-    14.2
-   ]
-  },
-  "de": "R$ 14,20",
-  "por": "R$ 14,20",
-  "desconto": 0,
-  "porcao": "Porção de 0,5 g (1 cápsula)",
-  "porcoes": "Porções por embalagem: 30",
-  "tabela": [
-   [
-    "Vitamina E (mg)",
-    "15",
-    "100"
-   ],
-   [
-    "Coenzima Q10 (mg)",
-    "100",
-    "*"
-   ]
-  ],
-  "naoContem": "Não contém quantidades significativas de Valor energético, Carboidratos, Açúcares totais, Açúcares adicionados, Proteínas, Gorduras saturadas, Gorduras trans, Fibras alimentares e Sódio."
- },
- {
   "id": "C-006",
   "slug": "coenzima-q10-200mg",
   "titulo": "Coenzima Q10 (200mg)",
@@ -218,20 +169,20 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "500": [
-    23.9,
-    23.9
+    25.0,
+    25.0
    ],
    "1000": [
-    17.9,
-    17.9
+    18.5,
+    18.5
    ],
    "3000": [
-    16.25,
-    16.25
+    16.5,
+    16.5
    ]
   },
-  "de": "R$ 16,25",
-  "por": "R$ 16,25",
+  "de": "R$ 16,50",
+  "por": "R$ 16,50",
   "desconto": 0,
   "porcao": "Porção de 0,4 g (1 cápsula)",
   "porcoes": "Porções por embalagem: 30",
@@ -261,20 +212,20 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "500": [
-    17.6,
-    17.6
+    19.6,
+    19.6
    ],
    "1000": [
-    13.55,
-    13.55
+    15.5,
+    15.5
    ],
    "3000": [
-    10.3,
-    10.3
+    12.4,
+    12.4
    ]
   },
-  "de": "R$ 10,30",
-  "por": "R$ 10,30",
+  "de": "R$ 12,40",
+  "por": "R$ 12,40",
   "desconto": 0,
   "porcao": "Porção de 0,4 g (1 cápsula)",
   "porcoes": "Porções por embalagem: 30",
@@ -314,20 +265,20 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "500": [
-    16.45,
-    16.45
+    17.5,
+    17.5
    ],
    "1000": [
-    11.8,
-    11.8
+    12.4,
+    12.4
    ],
    "3000": [
-    9.25,
-    9.25
+    9.5,
+    9.5
    ]
   },
-  "de": "R$ 9,25",
-  "por": "R$ 9,25",
+  "de": "R$ 9,50",
+  "por": "R$ 9,50",
   "desconto": 0,
   "porcao": "Porção de 0,4 g (1 cápsula)",
   "porcoes": "Porções por embalagem: 30",
@@ -357,16 +308,16 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "100": [
-    46.9,
-    46.9
+    50.9,
+    50.9
    ],
    "300": [
-    44.9,
-    44.9
+    45.9,
+    45.9
    ],
    "500": [
-    42.5,
-    42.5
+    43.9,
+    43.9
    ],
    "1000": [
     40.9,
@@ -624,24 +575,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "100": [
-    59.9,
-    59.9
+    64.9,
+    64.9
    ],
    "300": [
-    57.5,
-    57.5
+    61.9,
+    61.9
    ],
    "500": [
-    54.9,
-    54.9
+    58.9,
+    58.9
    ],
    "1000": [
-    50.9,
-    50.9
+    54.9,
+    54.9
    ]
   },
-  "de": "R$ 50,90",
-  "por": "R$ 50,90",
+  "de": "R$ 54,90",
+  "por": "R$ 54,90",
   "desconto": 0,
   "porcao": "Porção de 12 g (3 unidades)",
   "porcoes": "Porções por embalagem: 30",
@@ -707,24 +658,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "100": [
-    59.9,
-    59.9
+    64.9,
+    64.9
    ],
    "300": [
-    57.5,
-    57.5
+    61.9,
+    61.9
    ],
    "500": [
-    54.9,
-    54.9
+    58.9,
+    58.9
    ],
    "1000": [
-    50.9,
-    50.9
+    54.9,
+    54.9
    ]
   },
-  "de": "R$ 50,90",
-  "por": "R$ 50,90",
+  "de": "R$ 54,90",
+  "por": "R$ 54,90",
   "desconto": 0,
   "porcao": "Porção de 12 g (3 unidades)",
   "porcoes": "Porções por embalagem: 30",
@@ -790,24 +741,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "100": [
-    59.9,
-    59.9
+    64.9,
+    64.9
    ],
    "300": [
-    57.5,
-    57.5
+    61.9,
+    61.9
    ],
    "500": [
-    54.9,
-    54.9
+    58.9,
+    58.9
    ],
    "1000": [
-    50.9,
-    50.9
+    54.9,
+    54.9
    ]
   },
-  "de": "R$ 50,90",
-  "por": "R$ 50,90",
+  "de": "R$ 54,90",
+  "por": "R$ 54,90",
   "desconto": 0,
   "porcao": "Porção de 12 g (3 unidades)",
   "porcoes": "Porções por embalagem: 30",
@@ -872,24 +823,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "100": [
-    18,
-    18
+    20.9,
+    20.9
    ],
    "300": [
-    17.55,
-    17.55
+    16.0,
+    16.0
    ],
    "500": [
-    16.4,
-    16.4
+    15.0,
+    15.0
    ],
    "1000": [
-    14.2,
-    14.2
+    13.5,
+    13.5
    ]
   },
-  "de": "R$ 14,20",
-  "por": "R$ 14,20",
+  "de": "R$ 13,50",
+  "por": "R$ 13,50",
   "desconto": 0,
   "porcao": "Porção de 1,1 g (2 cápsulas)",
   "porcoes": "Porções por embalagem: 30",
@@ -969,24 +920,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "100": [
-    20.7,
-    20.7
+    25.5,
+    25.5
    ],
    "300": [
-    18.7,
-    18.7
+    20.9,
+    20.9
    ],
    "500": [
-    17.6,
-    17.6
+    19.5,
+    19.5
    ],
    "1000": [
-    16.3,
-    16.3
+    18.0,
+    18.0
    ]
   },
-  "de": "R$ 16,30",
-  "por": "R$ 16,30",
+  "de": "R$ 18,00",
+  "por": "R$ 18,00",
   "desconto": 0,
   "porcao": "Porção de 1,2 g (2 comprimidos)",
   "porcoes": "Porções por embalagem: 30",
@@ -1036,24 +987,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "100": [
-    18,
-    18
+    20.9,
+    20.9
    ],
    "300": [
-    17.55,
-    17.55
+    16.0,
+    16.0
    ],
    "500": [
-    15.3,
-    15.3
+    15.0,
+    15.0
    ],
    "1000": [
-    13.15,
-    13.15
+    13.0,
+    13.0
    ]
   },
-  "de": "R$ 13,15",
-  "por": "R$ 13,15",
+  "de": "R$ 13,00",
+  "por": "R$ 13,00",
   "desconto": 0,
   "porcao": "Porção de 1,1 g (2 cápsulas)",
   "porcoes": "Porções por embalagem: 30",
@@ -1108,24 +1059,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "100": [
-    10,
-    10
+    15.5,
+    15.5
    ],
    "300": [
-    9.5,
-    9.5
+    12.5,
+    12.5
    ],
    "500": [
-    8.5,
-    8.5
+    10.5,
+    10.5
    ],
    "1000": [
-    7,
-    7
+    8.5,
+    8.5
    ]
   },
-  "de": "R$ 7,00",
-  "por": "R$ 7,00",
+  "de": "R$ 8,50",
+  "por": "R$ 8,50",
   "desconto": 0,
   "porcao": "Porção de 1 mL (17 gotas)",
   "porcoes": "Porções por embalagem: 30",
@@ -1181,24 +1132,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "100": [
-    18,
-    18
+    20.5,
+    20.5
    ],
    "300": [
-    16.4,
-    16.4
+    15.5,
+    15.5
    ],
    "500": [
-    13.15,
-    13.15
+    14.5,
+    14.5
    ],
    "1000": [
-    10.45,
-    10.45
+    12.5,
+    12.5
    ]
   },
-  "de": "R$ 10,45",
-  "por": "R$ 10,45",
+  "de": "R$ 12,50",
+  "por": "R$ 12,50",
   "desconto": 0,
   "porcao": "Porção de 1,3 g (2 cápsulas)",
   "porcoes": "Porções por embalagem: 30",
@@ -1313,24 +1264,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "100": [
-    30.95,
-    30.95
+    29.9,
+    29.9
    ],
    "300": [
-    26.3,
-    26.3
+    26.9,
+    26.9
    ],
    "500": [
-    25.2,
-    25.2
+    25.9,
+    25.9
    ],
    "1000": [
-    22.6,
-    22.6
+    24.5,
+    24.5
    ]
   },
-  "de": "R$ 22,60",
-  "por": "R$ 22,60",
+  "de": "R$ 24,50",
+  "por": "R$ 24,50",
   "desconto": 0,
   "porcao": "Porção de 3,5 g (1 unidade)",
   "porcoes": "Porções por embalagem: 30",
@@ -1425,24 +1376,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "100": [
-    18,
-    18
+    20.9,
+    20.9
    ],
    "300": [
-    15.95,
-    15.95
+    14.5,
+    14.5
    ],
    "500": [
-    12.65,
-    12.65
+    13.0,
+    13.0
    ],
    "1000": [
-    11.5,
-    11.5
+    12.0,
+    12.0
    ]
   },
-  "de": "R$ 11,50",
-  "por": "R$ 11,50",
+  "de": "R$ 12,00",
+  "por": "R$ 12,00",
   "desconto": 0,
   "porcao": "Porção de 1,1 g (2 cápsulas)",
   "porcoes": "Porções por embalagem: 30",
@@ -1541,196 +1492,6 @@ window.PRODUCTS = [
   "naoContem": "Não contém quantidades significativas de Valor energético, Proteínas, Gorduras totais, Gorduras saturadas, Gorduras trans, Fibras alimentares e Sódio."
  },
  {
-  "id": "G-006",
-  "slug": "kids-imunidade-kids",
-  "titulo": "Kids / Imunidade Kids",
-  "nome": "Kids / Imunidade Kids",
-  "tipo": "Gomas e Pastilhas",
-  "categoria": "Imunidade",
-  "tamanho": "30 gomas",
-  "maisPedido": false,
-  "descricao": "Formulado para crianças, reúne nutrientes que apoiam o crescimento e o desenvolvimento saudável, contribuindo para a formação de células sanguíneas, o transporte de oxigênio pelo corpo e a manutenção de ossos e dentes.",
-  "beneficios": [
-   "Contribui para a saúde de cabelos e pele",
-   "Apoia o desenvolvimento infantil",
-   "Colabora com o sistema imunológico"
-  ],
-  "volumes": {
-   "100": [
-    30.95,
-    30.95
-   ],
-   "300": [
-    26.3,
-    26.3
-   ],
-   "500": [
-    25.2,
-    25.2
-   ],
-   "1000": [
-    22.6,
-    22.6
-   ]
-  },
-  "de": "R$ 22,60",
-  "por": "R$ 22,60",
-  "desconto": 0,
-  "porcao": "Porção de 4 g (1 unidade)",
-  "porcoes": "Porções por embalagem: 30",
-  "tabela": [
-   [
-    "Valor energético (kcal)",
-    "8",
-    "1"
-   ],
-   [
-    "Carboidratos (g)",
-    "2,5",
-    "1"
-   ],
-   [
-    "Açúcares totais (g)",
-    "0",
-    "*"
-   ],
-   [
-    "Açúcares adicionados (g)",
-    "0",
-    "0"
-   ],
-   [
-    "Polióis totais (g)",
-    "2,5",
-    "*"
-   ],
-   [
-    "Proteínas (g)",
-    "0,6",
-    "2"
-   ],
-   [
-    "Vitamina D (µg)",
-    "5",
-    "33"
-   ],
-   [
-    "Vitamina E (mg)",
-    "5",
-    "71"
-   ],
-   [
-    "Vitamina C (mg)",
-    "30",
-    "120"
-   ],
-   [
-    "Zinco (mg)",
-    "5,1",
-    "102"
-   ],
-   [
-    "Valor energético (kcal)",
-    "8",
-    "0"
-   ],
-   [
-    "Carboidratos (g)",
-    "2,5",
-    "1"
-   ],
-   [
-    "Açúcares totais (g)",
-    "0",
-    "*"
-   ],
-   [
-    "Açúcares adicionados (g)",
-    "0",
-    "0"
-   ],
-   [
-    "Polióis totais (g)",
-    "2,5",
-    "*"
-   ],
-   [
-    "Proteínas (g)",
-    "0,6",
-    "1"
-   ],
-   [
-    "Vitamina D (µg)",
-    "5",
-    "33"
-   ],
-   [
-    "Vitamina E (mg)",
-    "5",
-    "33"
-   ],
-   [
-    "Vitamina C (mg)",
-    "30",
-    "40"
-   ],
-   [
-    "Zinco (mg)",
-    "5,1",
-    "46"
-   ]
-  ],
-  "naoContem": "Não contém quantidades significativas de Gorduras totais, Gorduras saturadas, Gorduras trans, Fibras alimentares e Sódio."
- },
- {
-  "id": "C-013",
-  "slug": "l-tirosina",
-  "titulo": "L-Tirosina",
-  "nome": "L-Tirosina",
-  "tipo": "Cápsulas",
-  "categoria": "Cognição",
-  "tamanho": "60 cápsulas",
-  "maisPedido": false,
-  "descricao": "Contribui para mais energia e desempenho no dia a dia, apoiando a concentração e a memória em tarefas que exigem esforço cognitivo. Participa também da produção de neurotransmissores ligados ao bem-estar e ao humor.",
-  "beneficios": [
-   "Contribui para reduzir a sensação de fadiga",
-   "Apoia a concentração",
-   "Participa da produção de neurotransmissores"
-  ],
-  "volumes": {
-   "500": [
-    17.5,
-    17.5
-   ],
-   "1000": [
-    12.1,
-    12.1
-   ],
-   "3000": [
-    9.8,
-    9.8
-   ]
-  },
-  "de": "R$ 9,80",
-  "por": "R$ 9,80",
-  "desconto": 0,
-  "porcao": "Porção de 0,7 g (2 cápsulas)",
-  "porcoes": "Porções por embalagem: 30",
-  "tabela": [
-   [
-    "Proteínas (g)",
-    "0",
-    "0"
-   ],
-   [
-    "L-tirosina (mg)",
-    "450",
-    "*"
-   ]
-  ],
-  "naoContem": "Não contém quantidades significativas de Valor energético, Carboidratos, Açúcares totais, Açúcares adicionados, Proteínas, Gorduras totais, Gorduras saturadas, Gorduras trans, Fibras alimentares e Sódio."
- },
- {
   "id": "C-014",
   "slug": "magnesio-dimalato",
   "titulo": "Magnésio Dimalato",
@@ -1751,16 +1512,16 @@ window.PRODUCTS = [
     17.9
    ],
    "1000": [
-    13.15,
-    13.15
+    13.7,
+    13.7
    ],
    "3000": [
-    10.45,
-    10.45
+    11.0,
+    11.0
    ]
   },
-  "de": "R$ 10,45",
-  "por": "R$ 10,45",
+  "de": "R$ 11,00",
+  "por": "R$ 11,00",
   "desconto": 0,
   "porcao": "Porção de 1,1 g (2 cápsulas)",
   "porcoes": "Porções por embalagem: 30",
@@ -1790,20 +1551,20 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "500": [
-    16.2,
-    16.2
+    17.0,
+    17.0
    ],
    "1000": [
-    11.05,
-    11.05
+    11.5,
+    11.5
    ],
    "3000": [
-    8.35,
-    8.35
+    8.5,
+    8.5
    ]
   },
-  "de": "R$ 8,35",
-  "por": "R$ 8,35",
+  "de": "R$ 8,50",
+  "por": "R$ 8,50",
   "desconto": 0,
   "porcao": "Porção de 0,6 g (1 cápsula)",
   "porcoes": "Porções por embalagem: 30",
@@ -1852,16 +1613,16 @@ window.PRODUCTS = [
     15.3
    ],
    "1000": [
-    10.5,
-    10.5
+    11.5,
+    11.5
    ],
    "3000": [
-    8.35,
-    8.35
+    8.5,
+    8.5
    ]
   },
-  "de": "R$ 8,35",
-  "por": "R$ 8,35",
+  "de": "R$ 8,50",
+  "por": "R$ 8,50",
   "desconto": 0,
   "porcao": "Porção de 0,7 g (1 cápsula)",
   "porcoes": "Porções por embalagem: 30",
@@ -1901,24 +1662,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "100": [
-    10,
-    10
+    13.9,
+    13.9
    ],
    "300": [
-    9.5,
-    9.5
+    10.9,
+    10.9
    ],
    "500": [
-    8.5,
-    8.5
+    8.9,
+    8.9
    ],
    "1000": [
-    7,
-    7
+    7.9,
+    7.9
    ]
   },
-  "de": "R$ 7,00",
-  "por": "R$ 7,00",
+  "de": "R$ 7,90",
+  "por": "R$ 7,90",
   "desconto": 0,
   "porcao": "Porção de 0,1 mL (1 gota)",
   "porcoes": "Porções por embalagem: 360",
@@ -2020,24 +1781,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "100": [
-    30.95,
-    30.95
+    29.9,
+    29.9
    ],
    "300": [
-    26.3,
-    26.3
+    26.9,
+    26.9
    ],
    "500": [
-    25.2,
-    25.2
+    25.9,
+    25.9
    ],
    "1000": [
-    22.6,
-    22.6
+    23.5,
+    23.5
    ]
   },
-  "de": "R$ 22,60",
-  "por": "R$ 22,60",
+  "de": "R$ 23,50",
+  "por": "R$ 23,50",
   "desconto": 0,
   "porcao": "Porção de 4 g (1 unidade)",
   "porcoes": "Porções por embalagem: 30",
@@ -2098,24 +1859,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "100": [
-    18,
-    18
+    20.5,
+    20.5
    ],
    "300": [
-    17.55,
-    17.55
+    15.5,
+    15.5
    ],
    "500": [
-    15.3,
-    15.3
+    14.5,
+    14.5
    ],
    "1000": [
-    13.15,
-    13.15
+    12.5,
+    12.5
    ]
   },
-  "de": "R$ 13,15",
-  "por": "R$ 13,15",
+  "de": "R$ 12,50",
+  "por": "R$ 12,50",
   "desconto": 0,
   "porcao": "Porção de 1 g (2 cápsulas)",
   "porcoes": "Porções por embalagem: 30",
@@ -2184,20 +1945,20 @@ window.PRODUCTS = [
     15.9
    ],
    "300": [
-    13.9,
-    13.9
+    14.9,
+    14.9
    ],
    "500": [
-    10.8,
-    10.8
+    12.9,
+    12.9
    ],
    "1000": [
-    9.5,
-    9.5
+    11.9,
+    11.9
    ]
   },
-  "de": "R$ 9,50",
-  "por": "R$ 9,50",
+  "de": "R$ 11,90",
+  "por": "R$ 11,90",
   "desconto": 0,
   "porcao": "Porção de 1 mL (22 gotas)",
   "porcoes": "Porções por embalagem: 30",
@@ -2237,24 +1998,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "100": [
-    14.3,
-    14.3
+    14.9,
+    14.9
    ],
    "300": [
-    12.5,
-    12.5
+    12.9,
+    12.9
    ],
    "500": [
-    9.75,
-    9.75
+    11.9,
+    11.9
    ],
    "1000": [
-    8.6,
-    8.6
+    9.9,
+    9.9
    ]
   },
-  "de": "R$ 8,60",
-  "por": "R$ 8,60",
+  "de": "R$ 9,90",
+  "por": "R$ 9,90",
   "desconto": 0,
   "porcao": "Porção de 1 mL (20 gotas)",
   "porcoes": "Porções por embalagem: 30",
@@ -2294,24 +2055,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "100": [
-    15.9,
-    15.9
+    15.5,
+    15.5
    ],
    "300": [
     13.9,
     13.9
    ],
    "500": [
-    10.8,
-    10.8
+    12.9,
+    12.9
    ],
    "1000": [
-    9.5,
-    9.5
+    11.9,
+    11.9
    ]
   },
-  "de": "R$ 9,50",
-  "por": "R$ 9,50",
+  "de": "R$ 11,90",
+  "por": "R$ 11,90",
   "desconto": 0,
   "porcao": "Porção de 1 mL (22 gotas)",
   "porcoes": "Porções por embalagem: 30",
@@ -2355,20 +2116,16 @@ window.PRODUCTS = [
     12.9
    ],
    "500": [
-    11.25,
-    11.25
+    11.5,
+    11.5
    ],
    "1000": [
-    8.95,
-    8.95
-   ],
-   "3000": [
-    7.2,
-    7.2
+    9.5,
+    9.5
    ]
   },
-  "de": "R$ 7,20",
-  "por": "R$ 7,20",
+  "de": "R$ 9,50",
+  "por": "R$ 9,50",
   "desconto": 0,
   "porcao": "Porção de 1 mL (22 gotas)",
   "porcoes": "Porções por embalagem: 30",
@@ -2409,24 +2166,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "100": [
-    52.8,
-    52.8
+    55.9,
+    55.9
    ],
    "300": [
-    46.75,
-    46.75
+    48.5,
+    48.5
    ],
    "500": [
-    45,
-    45
+    46.9,
+    46.9
    ],
    "1000": [
-    40.15,
-    40.15
+    42.9,
+    42.9
    ]
   },
-  "de": "R$ 40,15",
-  "por": "R$ 40,15",
+  "de": "R$ 42,90",
+  "por": "R$ 42,90",
   "desconto": 0,
   "porcao": "Porção de 7,2 g (3 unidades)",
   "porcoes": "Porções por embalagem: 30",
@@ -2486,24 +2243,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "100": [
-    18,
-    18
+    20.9,
+    20.9
    ],
    "300": [
-    16.5,
-    16.5
+    16.0,
+    16.0
    ],
    "500": [
-    15,
-    15
+    14.0,
+    14.0
    ],
    "1000": [
-    13.5,
-    13.5
+    13.0,
+    13.0
    ]
   },
-  "de": "R$ 13,50",
-  "por": "R$ 13,50",
+  "de": "R$ 13,00",
+  "por": "R$ 13,00",
   "desconto": 0,
   "porcao": "Porção de 0,4 g (1 cápsula)",
   "porcoes": "Porções por embalagem: 60",
@@ -2515,49 +2272,6 @@ window.PRODUCTS = [
    ]
   ],
   "naoContem": "Não contém quantidades significativas de Valor energético, Carboidratos, Açúcares totais, Açúcares adicionados, Proteínas, Gorduras saturadas, Gorduras trans, Fibras alimentares e Sódio."
- },
- {
-  "id": "C-019",
-  "slug": "taurina",
-  "titulo": "Taurina",
-  "nome": "Taurina",
-  "tipo": "Cápsulas",
-  "categoria": "Energia",
-  "tamanho": "60 cápsulas",
-  "maisPedido": false,
-  "descricao": "Contribui para o desempenho físico e mental e para a redução da fadiga. Atua na proteção das células nervosas contra danos e apoia a função muscular, contribuindo para músculos mais eficientes.",
-  "beneficios": [
-   "Ação antioxidante",
-   "Contribui para a regeneração estrutural das células",
-   "Apoia a resistência física"
-  ],
-  "volumes": {
-   "500": [
-    17.05,
-    17.05
-   ],
-   "1000": [
-    12.55,
-    12.55
-   ],
-   "3000": [
-    10,
-    10
-   ]
-  },
-  "de": "R$ 10,00",
-  "por": "R$ 10,00",
-  "desconto": 0,
-  "porcao": "Porção de 1,4 g (2 cápsulas)",
-  "porcoes": "Porções por embalagem: 30",
-  "tabela": [
-   [
-    "Taurina (mg)",
-    "1.000",
-    "*"
-   ]
-  ],
-  "naoContem": "Não contém quantidades significativas de Valor energético, Carboidratos, Açúcares totais, Açúcares adicionados, Proteínas, Gorduras totais, Gorduras saturadas, Gorduras trans, Fibras alimentares e Sódio."
  },
  {
   "id": "L-007",
@@ -2578,24 +2292,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "300": [
-    11.5,
-    11.5
+    14.9,
+    14.9
    ],
    "500": [
-    9.5,
-    9.5
+    13.9,
+    13.9
    ],
    "1000": [
-    7.5,
-    7.5
+    12.9,
+    12.9
    ],
    "3000": [
-    6.25,
-    6.25
+    10.9,
+    10.9
    ]
   },
-  "de": "R$ 6,25",
-  "por": "R$ 6,25",
+  "de": "R$ 10,90",
+  "por": "R$ 10,90",
   "desconto": 0,
   "porcao": "Porção de 1 gota",
   "porcoes": "Porções por embalagem: 360",
@@ -2607,63 +2321,6 @@ window.PRODUCTS = [
    ]
   ],
   "naoContem": "Não contém quantidades significativas de Valor energético, Carboidratos, Açúcares totais, Açúcares adicionados, Proteínas, Gorduras totais, Gorduras saturadas, Gorduras trans, Fibras alimentares e Sódio."
- },
- {
-  "id": "L-008",
-  "slug": "vitamina-d3-liquida",
-  "titulo": "Vitamina D3 Líquida",
-  "nome": "Vitamina D3 Líquida",
-  "tipo": "Líquidos",
-  "categoria": "Vitaminas",
-  "tamanho": "20 mL",
-  "maisPedido": false,
-  "descricao": "Vitamina D3 em formato líquido, indicada para quem busca suporte adicional à saúde dos ossos e ao sistema imunológico, favorecendo também a absorção de cálcio.",
-  "beneficios": [
-   "Contribui para a manutenção dos ossos",
-   "Apoia o funcionamento do sistema imunológico",
-   "Ajuda na absorção do cálcio"
-  ],
-  "volumes": {
-   "300": [
-    11.5,
-    11.5
-   ],
-   "500": [
-    9.5,
-    9.5
-   ],
-   "1000": [
-    7.5,
-    7.5
-   ],
-   "3000": [
-    6.25,
-    6.25
-   ]
-  },
-  "de": "R$ 6,25",
-  "por": "R$ 6,25",
-  "desconto": 0,
-  "porcao": "Porção de 1 mL (14 gotas)",
-  "porcoes": "Porções por embalagem: 20",
-  "tabela": [
-   [
-    "Valor energético (kcal)",
-    "9,7",
-    "0"
-   ],
-   [
-    "Gorduras totais (g)",
-    "1,1",
-    "2"
-   ],
-   [
-    "Vitamina D (µg)",
-    "50",
-    "333"
-   ]
-  ],
-  "naoContem": "Não contém quantidades significativas de Carboidratos, Açúcares totais, Açúcares adicionados, Proteínas, Gorduras saturadas, Gorduras trans, Fibras alimentares e Sódio."
  },
  {
   "id": "L-009",
@@ -2682,24 +2339,28 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "300": [
-    15.9,
-    15.9
+    16.9,
+    16.9
    ],
    "500": [
-    13.9,
-    13.9
+    15.3,
+    15.3
    ],
    "1000": [
-    10.8,
-    10.8
+    12.0,
+    12.0
+   ],
+   "2000": [
+    11.5,
+    11.5
    ],
    "3000": [
-    9.5,
-    9.5
+    10.0,
+    10.0
    ]
   },
-  "de": "R$ 9,50",
-  "por": "R$ 9,50",
+  "de": "R$ 10,00",
+  "por": "R$ 10,00",
   "desconto": 0,
   "porcao": "Porção de 1 mL (20 gotas)",
   "porcoes": "Porções por embalagem: 30",
@@ -2726,53 +2387,5 @@ window.PRODUCTS = [
    ]
   ],
   "naoContem": "Não contém quantidades significativas de Carboidratos, Açúcares totais, Açúcares adicionados, Proteínas, Gorduras saturadas, Gorduras trans, Fibras alimentares e Sódio."
- },
- {
-  "id": "C-020",
-  "slug": "vitamina-d3-e-k2",
-  "titulo": "Vitamina D3 e K2",
-  "nome": "Vitamina D3 e K2",
-  "tipo": "Cápsulas",
-  "categoria": "Vitaminas",
-  "tamanho": "30 cápsulas",
-  "maisPedido": false,
-  "descricao": "A vitamina D3 apoia a absorção de cálcio, enquanto a vitamina K2 contribui para direcioná-lo aos locais adequados do organismo, ajudando a reduzir o acúmulo de cálcio em locais indesejados e apoiando o funcionamento muscular.",
-  "beneficios": [
-   "Contribui para a absorção do cálcio",
-   "Apoia o sistema imunológico",
-   "Contribui para a absorção do fósforo"
-  ],
-  "volumes": {
-   "500": [
-    17.05,
-    17.05
-   ],
-   "1000": [
-    12.1,
-    12.1
-   ],
-   "3000": [
-    9.75,
-    9.75
-   ]
-  },
-  "de": "R$ 9,75",
-  "por": "R$ 9,75",
-  "desconto": 0,
-  "porcao": "Porção de 0,5 g (1 cápsula)",
-  "porcoes": "Porções por embalagem: 30",
-  "tabela": [
-   [
-    "Vitamina D (µg)",
-    "50",
-    "333"
-   ],
-   [
-    "Vitamina K (µg)",
-    "149",
-    "124"
-   ]
-  ],
-  "naoContem": "Não contém quantidades significativas de Valor energético, Carboidratos, Açúcares totais, Açúcares adicionados, Proteínas, Gorduras totais, Gorduras saturadas, Gorduras trans, Fibras alimentares e Sódio."
  }
 ];
