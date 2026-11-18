@@ -408,6 +408,7 @@ a.toc__row:active .toc__ar{opacity:1;transform:translateX(1mm)}
   body{background:var(--desk)}
   .pages{zoom:1;display:flex;flex-direction:column;align-items:center;padding:56px 24px 160px;gap:28px}
   .page{width:100%;max-width:1120px;height:auto;min-height:0;margin:0 auto;padding:64px 72px;border-radius:32px;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.03),0 24px 56px -32px rgba(6,40,35,.2)}
+  .dock{left:50%;right:auto;translate:-50% 0}
 
   .mono,.ph__r,.tag,.code,.eyebrow .num{font-size:12px}
   .h2{font-size:42px}
