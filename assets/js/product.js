@@ -3,6 +3,7 @@
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const { brl, waLink, productFor, photoFor, minPrice, priceAt, COSTS, nutriRows, bottleData } = window.Caps;
+  const arteFor = v => v >= COSTS.arteMin ? 0 : COSTS.artePreco;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const P = window.PRODUCTS;
   const slug = new URLSearchParams(location.search).get('p');
@@ -93,13 +94,15 @@
       $('.js-lot-q').textContent = `${q.toLocaleString('pt-BR')} un. · valores a consultar`;
       $('.js-c-rot-l').textContent = `(${q.toLocaleString('pt-BR')} un.)`;
       say($('.js-c-rot'), 'A consultar');
+      say($('.js-arte'), 'Cortesia');
       say($('.js-c-total'), 'Valores a consultar');
-      $$('.js-wa-calc').forEach(a => a.href = msg([`*Produto:* ${p.titulo} (${p.id})`, `*Quantidade:* ${nf(q)} unidades`, `*Embalagem:* ${p.tamanho}`, '*Valores:* a consultar (acima de 1.000 un.)']));
+      $$('.js-wa-calc').forEach(a => a.href = msg([`*Produto:* ${p.titulo} (${p.id})`, `*Quantidade:* ${nf(q)} unidades`, `*Embalagem:* ${p.tamanho}`, '*Valores:* a consultar (acima de 1.000 un.)', '*Arte do rótulo:* Cortesia']));
       if (ctaTxt) ctaTxt.textContent = `Quero ${nf(q)} unidades`;
     } else {
       const de = p.volumes[vol][0], por = priceAt(p, vol);
       const packs = Math.ceil(vol / LOTE);
-      const sub = vol * por, rot = packs * ROT, total = sub + rot + ANV, eco = vol * (de - por);
+      const arte = arteFor(vol);
+      const sub = vol * por, rot = packs * ROT, total = sub + rot + ANV + arte, eco = vol * (de - por);
       tween($('.js-por'), por);
       if ($('.js-de')) $('.js-de').textContent = brl(de);
       if ($('.js-off2')) $('.js-off2').textContent = `-${Math.round((1 - por / de) * 100)}%`;
@@ -107,6 +110,7 @@
       $('.js-lot-q').textContent = '';
       $('.js-c-rot-l').textContent = `(${(packs * LOTE).toLocaleString('pt-BR')} un.)`;
       fix($('.js-c-rot'), rot);
+      say($('.js-arte'), arte ? brl(arte) : 'Cortesia');
       tween($('.js-c-total'), total);
       fix($('.js-c-eco'), eco);
       $$('.js-wa-calc').forEach(a => a.href = msg([
@@ -114,7 +118,8 @@
         `*Quantidade:* ${nf(vol)} unidades`,
         `*Embalagem:* ${p.tamanho}`,
         `*Preço:* ${brl(por)}/un.`,
-        `*Lote:* ${brl(sub)} + rótulos ${brl(rot)} + ANVISA ${brl(ANV)}`,
+        `*Lote:* ${brl(sub)} + rótulos ${brl(rot)} + ANVISA ${brl(ANV)}${arte ? ` + arte do rótulo ${brl(arte)}` : ''}`,
+        `*Arte do rótulo:* ${arte ? brl(arte) : 'Cortesia'}`,
         `*Total estimado:* ${brl(total)} (sem frete)`,
       ]));
       if (ctaTxt) ctaTxt.textContent = `Quero ${nf(vol)} unidades`;

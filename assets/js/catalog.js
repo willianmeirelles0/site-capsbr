@@ -23,6 +23,8 @@
       'Solúveis': { 500: 790, 1000: 950 },
     },
     anvisa: 300,
+    arteMin: 300,
+    artePreco: 150,
   }, SITE.costs || {});
   const ORDER = ['Cápsulas', 'Líquidos', 'Gomas e Pastilhas', 'Solúveis'];
   const LINHAS = [
@@ -166,21 +168,9 @@
     ${head('Índice · <b>Fórmulas</b>')}
     <div class="eyebrow"><span class="num">02</span><span class="line"></span><span class="mono">Índice</span></div>
     <h2 class="display h2">Escolha a fórmula.<br>A marca é <span class="accent">sua.</span></h2>
-    <p class="lead toc__lead">${state.precos ? 'Valores por unidade na maior faixa de volume. Toque numa fórmula para ver a página completa.' : 'Toque numa fórmula para ver composição, tabela nutricional e volumes.'}</p>
+    <p class="lead toc__lead">Filtre por linha e veja a lista completa de fórmulas logo a seguir.</p>
     ${linhaBar()}
-    <div class="toc">
-      ${groups.map((g, gi) => `<div class="toc__grp">
-        <div class="toc__gh"><h3>${g.label}</h3><span>${pad(g.items.length)} fórmulas</span></div>
-        ${g.items.map(p => `<a class="toc__row" href="#${esc(p.id)}">
-          <span class="toc__code">${esc(p.id)}</span>
-          <span class="toc__name">${esc(p.titulo)}${p.maisPedido ? '<i class="toc__hot">Mais pedido</i>' : ''}</span>
-          <span class="toc__dots" aria-hidden="true"></span>
-          ${state.precos ? `<span class="toc__price"><small>a partir de</small> ${brl(minPrice(p))}</span>` : ''}
-          <span class="toc__pg" data-goto="${esc(p.id)}"></span>
-          <span class="toc__ar" aria-hidden="true">${ARROW}</span>
-        </a>`).join('')}
-      </div>`).join('')}
-    </div>
+    <div class="toc__sum">${groups.map(g => `<div class="toc__sumit"><b>${pad(g.items.length)}</b><span>${g.label}</span></div>`).join('')}</div>
     ${foot()}
   </section>`;
 
@@ -207,19 +197,22 @@
       </div>
       <div class="dv__list">
         <span class="mono">Nesta linha</span>
-        <div>${g.items.map(p => `<a href="#${esc(p.id)}"><em>${esc(p.id)}</em>${esc(p.titulo)}</a>`).join('')}</div>
+        <div>${g.items.map(p => `<a href="#${esc(p.id)}"><em>${esc(p.id)}</em><span>${esc(p.titulo)}</span><i class="dv__ar" aria-hidden="true">${ARROW}</i></a>`).join('')}</div>
       </div>
     </section>`;
   };
 
   /* ---------- Orçamento ao vivo (seleção de volume + rótulo por fórmula) ---------- */
   const sel = {};
+  const ARTE_MIN = COSTS.arteMin, ARTE_PRECO = COSTS.artePreco;
+  const arteFor = v => v >= ARTE_MIN ? 0 : ARTE_PRECO;
   const calcFor = (p, v, rq) => {
     const unit = priceAt(p, v);
     const fab = unit * v;
     const rot = (COSTS.rotulo[p.tipo] || COSTS.rotulo['Cápsulas'])[rq];
     const anvisa = COSTS.anvisa;
-    return { unit, fab, rot, anvisa, total: fab + rot + anvisa };
+    const arte = arteFor(v);
+    return { unit, fab, rot, anvisa, arte, total: fab + rot + anvisa + arte };
   };
   const quoteMsg = (p, v, rq, c) => [
     `Olá! Vi o catálogo da CapsBR e quero fabricar o ${p.id} · ${p.titulo} com a minha marca.`,
@@ -229,7 +222,7 @@
     `- Fabricação: ${nf(v)} un. × ${brl(c.unit)} = ${brl(c.fab)}`,
     `- Rótulos impressos: ${nf(rq)} unidades = ${brl(c.rot)}`,
     `- Notificação ANVISA: ${brl(c.anvisa)}`,
-    `- Arte do rótulo: ${PROMO.on ? 'Cortesia' : 'Sob consulta'}`,
+    `- Arte do rótulo: ${c.arte ? brl(c.arte) : 'Cortesia'}`,
     `*Total estimado: ${brl(c.total)}* (frete não incluso)`,
     '',
     'Pode confirmar a cotação?',
@@ -251,10 +244,10 @@
         <div class="pr__row"><span>Fabricação<small>${nf(v)} un. × ${brl(c.unit)}</small></span><b>${brl(c.fab)}</b></div>
         <div class="pr__row"><span>Impressão de rótulos<small>${nf(rq)} unidades</small></span><b>${brl(c.rot)}</b></div>
         <div class="pr__row"><span>Notificação ANVISA</span><b>${brl(c.anvisa)}</b></div>
-        <div class="pr__row"><span>Arte do rótulo</span><b>${PROMO.on ? 'Cortesia' : 'Sob consulta'}</b></div>
+        <div class="pr__row"><span>Arte do rótulo<small>${v >= ARTE_MIN ? `a partir de ${nf(ARTE_MIN)} un.` : `abaixo de ${nf(ARTE_MIN)} un.`}</small></span><b>${c.arte ? brl(c.arte) : 'Cortesia'}</b></div>
       </div>
       <div class="pr__tot"><span>Total estimado</span><b>${brl(c.total)}</b></div>
-      <p class="pr__inc">Já inclui <b>rótulo personalizado, teste de estabilidade e tabela nutricional</b>. Frete não incluso.${PROMO.on ? '' : ' Arte do rótulo confirmada na cotação.'}</p>
+      <p class="pr__inc">Já inclui <b>rótulo personalizado, teste de estabilidade e tabela nutricional</b>. Frete não incluso.</p>
     </div>`;
   };
   const ctaBlock = (p, v, rq) => {
@@ -341,7 +334,7 @@
           <div class="sim__row"><span>Fabricação<small>${nf(exV)} un. × ${brl(c.unit)}</small></span><b>${brl(c.fab)}</b></div>
           <div class="sim__row"><span>Impressão de rótulos<small>500 unidades</small></span><b>${brl(c.rot)}</b></div>
           <div class="sim__row"><span>Notificação ANVISA<small>por produto</small></span><b>${brl(COSTS.anvisa)}</b></div>
-          <div class="sim__row"><span>Arte do rótulo</span><b>${PROMO.on ? 'Cortesia' : 'Sob consulta'}</b></div>
+          <div class="sim__row"><span>Arte do rótulo</span><b>${c.arte ? brl(c.arte) : 'Cortesia'}</b></div>
           <div class="sim__tot"><span>Investimento total</span><b>${brl(c.total)}</b></div>
         </div>
       </div>`;
@@ -364,7 +357,7 @@
           <p>Por linha e quantidade de rótulos impressos.</p>
         </div>
         <div class="cost__it"><span class="inc__ic">${IC.shield}</span><span class="cost__k">Notificação ANVISA</span><div class="cost__v"><b>${brl(COSTS.anvisa)}</b><small>por produto</small></div><p>Conduzida pela CapsBR no mesmo fluxo do pedido.</p></div>
-        <div class="cost__it"><span class="inc__ic">${IC.sign.replace('viewBox="0 0 48 48"', 'viewBox="4 2 40 44"')}</span><span class="cost__k">Arte do rótulo</span><div class="cost__v"><b>Sob consulta</b></div><p>Ou envie a sua arte pronta para aprovação.</p></div>
+        <div class="cost__it"><span class="inc__ic">${IC.sign.replace('viewBox="0 0 48 48"', 'viewBox="4 2 40 44"')}</span><span class="cost__k">Arte do rótulo</span><div class="cost__v"><b>Cortesia</b><small>a partir de ${nf(ARTE_MIN)} un.</small></div><div class="cost__v"><b>${brl(ARTE_PRECO)}</b><small>abaixo de ${nf(ARTE_MIN)} un.</small></div><p>Ou envie a sua arte pronta para aprovação.</p></div>
       </div>
       ${sim}
       <div class="sec-label"><span class="mono">Perguntas frequentes</span></div>
