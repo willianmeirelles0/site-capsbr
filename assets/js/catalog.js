@@ -155,6 +155,7 @@
           <span class="toc__dots" aria-hidden="true"></span>
           ${state.precos ? `<span class="toc__price"><small>a partir de</small> ${brl(minPrice(p))}</span>` : ''}
           <span class="toc__pg" data-goto="${esc(p.id)}"></span>
+          <span class="toc__ar" aria-hidden="true">${ARROW}</span>
         </a>`).join('')}
       </div>`).join('')}
     </div>
@@ -182,24 +183,53 @@
     </section>`;
   };
 
+  /* ---------- Orçamento ao vivo (seleção de volume por fórmula) ---------- */
+  const selected = {};
+  const LOTE = Math.max(1, COSTS.rotuloLote | 0);
+  const calcFor = (p, v) => {
+    const unit = priceAt(p, v);
+    const fab = unit * v;
+    const rot = (isLiq(p) ? COSTS.rotuloLiq : COSTS.rotuloCaps) * Math.ceil(v / LOTE);
+    const anvisa = COSTS.anvisa;
+    return { unit, fab, rot, anvisa, total: fab + rot + anvisa };
+  };
+  const quoteMsg = (p, v, c) => `Olá! Vi o catálogo da CapsBR e quero fabricar o ${p.id} · ${p.titulo} com a minha marca, no volume de ${nf(v)} unidades. Total estimado: ${brl(c.total)}${PROMO.on ? '' : ' + arte do rótulo (sob consulta)'}. Pode confirmar a cotação?`;
+  const priceBlock = (p, v) => {
+    const vs = vols(p);
+    const c = calcFor(p, v);
+    return `<div class="pr" data-pid="${esc(p.id)}">
+      <div class="pr__h"><span class="mono">Monte o seu pedido</span>${PROMO.on ? `<span class="pr__badge">${esc(PROMO.name)} · -${p.desconto}%</span>` : ''}</div>
+      <div class="pr__pills" role="group" aria-label="Volume do pedido">
+        ${vs.map(vv => `<button type="button" class="pr__pill${vv === v ? ' is-on' : ''}" data-vol="${vv}" aria-pressed="${vv === v}">${nf(vv)} un.</button>`).join('')}
+      </div>
+      <div class="pr__calc">
+        <div class="pr__row"><span>Fabricação<small>${nf(v)} un. × ${brl(c.unit)}</small></span><b>${brl(c.fab)}</b></div>
+        <div class="pr__row"><span>Impressão de rótulos<small>a cada ${nf(LOTE)} un.</small></span><b>${brl(c.rot)}</b></div>
+        <div class="pr__row"><span>Notificação ANVISA</span><b>${brl(c.anvisa)}</b></div>
+        <div class="pr__row"><span>Arte do rótulo</span><b>${PROMO.on ? 'Cortesia' : 'Sob consulta'}</b></div>
+      </div>
+      <div class="pr__tot"><span>Total estimado</span><b>${brl(c.total)}</b></div>
+      <p class="pr__inc">Já inclui <b>rótulo personalizado, teste de estabilidade e tabela nutricional</b>.${PROMO.on ? '' : ' Arte do rótulo confirmada na cotação.'}</p>
+    </div>`;
+  };
+  const ctaBlock = (p, v) => {
+    const c = calcFor(p, v);
+    return `<a class="cta" id="cta-${esc(p.id)}" href="${wa(quoteMsg(p, v, c))}" target="_blank" rel="noopener">
+      <span class="cta__t"><b>Quero essa fórmula com a minha marca</b><span>${nf(v)} unidades · total estimado ${brl(c.total)}, já escrito na mensagem.</span></span>
+      <span class="cta__btn"><span class="cta__ic">${WAIC}</span>Pedir cotação<span class="cta__ar">${ARROW}</span></span>
+    </a>`;
+  };
+
   const product = (p) => {
     const liq = isLiq(p);
     const rows = nutriRows(p);
     const vd = r => /^\d/.test(String(r.vd).trim()) ? `${r.vd}%` : '**';
     const vs = vols(p);
-    const link = wa(`Olá! Vi o catálogo da CapsBR e quero fabricar o ${p.id} · ${p.titulo} com a minha marca. Pode me passar a cotação?`);
+    if (!(p.id in selected) || !vs.includes(selected[p.id])) selected[p.id] = vs[0];
+    const v0 = selected[p.id];
     const cleanPorcao = s => String(s || '').replace(/^Porção de\s*/i, '');
     const cleanPorcoes = s => String(s || '').replace(/^Porções por embalagem:\s*/i, '');
-    const price = state.precos ? `
-      <div class="pr">
-        <div class="pr__h"><span class="mono">Preço por unidade</span>${PROMO.on ? `<span class="pr__badge">${esc(PROMO.name)} · -${p.desconto}%</span>` : ''}</div>
-        <div class="pr__from">a partir de<b>${brl(minPrice(p))}<em> /un.</em></b></div>
-        <div class="pr__tbl">
-          <div class="pr__row pr__row--h"><span>Volume</span><span>Preço /un.</span><span style="text-align:right">Lote</span></div>
-          ${vs.map(v => { const [de] = p.volumes[v]; const now = priceAt(p, v); return `<div class="pr__row"><span>${nf(v)} un.</span><span>${PROMO.on && de > now ? `<s>${brl(de)}</s> ` : ''}${brl(now)}</span><b>${brl(now * v)}</b></div>`; }).join('')}
-        </div>
-        <p class="pr__inc">Já inclui <b>rótulo personalizado, teste de estabilidade e tabela nutricional</b>. Impressão dos rótulos e notificação ANVISA à parte.</p>
-      </div>` : `
+    const price = state.precos ? priceBlock(p, v0) : `
       <div class="pr">
         <div class="pr__h"><span class="mono">Volumes disponíveis</span></div>
         <div class="pr__ask">Valores sob consulta, direto com a CapsBR.</div>
@@ -241,10 +271,10 @@
         </div>
         ${price}
       </div>
-      <a class="cta" href="${link}" target="_blank" rel="noopener">
+      ${state.precos ? ctaBlock(p, v0) : `<a class="cta" href="${wa(`Olá! Vi o catálogo da CapsBR e quero fabricar o ${p.id} · ${p.titulo} com a minha marca. Pode me passar a cotação?`)}" target="_blank" rel="noopener">
         <span class="cta__t"><b>Quero essa fórmula com a minha marca</b><span>Pedido de cotação do <em>${esc(p.id)}</em> já vai escrito na mensagem.</span></span>
         <span class="cta__btn"><span class="cta__ic">${WAIC}</span>Pedir cotação<span class="cta__ar">${ARROW}</span></span>
-      </a>
+      </a>`}
       ${foot()}
     </section>`;
   };
@@ -328,6 +358,19 @@
 
   /* ---------- Montagem ---------- */
   const root = $('.js-pages');
+  root.addEventListener('click', e => {
+    const pill = e.target.closest('.pr__pill');
+    if (!pill) return;
+    const box = pill.closest('[data-pid]');
+    const id = box && box.dataset.pid;
+    const p = id && ALL.find(x => x.id === id);
+    const v = Number(pill.dataset.vol);
+    if (!p || !v || selected[id] === v) return;
+    selected[id] = v;
+    box.outerHTML = priceBlock(p, v);
+    const cta = document.getElementById('cta-' + id);
+    if (cta) cta.outerHTML = ctaBlock(p, v);
+  });
   function render() {
     const list = ALL.filter(p => state.linha === 'todas' || (state.linha === 'liquidos') === isLiq(p));
     if (!list.length) { root.innerHTML = '<p class="loading">Nenhuma fórmula encontrada.</p>'; return; }

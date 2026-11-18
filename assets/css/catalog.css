@@ -200,7 +200,11 @@ input{font:inherit}
 .toc__price{flex:none;font-family:var(--f-display);font-size:10pt;font-weight:600;letter-spacing:-.01em;white-space:nowrap}
 .toc__price small{font-family:var(--f-body);font-size:6.8pt;font-weight:500;color:var(--dim)}
 .toc__pg{flex:none;width:7mm;text-align:right;font-family:var(--f-mono);font-size:7.4pt;color:var(--g)}
+.toc__ar{flex:none;width:4mm;height:4mm;display:flex;align-items:center;justify-content:center;color:var(--g);opacity:.55;transition:transform .2s,opacity .2s}
+.toc__ar svg{width:100%;height:100%}
 a.toc__row:hover .toc__name{color:var(--g)}
+a.toc__row:hover .toc__ar{opacity:1;transform:translateX(1mm)}
+a.toc__row:active .toc__ar{opacity:1;transform:translateX(1mm)}
 
 /* ---------- Divisória de linha ---------- */
 .dv{padding:16mm}
@@ -285,12 +289,20 @@ a.toc__row:hover .toc__name{color:var(--g)}
 .pr__from b{display:block;font-family:var(--f-display);font-size:26pt;font-weight:600;letter-spacing:-.04em;line-height:1.05;color:#fff}
 .pr__from b em{font-style:normal;font-family:var(--f-body);font-size:8pt;font-weight:500;color:#a9c2bb;letter-spacing:0}
 .pr__tbl{margin-top:3.5mm}
+.pr__pills{margin-top:3.5mm;display:flex;flex-wrap:wrap;gap:1.6mm}
+.pr__pill{padding:1.6mm 3mm;border-radius:99px;border:1px solid var(--deep-line);background:transparent;color:#d7e4e0;font-family:inherit;font-size:7.4pt;font-weight:600;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+.pr__pill:hover{border-color:var(--mint)}
+.pr__pill.is-on{background:var(--mint);border-color:var(--mint);color:var(--deep)}
+.pr__calc{margin-top:3mm}
 .pr__row{display:grid;grid-template-columns:1fr auto auto;gap:3mm;align-items:baseline;padding:1.7mm 0;border-top:1px solid var(--deep-line);font-size:7.8pt}
 .pr__row span:first-child{font-weight:600}
+.pr__row small{display:block;font-weight:400;font-size:6.4pt;color:#6f8f87}
 .pr__row s{color:#6f8f87;font-size:6.8pt}
 .pr__row b{font-family:var(--f-display);font-size:9.6pt;font-weight:600;letter-spacing:-.01em;min-width:15mm;text-align:right}
 .pr__row--h{font-family:var(--f-mono);font-size:5.8pt;letter-spacing:.1em;text-transform:uppercase;color:#6f8f87;padding-top:0;border-top:0}
 .pr__row--h span:first-child{font-weight:400}
+.pr__tot{display:flex;justify-content:space-between;align-items:baseline;gap:3mm;margin-top:1.5mm;padding-top:2.5mm;border-top:1.5px solid var(--mint);font-size:7.8pt;font-weight:600;color:#d7e4e0}
+.pr__tot b{font-family:var(--f-display);font-size:15pt;font-weight:600;letter-spacing:-.02em;color:var(--mint)}
 .pr__inc{margin-top:auto;padding-top:3mm;font-size:6.6pt;color:#a9c2bb;line-height:1.45}
 .pr__inc b{color:var(--mint);font-weight:600}
 .pr__ask{margin-top:4mm;font-family:var(--f-display);font-size:15pt;font-weight:600;letter-spacing:-.03em;line-height:1.1}
@@ -443,7 +455,8 @@ a.toc__row:hover .toc__name{color:var(--g)}
   .toc__gh{padding-bottom:10px}
   .toc__gh h3{font-size:21px}
   .toc__gh span{font-size:10.5px}
-  .toc__row{flex-wrap:wrap;gap:2px 10px;padding:12px 0;align-items:center}
+  .toc__row{flex-wrap:wrap;gap:2px 10px;padding:12px 10px;align-items:center;border-bottom:0;margin-bottom:8px;border-radius:14px;background:var(--surface);transition:background .15s}
+  a.toc__row:active{background:rgba(20,72,63,.08)}
   .toc__code{width:auto;font-size:10.5px;order:1}
   .toc__name{flex:1 1 100%;order:3;font-size:16.5px}
   .toc__hot{font-size:10px;padding:2px 8px;margin-left:8px}
@@ -451,6 +464,7 @@ a.toc__row:hover .toc__name{color:var(--g)}
   .toc__price{order:4;font-size:14px}
   .toc__price small{font-size:11.5px}
   .toc__pg{display:none}
+  .toc__ar{order:5;width:18px;height:18px;opacity:1;margin-left:auto}
 
   /* divisória */
   .dv__top{margin-bottom:26px}
@@ -501,10 +515,16 @@ a.toc__row:hover .toc__name{color:var(--g)}
   .pr__from{font-size:12.5px;margin-top:10px}
   .pr__from b{font-size:38px}
   .pr__from b em{font-size:13px}
+  .pr__pills{margin-top:14px;gap:8px}
+  .pr__pill{font-size:13.5px;padding:8px 14px}
+  .pr__calc{margin-top:12px}
   .pr__row{font-size:13.5px;padding:9px 0}
+  .pr__row small{font-size:11.5px}
   .pr__row s{font-size:11.5px}
   .pr__row b{font-size:15px;min-width:0}
   .pr__row--h{font-size:9.5px}
+  .pr__tot{margin-top:4px;padding-top:12px;font-size:13.5px}
+  .pr__tot b{font-size:26px}
   .pr__inc{font-size:12px;padding-top:14px}
   .pr__ask{font-size:22px}
   .pr__ask + p{font-size:14px}
