@@ -152,9 +152,9 @@ input{font:inherit}
 .cover__art img{position:absolute;bottom:0;height:auto}
 .cover__art::before{content:"";position:absolute;left:4mm;right:0;bottom:-5mm;height:14mm;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.55),transparent)}
 .cover__art.is-solo::before{left:25mm;right:25mm}
-.cover__art .i-caps{left:10mm;width:72mm}
+.cover__art .i-caps,.cover__art .i-gom,.cover__art .i-sol{left:10mm;width:72mm}
 .cover__art .i-liq{right:6mm;width:34mm}
-.cover__art.is-solo .i-caps{left:50%;translate:-50% 0;width:80mm}
+.cover__art.is-solo .i-caps,.cover__art.is-solo .i-gom,.cover__art.is-solo .i-sol{left:50%;translate:-50% 0;width:80mm}
 .cover__art.is-solo .i-liq{right:auto;left:50%;translate:-50% 0;width:46mm}
 .cover__stats{position:relative;margin-top:auto;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--deep-line)}
 .cover__stats div{padding:6mm 4mm 0 0}
@@ -188,6 +188,10 @@ input{font:inherit}
 
 /* ---------- Índice (sumário limpo, com pontilhado) ---------- */
 .toc__lead{margin-top:3mm;font-size:9.5pt}
+.lnf{margin-top:4mm;display:flex;flex-wrap:wrap;gap:1.8mm}
+.lnf__b{padding:1.8mm 3.6mm;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-family:inherit;font-size:7.6pt;font-weight:600;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+.lnf__b:hover{border-color:var(--g)}
+.lnf__b.is-on{background:var(--g);border-color:var(--g);color:#fff}
 .toc{margin-top:6mm;display:grid;gap:7mm}
 .toc__gh{display:flex;align-items:baseline;justify-content:space-between;padding-bottom:2.4mm;border-bottom:1.5px solid var(--text)}
 .toc__gh h3{font-family:var(--f-display);font-size:14pt;font-weight:600;letter-spacing:-.03em}
@@ -243,7 +247,7 @@ a.toc__row:active .toc__ar{opacity:1;transform:translateX(1mm)}
 .pp__stage img{position:absolute;left:50%;bottom:13mm;translate:-50% 0;height:auto}
 .pp__stage::before{content:"";position:absolute;left:50%;bottom:9.5mm;width:56mm;height:8mm;translate:-50% 0;border-radius:50%;background:radial-gradient(closest-side,rgba(6,40,35,.3),transparent)}
 .pp__stage:has(.i-liq)::before{width:32mm}
-.pp__stage .i-caps{width:50mm}
+.pp__stage .i-caps,.pp__stage .i-gom,.pp__stage .i-sol{width:50mm}
 .pp__stage .i-liq{width:26mm}
 .pp__stage .code{position:absolute;top:5mm;left:5mm;background:rgba(255,255,255,.7)}
 .pp__hot{position:absolute;top:5mm;right:5mm;padding:1mm 2.6mm;border-radius:99px;background:var(--g);color:#fff;font-size:6.6pt;font-weight:700}
@@ -285,6 +289,8 @@ a.toc__row:active .toc__ar{opacity:1;transform:translateX(1mm)}
 .pr__h{display:flex;justify-content:space-between;align-items:baseline}
 .pr__h .mono{color:#a9c2bb;font-size:6.4pt}
 .pr__badge{padding:.8mm 2.4mm;border-radius:99px;background:var(--mint);color:var(--deep);font-size:6.2pt;font-weight:700}
+.pr__sub{margin-top:3mm;font-family:var(--f-mono);font-size:5.8pt;letter-spacing:.08em;text-transform:uppercase;color:#6f8f87}
+.pr__sub:first-of-type{margin-top:3.5mm}
 .pr__from{margin-top:3mm;font-size:7.2pt;color:#a9c2bb}
 .pr__from b{display:block;font-family:var(--f-display);font-size:26pt;font-weight:600;letter-spacing:-.04em;line-height:1.05;color:#fff}
 .pr__from b em{font-style:normal;font-family:var(--f-body);font-size:8pt;font-weight:500;color:#a9c2bb;letter-spacing:0}
@@ -333,6 +339,12 @@ a.toc__row:active .toc__ar{opacity:1;transform:translateX(1mm)}
 .cost__v b{font-family:var(--f-display);font-size:17pt;font-weight:600;letter-spacing:-.04em;line-height:1.05}
 .cost__v small{font-size:7.4pt;color:var(--muted)}
 .cost__it p{margin-top:auto;padding-top:3mm;font-size:7.6pt;color:var(--muted);line-height:1.4}
+.cost__it--rot{grid-column:1/-1}
+.cost__rot{margin-top:2mm;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.6mm 5mm}
+.cost__rotrow{display:flex;flex-direction:column;gap:.4mm;padding:2mm 0;border-top:1px solid var(--border);font-size:7.6pt}
+.cost__rotrow b{font-family:var(--f-display);font-size:8.6pt;font-weight:600}
+.cost__rotrow span{color:var(--muted)}
+.cost__rotrow em{font-style:normal;font-weight:600;color:var(--text)}
 .sim{margin-top:5mm;display:grid;grid-template-columns:1fr 1.05fr;border-radius:6mm;overflow:hidden;background:var(--deep);color:#f3f7f5}
 .sim__l{display:flex;flex-direction:column;padding:6mm}
 .sim__l .mono{color:var(--mint);font-size:6.4pt}
@@ -412,9 +424,9 @@ a.toc__row:active .toc__ar{opacity:1;transform:translateX(1mm)}
   .cover__for b{font-size:21px}
   .cover__art{position:relative;right:auto;bottom:auto;width:100%;max-width:340px;height:300px;margin:26px auto 0}
   .cover__disc{width:280px;bottom:-14px}
-  .cover__art .i-caps{left:12%;width:52%}
+  .cover__art .i-caps,.cover__art .i-gom,.cover__art .i-sol{left:12%;width:52%}
   .cover__art .i-liq{right:8%;width:24%}
-  .cover__art.is-solo .i-caps{width:62%}
+  .cover__art.is-solo .i-caps,.cover__art.is-solo .i-gom,.cover__art.is-solo .i-sol{width:62%}
   .cover__art.is-solo .i-liq{width:34%}
   .cover__stats{grid-template-columns:1fr 1fr;margin-top:30px}
   .cover__stats div,.cover__stats div + div{padding:18px 12px 0 0;border-left:0}
@@ -451,6 +463,8 @@ a.toc__row:active .toc__ar{opacity:1;transform:translateX(1mm)}
 
   /* índice */
   .toc__lead{font-size:14.5px;margin-top:10px}
+  .lnf{margin-top:14px;gap:8px}
+  .lnf__b{font-size:13.5px;padding:8px 14px}
   .toc{gap:28px;margin-top:22px}
   .toc__gh{padding-bottom:10px}
   .toc__gh h3{font-size:21px}
@@ -477,9 +491,9 @@ a.toc__row:active .toc__ar{opacity:1;transform:translateX(1mm)}
   .dv__art{height:280px;margin-top:10px}
   .dv__disc{width:240px;bottom:10px}
   .dv__art img{width:190px}
-  .dv__art.is-liq img{width:104px}
+  .dv__art.is-liq img{width:170px}
   .dv__art::before{width:210px;height:34px;bottom:-12px}
-  .dv__art.is-liq::before{width:130px}
+  .dv__art.is-liq::before{width:150px}
   .dv__list{padding-top:20px;margin-top:20px}
   .dv__list > div{grid-template-columns:1fr;margin-top:10px}
   .dv__list a{font-size:15.5px;padding:11px 0;gap:12px}
@@ -489,10 +503,10 @@ a.toc__row:active .toc__ar{opacity:1;transform:translateX(1mm)}
   .pp__top{grid-template-columns:1fr;gap:20px}
   .pp__stage{height:300px;border-radius:22px}
   .pp__stage img{bottom:42px}
-  .pp__stage .i-caps{width:168px}
-  .pp__stage .i-liq{width:88px}
+  .pp__stage .i-caps,.pp__stage .i-gom,.pp__stage .i-sol{width:150px}
+  .pp__stage .i-liq{width:130px}
   .pp__stage::before{bottom:30px;width:190px;height:28px}
-  .pp__stage:has(.i-liq)::before{width:110px}
+  .pp__stage:has(.i-liq)::before{width:140px}
   .pp__stage .code{top:16px;left:16px;padding:4px 10px}
   .pp__hot{top:16px;right:16px;font-size:11px;padding:4px 10px}
   .pp__off{width:58px;height:58px;right:16px;bottom:16px;font-size:18px}
@@ -512,6 +526,8 @@ a.toc__row:active .toc__ar{opacity:1;transform:translateX(1mm)}
   .pr{order:-1;padding:20px;border-radius:20px}
   .pr__h .mono{font-size:10.5px}
   .pr__badge{font-size:10.5px;padding:3px 9px}
+  .pr__sub{font-size:10.5px;margin-top:12px}
+  .pr__sub:first-of-type{margin-top:14px}
   .pr__from{font-size:12.5px;margin-top:10px}
   .pr__from b{font-size:38px}
   .pr__from b em{font-size:13px}
@@ -553,6 +569,9 @@ a.toc__row:active .toc__ar{opacity:1;transform:translateX(1mm)}
   .cost__v b{font-size:26px}
   .cost__v small{font-size:13px}
   .cost__it p{font-size:13px;padding-top:8px}
+  .cost__rot{grid-template-columns:1fr 1fr;gap:6px 14px}
+  .cost__rotrow{font-size:13px;padding:8px 0}
+  .cost__rotrow b{font-size:14.5px}
   .sim{grid-template-columns:1fr;margin-top:16px;border-radius:20px}
   .sim__l{padding:22px 20px 10px}
   .sim__l .mono{font-size:10.5px}

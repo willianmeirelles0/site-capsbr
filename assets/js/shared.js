@@ -152,7 +152,7 @@ ${line(38, 238, l2, 8, 124, 600, FONT_B, t.sub, .06)}
   // [de, por] → preço vigente (promo ou normal)
   const priceAt = (p, v) => { const [de, por] = p.volumes[v]; return PROMO.on ? por : de; };
   const minPrice = p => Math.min(...Object.keys(p.volumes).map(v => priceAt(p, v)));
-  const maxDe = p => Object.values(p.volumes).find(v => v[1] === Math.min(...Object.values(p.volumes).map(x => x[1])))[0];
+  const maxDe = p => { const vs = Object.values(p.volumes); if (!vs.length) return 0; return vs.find(v => v[1] === Math.min(...vs.map(x => x[1])))[0]; };
 
   // tabela nutricional: separa unidade e remove linhas zeradas (só o que vai no produto)
   const parseRow = ([n, v, vd]) => { const m = n.match(/^(.*?)\s*\(([^)]+)\)\s*$/); return { name: m ? m[1] : n, unit: m ? m[2] : '', v, vd }; };
