@@ -88,7 +88,11 @@ export function normalizeProduct(raw, i = 0) {
   keys.slice(0, LIMITS.volumes).forEach(k => {
     const q = Math.round(toNumber(k));
     const pair = Array.isArray(src[k]) ? src[k] : [];
-    const de = round2(toNumber(pair[0])), por = round2(toNumber(pair[1]));
+    const de = round2(toNumber(pair[0]));
+    // sem promoção: deixar "preço na campanha" em branco repete o preço normal
+    const porRaw = pair[1];
+    const porBlank = porRaw === '' || porRaw == null || (typeof porRaw === 'string' && porRaw.trim() === '');
+    const por = round2(toNumber(porBlank ? pair[0] : porRaw));
     if (!(q >= 1 && q <= 1000000)) { at('volumes', `Quantidade inválida: ${k}.`); return; }
     if (volumes[q]) { at('volumes', `Quantidade repetida: ${q}.`); return; }
     if (!(de > 0) || de > 100000) { at('volumes', `Preço normal inválido em ${q} un.`); return; }

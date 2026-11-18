@@ -228,8 +228,8 @@
 
       <div class="dsec">
         <div class="dsec__head"><h4>Preços por quantidade</h4><button type="button" class="btn btn--sm btn--ghost" id="addVol">+ Faixa</button></div>
-        <p class="help">O site mostra as faixas de até 1.000 unidades como botões (300, 500, 1.000) e "Personalizado" acima disso. A maior faixa define o "a partir de" do card.</p>
-        <table class="vtable"><thead><tr><th>Quantidade</th><th>Preço normal</th><th>Preço na campanha</th><th class="num">Desconto</th><th></th></tr></thead><tbody id="volBody"></tbody></table>
+        <p class="help">O site mostra as faixas de até 1.000 unidades como botões (300, 500, 1.000) e "Personalizado" acima disso. A maior faixa define o "a partir de" do card. Deixe "Preço na campanha" em branco se esta faixa não estiver em promoção — o site usa o preço normal.</p>
+        <table class="vtable"><thead><tr><th>Quantidade</th><th>Preço normal</th><th>Preço na campanha <em class="opt">opcional</em></th><th class="num">Desconto</th><th></th></tr></thead><tbody id="volBody"></tbody></table>
         <small class="err" data-perr="volumes"></small>
         <div class="grid2 mt">
           <label class="field"><span>Selo de desconto no card</span><div class="affix"><input type="text" inputmode="numeric" name="desconto" maxlength="2"><em>%</em></div><small class="help"><button type="button" class="linkish" id="autoOff"></button></small><small class="err" data-perr="desconto"></small></label>

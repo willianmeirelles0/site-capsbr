@@ -376,10 +376,16 @@ function renderVolRows(rows) {
 }
 function updateVolOffs() {
   $$('#volBody tr').forEach(tr => {
-    const de = toNumber($('[data-v=de]', tr).value), por = toNumber($('[data-v=por]', tr).value);
+    const deInput = $('[data-v=de]', tr), porInput = $('[data-v=por]', tr);
+    const de = toNumber(deInput.value), porTyped = porInput.value.trim();
+    porInput.placeholder = de > 0 ? money(de) : '';
+    const por = porTyped ? toNumber(porTyped) : de;
     const cell = $('.off', tr);
-    if (de > 0 && por > 0) { const off = Math.round((1 - por / de) * 100); cell.textContent = off < 0 ? 'maior!' : `-${off}%`; cell.classList.toggle('is-bad', off < 0); }
-    else { cell.textContent = ''; cell.classList.remove('is-bad'); }
+    if (de > 0 && por > 0) {
+      const off = Math.round((1 - por / de) * 100);
+      cell.textContent = !porTyped ? 'sem promo' : off < 0 ? 'maior!' : `-${off}%`;
+      cell.classList.toggle('is-bad', off < 0);
+    } else { cell.textContent = ''; cell.classList.remove('is-bad'); }
   });
 }
 function renderFornRotRows(rows) {
