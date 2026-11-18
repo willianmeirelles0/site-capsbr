@@ -441,17 +441,7 @@
     pages.forEach((pg, i) => { const n = $('[data-pn]', pg); if (n) n.textContent = `${pad(i + 1)} / ${pad(total)}`; pg.dataset.n = i + 1; });
     $$('[data-goto]', root).forEach(el => { const t = document.getElementById(el.dataset.goto); el.textContent = t ? pad(t.dataset.n) : ''; });
     document.title = `Catálogo de Fórmulas${state.para ? ' · ' + state.para : ''} | CapsBR`;
-    fitZoom();
   }
-
-  // no computador as folhas A4 encolhem se a janela for estreita; no celular o layout vira fluido (CSS)
-  const MOBILE = matchMedia('(max-width: 899px)');
-  function fitZoom() {
-    const w = 210 * 96 / 25.4 + 48;
-    const z = MOBILE.matches ? 1 : Math.min(1, window.innerWidth / w);
-    document.documentElement.style.setProperty('--z', z.toFixed(3));
-  }
-  addEventListener('resize', fitZoom);
 
   const toast = msg => { const t = $('.js-toast'); t.textContent = msg; t.classList.add('is-on'); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('is-on'), 2400); };
   const ready = () => Promise.all([document.fonts ? document.fonts.ready : 0, ...$$('img', root).map(i => { i.loading = 'eager'; return i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; }); })]);
