@@ -1,5 +1,5 @@
 // Dados sincronizados com blackfriday.capsbr.com.br (vitrinecapsbr) em 2026-11-18
-// S-003/S-004 (Alphafitus): a fonte atual zera o preco (placeholder); mantido o ultimo preco valido conhecido ate confirmacao
+// S-003/S-004: precos de Pre-treino atualizados conforme tabela enviada por Willian em 2026-11-18
 window.PRODUCTS = [
  {
   "id": "C-002",
@@ -627,32 +627,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "300": [
-    42.9,
-    42.9
+    37.5,
+    37.5
    ],
    "500": [
-    41.9,
-    41.9
+    35.5,
+    35.5
    ],
    "1000": [
-    40.9,
-    40.9
+    33.5,
+    33.5
    ],
    "2000": [
-    39.9,
-    39.9
-   ],
-   "5000": [
-    38.9,
-    38.9
-   ],
-   "10000": [
-    37.9,
-    37.9
+    32.5,
+    32.5
    ]
   },
-  "de": "R$ 37,90",
-  "por": "R$ 37,90",
+  "de": "R$ 32,50",
+  "por": "R$ 32,50",
   "desconto": 0,
   "porcao": "Porção de 10 g (2 dosadores)",
   "porcoes": "Porções por embalagem: 30",
@@ -737,32 +729,24 @@ window.PRODUCTS = [
   ],
   "volumes": {
    "300": [
-    42.9,
-    42.9
+    36.5,
+    36.5
    ],
    "500": [
-    41.9,
-    41.9
+    34.5,
+    34.5
    ],
    "1000": [
-    40.9,
-    40.9
+    31.5,
+    31.5
    ],
    "2000": [
-    39.9,
-    39.9
-   ],
-   "5000": [
-    38.9,
-    38.9
-   ],
-   "10000": [
-    37.9,
-    37.9
+    30.5,
+    30.5
    ]
   },
-  "de": "R$ 37,90",
-  "por": "R$ 37,90",
+  "de": "R$ 30,50",
+  "por": "R$ 30,50",
   "desconto": 0,
   "porcao": "Porção de 10 g (2 dosadores)",
   "porcoes": "Porções por embalagem: 30",
