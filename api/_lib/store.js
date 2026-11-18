@@ -49,6 +49,21 @@ export async function saveCurrent(doc) {
   throw new Error('NO_STORE');
 }
 
+/** limite de tentativas (login) compartilhado entre instâncias via Redis.
+ *  INCR + EXPIRE NX: conta dentro da janela, define o TTL só na 1ª tentativa.
+ *  Sem Redis configurado, retorna null e quem chamou usa um limite local. */
+export async function rateLimitRedis(key, windowSeconds, max) {
+  if (storeKind() !== 'redis') return null;
+  const [count] = await redis(['INCR', key], ['EXPIRE', key, windowSeconds, 'NX']);
+  return { count, allowed: count <= max };
+}
+
+/** zera o contador (ex.: após login correto) */
+export async function rateLimitReset(key) {
+  if (storeKind() !== 'redis') return;
+  await redis(['DEL', key]);
+}
+
 /** histórico (mais recente primeiro) */
 export async function getHistory() {
   const k = storeKind();

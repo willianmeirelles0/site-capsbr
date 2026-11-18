@@ -2,7 +2,7 @@
    Visual Lab · Home (animações)
    ========================================================= */
 (() => {
-  const { bottle, brl, waLink, productFor, photoFor, minPrice } = window.Caps;
+  const { bottle, brl, waLink, productFor, photoFor, minPrice, esc } = window.Caps;
   // estado lido pelo módulo 3D (scene3d.js)
   const S3 = window.Caps.S3 = {
     hero: { intro: 0, scroll: 0 },
@@ -22,20 +22,20 @@
 
   /* ---------- Marquees ---------- */
   const names = P.map(p => p.titulo);
-  const marq = (el, list) => { const html = list.map(n => `<span class="f-item">${n}<i class="sep"></i></span>`).join(''); el.innerHTML = html + html; };
+  const marq = (el, list) => { const html = list.map(n => `<span class="f-item">${esc(n)}<i class="sep"></i></span>`).join(''); el.innerHTML = html + html; };
   marq($('.js-marq-a'), names.slice(0, 8));
   marq($('.js-marq-b'), names.slice(8));
 
   /* ---------- Products ---------- */
   const grid = $('.js-grid');
   const cardsHTML = () => P.map(p => `
-    <a class="spot pcard" href="produto.html?p=${p.slug}" data-tipo="${p.tipo}" data-hot="${p.maisPedido}">
-      <div class="pcard__top"><span class="tag tag--code" data-scramble>${p.id}</span></div>
+    <a class="spot pcard" href="produto.html?p=${esc(p.slug)}" data-tipo="${esc(p.tipo)}" data-hot="${p.maisPedido}">
+      <div class="pcard__top"><span class="tag tag--code" data-scramble>${esc(p.id)}</span></div>
       ${p.maisPedido ? '<span class="pcard__hot">Mais pedido</span>' : ''}
       <div class="pcard__img pcard__img--photo">${photoFor(p)}</div>
-      <div class="pcard__cat">${p.tipo} · ${p.categoria}</div>
-      <h3>${p.titulo}</h3>
-      <div class="pcard__size">${p.tamanho}</div>
+      <div class="pcard__cat">${esc(p.tipo)} · ${esc(p.categoria)}</div>
+      <h3>${esc(p.titulo)}</h3>
+      <div class="pcard__size">${esc(p.tamanho)}</div>
       <div class="pcard__foot">
         <div class="pcard__price"><small>a partir de</small><b>${brl(minPrice(p))}<em> /un.</em></b></div>
         <span class="pcard__go">${arrow}</span>

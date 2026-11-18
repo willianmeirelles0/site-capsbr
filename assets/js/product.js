@@ -2,7 +2,7 @@
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-  const { brl, waLink, productFor, photoFor, minPrice, priceAt, COSTS, nutriRows, bottleData } = window.Caps;
+  const { brl, waLink, productFor, photoFor, minPrice, priceAt, COSTS, nutriRows, bottleData, esc } = window.Caps;
   const arteFor = v => v >= COSTS.arteMin ? 0 : COSTS.artePreco;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const P = window.PRODUCTS;
@@ -25,7 +25,7 @@
   set('.js-size', p.tamanho);
   set('.js-word', `${p.categoria} · `.repeat(6));
   set('.js-porcao', p.porcao); set('.js-porcoes', p.porcoes);
-  $('.js-bens').innerHTML = p.beneficios.map(b => `<li data-reveal><i><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></i>${b}</li>`).join('');
+  $('.js-bens').innerHTML = p.beneficios.map(b => `<li data-reveal><i><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></i>${esc(b)}</li>`).join('');
 
   // foto recortada do produto, sem fundo (PNG com transparência)
   const CUT_BY_TIPO = {
@@ -34,7 +34,7 @@
     'Solúveis': { src: 'soluveis-recorte.png', w: 544, h: 820 },
   };
   const cut = CUT_BY_TIPO[p.tipo] || { src: 'capsulas-recorte.png', w: 514, h: 820 };
-  const photo = $('.js-photo'); if (photo) photo.innerHTML = `<img src="assets/img/${cut.src}" alt="${p.titulo}, ${isLiq ? 'frasco conta-gotas' : 'pote'} com a sua marca" width="${cut.w}" height="${cut.h}" fetchpriority="high" decoding="async">`;
+  const photo = $('.js-photo'); if (photo) photo.innerHTML = `<img src="assets/img/${cut.src}" alt="${esc(p.titulo)}, ${isLiq ? 'frasco conta-gotas' : 'pote'} com a sua marca" width="${cut.w}" height="${cut.h}" fetchpriority="high" decoding="async">`;
   if (isLiq && photo) photo.classList.add('is-liq');
 
   const msgBase = `Olá! Vim pelo site da CapsBR e tenho interesse na fórmula ${p.titulo} (${p.id}) com a minha marca.`;
@@ -54,9 +54,9 @@
     const na = isNaN(num);
     const w = na ? 100 : Math.min(num, 100);
     return `<div class="nt__row${na ? ' is-na' : ''}${num > 100 ? ' is-over' : ''}">
-      <span class="nt__name">${r.name}</span>
-      <span class="nt__val">${r.v}<small>${r.unit}</small></span>
-      <span class="nt__vd">${na ? '**' : r.vd + '%'}</span>
+      <span class="nt__name">${esc(r.name)}</span>
+      <span class="nt__val">${esc(r.v)}<small>${esc(r.unit)}</small></span>
+      <span class="nt__vd">${na ? '**' : esc(r.vd) + '%'}</span>
       <span class="nt__bar"><i style="--w:${w}%"></i></span>
     </div>`;
   }).join('');
@@ -139,13 +139,13 @@
   /* ---------- Relacionados ---------- */
   const rel = P.filter(x => x !== p).sort((a, b) => (b.tipo === p.tipo) - (a.tipo === p.tipo) || (b.categoria === p.categoria) - (a.categoria === p.categoria) || b.maisPedido - a.maisPedido).slice(0, 4);
   $('.js-rel').innerHTML = rel.map(x => `
-    <a class="spot pcard" href="produto.html?p=${x.slug}" data-reveal>
-      <div class="pcard__top"><span class="tag tag--code" data-scramble>${x.id}</span></div>
+    <a class="spot pcard" href="produto.html?p=${esc(x.slug)}" data-reveal>
+      <div class="pcard__top"><span class="tag tag--code" data-scramble>${esc(x.id)}</span></div>
       ${x.maisPedido ? '<span class="pcard__hot">Mais pedido</span>' : ''}
       <div class="pcard__img pcard__img--photo">${photoFor(x)}</div>
-      <div class="pcard__cat">${x.tipo} · ${x.categoria}</div>
-      <h3>${x.titulo}</h3>
-      <div class="pcard__size">${x.tamanho}</div>
+      <div class="pcard__cat">${esc(x.tipo)} · ${esc(x.categoria)}</div>
+      <h3>${esc(x.titulo)}</h3>
+      <div class="pcard__size">${esc(x.tamanho)}</div>
       <div class="pcard__foot">
         <div class="pcard__price"><small>a partir de</small><b>${brl(minPrice(x))}<em> /un.</em></b></div>
         <span class="pcard__go">${arrow}</span>

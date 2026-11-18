@@ -142,7 +142,7 @@ ${line(38, 238, l2, 8, 124, 600, FONT_B, t.sub, .06)}
   };
   const photoFor = p => {
     const ph = PHOTO_BY_TIPO[p.tipo] || { img: 'capsulas', alt: 'pote de cápsulas', w: 480, h: 720 };
-    return `<span class="pcard__photo"><img src="assets/img/${ph.img}-card.jpg" alt="${p.titulo}, ${ph.alt}" loading="lazy" decoding="async" width="${ph.w}" height="${ph.h}"></span>`;
+    return `<span class="pcard__photo"><img src="assets/img/${ph.img}-card.jpg" alt="${esc(p.titulo)}, ${ph.alt}" loading="lazy" decoding="async" width="${ph.w}" height="${ph.h}"></span>`;
   };
   // [de, por] → preço vigente (promo ou normal)
   const priceAt = (p, v) => { const [de, por] = p.volumes[v]; return PROMO.on ? por : de; };
