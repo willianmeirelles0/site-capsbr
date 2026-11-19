@@ -14,9 +14,9 @@ export const DEFAULT_SITE = {
   announceBanner: '',
   announce: ['Marca própria a partir de 300 unidades', 'Teste de estabilidade em todo produto', 'Notificação ANVISA no mesmo fluxo', 'Produção em 15 a 45 dias'],
   costs: {
-    // calculadora da página de produto (por lote)
-    rotuloCaps: 650, rotuloLiq: 600, rotuloLote: 500, anvisa: 300,
-    // calculadora do catálogo de leads (por linha e quantidade de rótulos)
+    // usados pelas duas calculadoras do site (produto.html e catalogo.html)
+    anvisa: 300,
+    // preço de impressão por linha e quantidade de rótulos
     rotulo: {
       'Cápsulas': { 500: 650, 1000: 750 },
       'Líquidos': { 500: 600, 1000: 650 },
@@ -117,9 +117,9 @@ export function normalizeProduct(raw, i = 0) {
     .map(r => Array.isArray(r) ? [clean(r[0], 60), clean(r[1], 20), clean(r[2], 20)] : null)
     .filter(r => r && r[0]).slice(0, LIMITS.tabela);
 
-  // fornecedor com cobrança própria (opcional): substitui ANVISA e/ou a
-  // tabela de impressão de rótulos do catálogo de leads para este produto.
-  // Sem nome preenchido, o produto usa os valores padrão normalmente.
+  // fornecedor com cobrança própria (opcional): substitui ANVISA, a tabela
+  // de impressão de rótulos e/ou a regra da arte deste produto, nas duas
+  // calculadoras do site. Sem nome preenchido, usa os valores padrão.
   let fornecedor = null;
   const fr = p.fornecedor && typeof p.fornecedor === 'object' ? p.fornecedor : {};
   const frNome = clean(fr.nome, 40);
@@ -196,16 +196,13 @@ export function normalizeSite(raw) {
 
   const c = s.costs && typeof s.costs === 'object' ? s.costs : {};
   const costs = {};
-  [['rotuloCaps', 'Rótulos (cápsulas)'], ['rotuloLiq', 'Rótulos (líquidos)'], ['anvisa', 'Notificação ANVISA']].forEach(([k, label]) => {
+  [['anvisa', 'Notificação ANVISA']].forEach(([k, label]) => {
     const n = round2(toNumber(c[k] ?? d.costs[k]));
     if (!(n >= 0 && n <= 1000000)) at('costs.' + k, `${label}: valor inválido.`);
     costs[k] = n >= 0 && n <= 1000000 ? n : d.costs[k];
   });
-  const lote = Math.round(toNumber(c.rotuloLote ?? d.costs.rotuloLote));
-  if (!(lote >= 1 && lote <= 100000)) at('costs.rotuloLote', 'Lote de rótulos: informe um número inteiro maior que zero.');
-  costs.rotuloLote = lote >= 1 && lote <= 100000 ? lote : d.costs.rotuloLote;
 
-  // catálogo de leads: preço de impressão por linha e quantidade de rótulos
+  // preço de impressão por linha e quantidade de rótulos (usado em produto.html e catalogo.html)
   const cr = c.rotulo && typeof c.rotulo === 'object' ? c.rotulo : {};
   costs.rotulo = {};
   let rotuloBad = false;

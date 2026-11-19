@@ -101,19 +101,13 @@
     <!-- VALORES -->
     <section class="view" data-view="valores" hidden>
       <div class="card">
-        <h3>Custos do pedido (página de produto)</h3>
-        <p class="muted">Usados na calculadora da página de cada produto ("composição do investimento") e na mensagem enviada pelo WhatsApp.</p>
-        <div class="grid2">
-          <label class="field"><span>Rótulos para cápsulas (por lote)</span><div class="affix affix--pre"><em>R$</em><input type="text" inputmode="decimal" data-site="costs.rotuloCaps" data-money></div><small class="err" data-err="costs.rotuloCaps"></small></label>
-          <label class="field"><span>Rótulos para líquidos (por lote)</span><div class="affix affix--pre"><em>R$</em><input type="text" inputmode="decimal" data-site="costs.rotuloLiq" data-money></div><small class="err" data-err="costs.rotuloLiq"></small></label>
-          <label class="field"><span>Tamanho do lote de rótulos</span><div class="affix"><input type="text" inputmode="numeric" data-site="costs.rotuloLote"><em>un.</em></div><small class="err" data-err="costs.rotuloLote"></small></label>
-          <label class="field"><span>Notificação ANVISA (por pedido)</span><div class="affix affix--pre"><em>R$</em><input type="text" inputmode="decimal" data-site="costs.anvisa" data-money></div><small class="err" data-err="costs.anvisa"></small></label>
-        </div>
-        <div class="example" id="costExample"></div>
+        <h3>Custos do pedido</h3>
+        <p class="muted">Usados nas duas calculadoras do site (a página de cada produto e o catalogo.html) e nas mensagens enviadas pelo WhatsApp. Um fornecedor específico cadastrado no produto (aba Produtos) substitui estes valores só para aquele produto.</p>
+        <label class="field"><span>Notificação ANVISA (por pedido)</span><div class="affix affix--pre"><em>R$</em><input type="text" inputmode="decimal" data-site="costs.anvisa" data-money></div><small class="err" data-err="costs.anvisa"></small></label>
       </div>
       <div class="card">
-        <h3>Impressão de rótulos (catálogo de leads)</h3>
-        <p class="muted">Usado na calculadora de "Monte o seu pedido" do catalogo.html, por linha de produto e quantidade de rótulos. Um fornecedor específico cadastrado no produto (aba Produtos) substitui estes valores só para aquele produto.</p>
+        <h3>Impressão de rótulos</h3>
+        <p class="muted">Por linha de produto e quantidade de rótulos impressos.</p>
         <div class="table-wrap"><table class="table" id="rotTable">
           <thead><tr><th>Linha</th><th class="num">500 un.</th><th class="num">1.000 un.</th></tr></thead>
           <tbody id="rotTableBody"></tbody>

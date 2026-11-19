@@ -5,7 +5,7 @@
   // Configurações editáveis pelo painel /admin (window.SITE vem de /api/catalog)
   const SITE = window.SITE || {};
   const WA = String(SITE.whatsapp || '5554997090147').replace(/\D/g, '') || '5554997090147';
-  const COSTS = Object.assign({ rotuloCaps: 650, rotuloLiq: 600, rotuloLote: 500, anvisa: 300, arteMin: 300, artePreco: 150 }, SITE.costs || {});
+  const COSTS = Object.assign({ anvisa: 300, arteMin: 300, artePreco: 150 }, SITE.costs || {});
   const THEMES = {
     teal:   { label: '#14483f', ink: '#ffffff', sub: 'rgba(255,255,255,.72)' },
     forest: { label: '#0b2b27', ink: '#efe6d6', sub: 'rgba(239,230,214,.7)' },

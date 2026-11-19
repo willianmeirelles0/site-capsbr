@@ -618,13 +618,6 @@ function renderSiteDerived() {
   $('#maxHelp').textContent = `Usado nos textos "até X% off". Maior desconto real entre os produtos: ${realMax}%.`;
   const endDM = isNaN(end) ? '--/--' : end.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', timeZone: 'America/Sao_Paulo' });
   $('#bannerAuto').textContent = `${clean(pr.name, 40) || 'Campanha'} CapsBR: até ${Math.round(toNumber(pr.max)) || 0}% off até ${endDM}`;
-  // custos: exemplo
-  const c = s.costs, lote = Math.max(1, Math.round(toNumber(c.rotuloLote)) || 1);
-  const ex = 1000, packs = Math.ceil(ex / lote);
-  const rc = toNumber(c.rotuloCaps), an = toNumber(c.anvisa);
-  $('#costExample').innerHTML = Number.isFinite(rc) && Number.isFinite(an)
-    ? `Exemplo, pedido de ${fmtInt(ex)} cápsulas: ${packs} lote${packs > 1 ? 's' : ''} de rótulos (${brl(packs * rc)}) + ANVISA (${brl(an)}) = <b>${brl(packs * rc + an)}</b> além do valor dos produtos.`
-    : 'Preencha os valores para ver um exemplo.';
   // whatsapp
   const wa = String(s.whatsapp || '').replace(/\D/g, '');
   const m = wa.match(/^(\d{2})(\d{2})(\d{4,5})(\d{4})$/);
