@@ -326,31 +326,11 @@
   };
 
   const invest = (list) => {
-    // exemplo calculado com o produto de menor preço em 500 un. (ou a menor faixa disponível)
-    const ex = [...list].sort((a, b) => minPrice(a) - minPrice(b))[0];
-    const exV = ex ? (vols(ex).includes(500) ? 500 : vols(ex)[0]) : 0;
-    const exRq = ex ? (rotQtysFor(ex).includes(500) ? 500 : rotQtysFor(ex)[0]) : 500;
     const minVol = Math.min(...list.flatMap(vols));
-    let sim = '';
-    if (ex && state.precos) {
-      const c = calcFor(ex, exV, exRq);
-      sim = `<div class="sim">
-        <div class="sim__l">
-          <span class="mono">Exemplo de pedido</span>
-          <h3>${nf(exV)} unidades de ${esc(ex.titulo)}</h3>
-          ${ex.fornecedor ? `<span class="sim__forn">Condição própria deste fornecedor</span>` : ''}
-          <p>Simulação com os valores deste catálogo. A cotação final é confirmada com você no WhatsApp, junto com a aprovação do rótulo.${ex.fornecedor ? ' Esta fórmula vem de um fornecedor com rótulo, ANVISA e/ou arte em condição diferente do padrão acima.' : ''}</p>
-          <div class="sim__per"><b>${brl(c.total / exV)}</b><span>custo final por unidade,<br>com tudo incluído</span></div>
-        </div>
-        <div class="sim__r">
-          <div class="sim__row"><span>Fabricação<small>${nf(exV)} un. × ${brl(c.unit)}</small></span><b>${brl(c.fab)}</b></div>
-          <div class="sim__row"><span>Impressão de rótulos<small>${nf(exRq)} unidades</small></span><b>${brl(c.rot)}</b></div>
-          <div class="sim__row"><span>Notificação ANVISA<small>por produto</small></span><b>${brl(c.anvisa)}</b></div>
-          <div class="sim__row"><span>Arte do rótulo</span><b>${c.arte ? brl(c.arte) : 'Cortesia'}</b></div>
-          <div class="sim__tot"><span>Investimento total</span><b>${brl(c.total)}</b></div>
-        </div>
-      </div>`;
-    }
+    // A tabela de custos "padrão" e a simulação de exemplo saíram daqui: o
+    // catálogo mistura fórmulas de fornecedores com condição própria (ex.:
+    // Alphafitus) com as de condição padrão, e uma tabela única não dava
+    // conta das duas — cada card de fórmula já mostra o cálculo certo dela.
     const faq = [
       ['Qual é o pedido mínimo?', `A partir de ${nf(minVol)} unidades por fórmula. Quanto maior o volume, menor o valor por unidade.`],
       ['O preço por unidade já inclui tudo?', 'Inclui rótulo personalizado, teste de estabilidade e tabela nutricional. ANVISA e impressão do rótulo entram à parte, confirmadas na cotação.'],
@@ -358,37 +338,11 @@
       ['Posso fechar mais de uma fórmula?', 'Pode, e vale a pena: monte seu kit com 2 ou mais fórmulas e peça tudo numa única mensagem.'],
       ['O frete está incluso?', 'Não. Os valores deste catálogo cobrem fabricação, rótulo, impressão e ANVISA — o frete é calculado à parte, conforme o endereço de entrega.'],
     ];
-    const faqBlock = `<div class="faq">${faq.map(([q, a], i) => `<div class="faq__it"><span class="faq__n">${pad(i + 1)}</span><div><h4>${esc(q)}</h4><p>${esc(a)}</p></div></div>`).join('')}</div>`;
-    // Numa proposta (seleção avulsa, possivelmente com fórmulas de fornecedores
-    // diferentes) a tabela padrão de custos e a simulação ficam de fora: cada
-    // card de fórmula já mostra o cálculo certo dela (respeitando o fornecedor
-    // próprio, quando há um), e repetir uma tabela "padrão" aqui só duplica
-    // informação e pode contradizer o que está no card.
-    if (PROPOSTA) {
-      return `<section class="page" aria-label="Perguntas frequentes">
-        ${head('Dúvidas · <b>Perguntas frequentes</b>')}
-        <div class="eyebrow"><span class="num">03</span><span class="line"></span><span class="mono">Dúvidas</span></div>
-        <h2 class="display h2">Perguntas <span class="accent">frequentes.</span></h2>
-        ${faqBlock}
-        ${foot()}
-      </section>`;
-    }
-    return `<section class="page" aria-label="Investimento e condições">
-      ${head('Investimento · <b>Condições</b>')}
-      <div class="eyebrow"><span class="num">03</span><span class="line"></span><span class="mono">Investimento</span></div>
-      <h2 class="display h2">Transparente do primeiro<br>ao último <span class="accent">frasco.</span></h2>
-      <p class="lead" style="margin-top:4mm">${state.precos ? 'Além do valor por unidade de cada fórmula, estes são os únicos custos do pedido (frete à parte).' : 'Além do valor por unidade de cada fórmula (sob consulta), estes são os únicos custos do pedido (frete à parte).'}</p>
-      <div class="cost">
-        <div class="cost__it cost__it--rot"><span class="inc__ic">${IC.label}</span><span class="cost__k">Impressão de rótulos</span>
-          <div class="cost__rot">${ORDER.map(t => `<div class="cost__rotrow"><b>${t}</b><span>500 un. <em>${brl(COSTS.rotulo[t][500])}</em></span><span>1.000 un. <em>${brl(COSTS.rotulo[t][1000])}</em></span></div>`).join('')}</div>
-          <p>Por linha e quantidade de rótulos impressos.${list.some(p => p.fornecedor) ? ' Algumas fórmulas têm fornecedor com condição própria, confirmada na página de cada uma.' : ''}</p>
-        </div>
-        <div class="cost__it"><span class="inc__ic">${IC.shield}</span><span class="cost__k">Notificação ANVISA</span><div class="cost__v"><b>${brl(COSTS.anvisa)}</b><small>por produto</small></div><p>Conduzida pela CapsBR no mesmo fluxo do pedido.${list.some(p => p.fornecedor && p.fornecedor.anvisa) ? ' Algumas fórmulas têm fornecedor com valor próprio, confirmado na página de cada uma.' : ''}</p></div>
-        <div class="cost__it"><span class="inc__ic">${IC.sign.replace('viewBox="0 0 48 48"', 'viewBox="4 2 40 44"')}</span><span class="cost__k">Arte do rótulo</span><div class="cost__v"><b>Cortesia</b><small>a partir de ${nf(ARTE_MIN)} un.</small></div><div class="cost__v"><b>${brl(ARTE_PRECO)}</b><small>abaixo de ${nf(ARTE_MIN)} un.</small></div><p>Ou envie a sua arte pronta para aprovação.${list.some(p => p.fornecedor && p.fornecedor.arteGratis) ? ' Algumas fórmulas têm fornecedor com arte sempre cortesia, confirmado na página de cada uma.' : ''}</p></div>
-      </div>
-      ${sim}
-      <div class="sec-label"><span class="mono">Perguntas frequentes</span></div>
-      ${faqBlock}
+    return `<section class="page" aria-label="Perguntas frequentes">
+      ${head('Dúvidas · <b>Perguntas frequentes</b>')}
+      <div class="eyebrow"><span class="num">03</span><span class="line"></span><span class="mono">Dúvidas</span></div>
+      <h2 class="display h2">Perguntas <span class="accent">frequentes.</span></h2>
+      <div class="faq">${faq.map(([q, a], i) => `<div class="faq__it"><span class="faq__n">${pad(i + 1)}</span><div><h4>${esc(q)}</h4><p>${esc(a)}</p></div></div>`).join('')}</div>
       ${foot()}
     </section>`;
   };
