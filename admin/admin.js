@@ -248,7 +248,7 @@ function renderProducts() {
     const last = keys.length ? p.volumes[keys[keys.length - 1]] : null;
     const img = IMG_BY_TIPO[p.tipo] || 'capsulas';
     return `<tr data-i="${i}" class="${errs.length ? 'is-err' : ''}${p.ativo === false ? ' is-off' : ''}">
-      <td><div class="ord"><span>${i + 1}</span>
+      <td><div class="ord"><input type="number" class="ord-pos" inputmode="numeric" min="1" max="${list.length}" value="${i + 1}" data-i="${i}" title="Posição" ${filtering ? 'disabled' : ''}>
         <button class="icon-btn" data-act="up" title="Subir" ${i === 0 || filtering ? 'disabled' : ''}>↑</button>
         <button class="icon-btn" data-act="down" title="Descer" ${i === list.length - 1 || filtering ? 'disabled' : ''}>↓</button></div></td>
       <td><div class="prod"><img src="/assets/img/${img}-card.jpg" alt="" loading="lazy"><div><b>${esc(p.titulo || 'Sem nome')}</b><small>${esc(p.id || 'sem código')}${errs.length ? `<span class="tag-err">${errs.length === 1 ? '1 problema' : errs.length + ' problemas'}</span>` : ''}</small></div></div></td>
@@ -301,11 +301,28 @@ $('#pTable tbody').addEventListener('click', async e => {
   }
 });
 $('#pTable tbody').addEventListener('change', e => {
+  if (e.target.classList.contains('ord-pos')) return moveProduct(e.target);
   if (e.target.dataset.act !== 'ativo') return;
   const i = +e.target.closest('tr').dataset.i;
   state.draft.products[i].ativo = e.target.checked;
   refresh();
 });
+// Enter confirma a posição digitada (o "change" de verdade só dispara ao perder o foco)
+$('#pTable tbody').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.target.classList.contains('ord-pos')) { e.preventDefault(); e.target.blur(); }
+});
+function moveProduct(inp) {
+  const list = state.draft.products;
+  const from = +inp.dataset.i;
+  const raw = Math.round(+inp.value);
+  if (!Number.isFinite(raw)) return renderProducts();
+  const to = Math.max(1, Math.min(list.length, raw)) - 1;
+  if (to === from) return renderProducts();
+  const [item] = list.splice(from, 1);
+  list.splice(to, 0, item);
+  refresh();
+  toast(`"${item.titulo}" movido para a posição ${to + 1}.`, 'ok');
+}
 
 const ID_PREFIX = { 'Cápsulas': 'C', 'Líquidos': 'L', 'Gomas e Pastilhas': 'G', 'Solúveis': 'S' };
 const IMG_BY_TIPO = { 'Cápsulas': 'capsulas', 'Líquidos': 'liquidos', 'Gomas e Pastilhas': 'gomas', 'Solúveis': 'soluveis' };
