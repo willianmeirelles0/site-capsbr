@@ -174,7 +174,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--teal);box-shadow:0 0 
 .prop-pick li{justify-content:space-between;padding:7px 2px;border-bottom:1px solid #f0ece5}
 .prop-pick li:last-child{border-bottom:0}
 .chk{display:flex;align-items:center;gap:10px;font-size:13.5px;cursor:pointer;flex:1;min-width:0}
-.chk input{flex:none;width:17px;height:17px;accent-color:var(--teal)}
+.prop-pick .chk input{flex:none;width:17px;height:17px;accent-color:var(--teal)}
 .chk span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .prop-disc-field{flex:none;display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
 .prop-disc-field input[type=number]{width:56px;height:30px;padding:0 8px;border:1px solid var(--line-2);border-radius:999px;background:#fff;text-align:right}
