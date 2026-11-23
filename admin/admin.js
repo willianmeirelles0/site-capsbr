@@ -205,7 +205,7 @@ function showBanner(kind, text, actions = []) {
 function hideBanner() { const b = $('#banner'); b.hidden = true; delete b.dataset.kind; }
 
 /* ---------- navegação ---------- */
-const TITLES = { produtos: 'Produtos', campanha: 'Campanha', valores: 'Custos do pedido', contato: 'Contato e avisos', catalogo: 'Catálogo', historico: 'Histórico', backup: 'Backup' };
+const TITLES = { produtos: 'Produtos', campanha: 'Campanha', valores: 'Custos do pedido', contato: 'Contato e avisos', catalogo: 'Catálogo', propostas: 'Propostas', historico: 'Histórico', backup: 'Backup' };
 function go(view) {
   if (!TITLES[view]) view = 'produtos';
   state.view = view;
@@ -217,6 +217,7 @@ function go(view) {
   renderView();
   if (view === 'historico') loadHistory();
   if (view === 'catalogo') renderCatalogLink();
+  if (view === 'propostas') loadPropostas();
   window.scrollTo(0, 0);
 }
 $('#nav').addEventListener('click', e => { const b = e.target.closest('button[data-view]'); if (b) go(b.dataset.view); });
@@ -873,3 +874,127 @@ $('#catCopy').addEventListener('click', async () => {
   }
 });
 renderCatalogLink();
+
+/* =========================================================
+   PROPOSTAS: links fixos com uma seleção de fórmulas por cliente
+   Documento à parte do catálogo (api/admin/propostas.js); editar e salvar
+   atualiza o mesmo link, sem precisar mandar um novo.
+   ========================================================= */
+const prop = { list: [], current: null, picked: new Map(), q: '', tipo: '', saving: false };
+
+async function loadPropostas() {
+  const r = await api('/api/admin/propostas');
+  if (!r.ok) { toast(r.data.error || 'Erro ao carregar propostas.', 'err'); return; }
+  prop.list = r.data.propostas || [];
+  renderPropostas();
+}
+function renderPropostas() {
+  $('#propBody').innerHTML = prop.list.map(p => `<tr data-id="${esc(p.id)}">
+    <td><b>${esc(p.cliente || '(sem nome)')}</b></td>
+    <td class="num">${(p.produtos || []).length}</td>
+    <td>${p.mostrarPrecos === false ? 'Ocultos' : 'Visíveis'}</td>
+    <td>${p.atualizadoEm ? new Date(p.atualizadoEm).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) : ''}</td>
+    <td><div class="acts">
+      <button class="icon-btn" data-act="copy" title="Copiar link">⎘</button>
+      <a class="icon-btn" href="/proposta.html?id=${encodeURIComponent(p.id)}" target="_blank" rel="noopener" title="Abrir">↗</a>
+      <button class="icon-btn" data-act="edit" title="Editar">✎</button>
+      <button class="icon-btn icon-btn--del" data-act="del" title="Excluir">🗑</button>
+    </div></td>
+  </tr>`).join('');
+  $('#propEmpty').hidden = prop.list.length > 0;
+}
+
+function propostaLink(id) { return `${location.origin}/proposta.html?id=${encodeURIComponent(id)}`; }
+
+$('#propBody').addEventListener('click', async e => {
+  const el = e.target.closest('[data-act]'); if (!el) return;
+  const id = el.closest('tr').dataset.id;
+  const doc = prop.list.find(p => p.id === id);
+  if (!doc) return;
+  if (el.dataset.act === 'edit') openPropEditor(doc);
+  else if (el.dataset.act === 'copy') {
+    const url = propostaLink(id);
+    try { await navigator.clipboard.writeText(url); toast('Link copiado'); } catch { prompt('Copie o link da proposta:', url); }
+  } else if (el.dataset.act === 'del') {
+    const ok = await modal({ title: 'Excluir proposta?', html: `<p>O link desta proposta para <b>${esc(doc.cliente || '(sem nome)')}</b> para de funcionar.</p>`, ok: 'Excluir', danger: true });
+    if (!ok) return;
+    const r = await api(`/api/admin/propostas?id=${encodeURIComponent(id)}`, { method: 'DELETE' });
+    if (!r.ok) return toast(r.data.error || 'Erro ao excluir.', 'err');
+    toast('Proposta excluída.');
+    loadPropostas();
+  }
+});
+
+/* ---------- editor (gaveta) ---------- */
+function renderPropPicker() {
+  const list = (state.draft && state.draft.products) || [];
+  const q = prop.q.trim().toLowerCase();
+  const rows = list.filter(p => (!prop.tipo || p.tipo === prop.tipo) &&
+    (!q || [p.titulo, p.nome, p.id, p.categoria].join(' ').toLowerCase().includes(q)));
+  $('#propPickList').innerHTML = rows.map(p => {
+    const checked = prop.picked.has(p.id);
+    const pct = checked ? prop.picked.get(p.id) : 0;
+    return `<li data-id="${esc(p.id)}">
+      <label class="chk"><input type="checkbox" data-pick="${esc(p.id)}" ${checked ? 'checked' : ''}><span><b>${esc(p.id)}</b> ${esc(p.titulo)}<small class="muted"> · ${esc(p.tipo)}</small></span></label>
+      <label class="prop-disc-field" ${checked ? '' : 'hidden'}><input type="number" min="0" max="95" step="1" data-disc="${esc(p.id)}" value="${pct || ''}" placeholder="0">% off</label>
+    </li>`;
+  }).join('');
+  if (!rows.length) $('#propPickList').innerHTML = '<li class="muted" style="justify-content:center">Nenhuma fórmula encontrada.</li>';
+  $('#propPickCount').textContent = `${prop.picked.size} selecionada${prop.picked.size === 1 ? '' : 's'}`;
+}
+$('#propPickList').addEventListener('change', e => {
+  const chk = e.target.closest('[data-pick]');
+  if (chk) {
+    if (chk.checked) prop.picked.set(chk.dataset.pick, 0); else prop.picked.delete(chk.dataset.pick);
+    renderPropPicker();
+    return;
+  }
+  const disc = e.target.closest('[data-disc]');
+  if (disc) prop.picked.set(disc.dataset.disc, Math.min(95, Math.max(0, Math.round(Number(disc.value) || 0))));
+});
+$('#propFTipo').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  prop.tipo = b.dataset.v;
+  $$('#propFTipo button').forEach(x => x.classList.toggle('is-active', x === b));
+  renderPropPicker();
+});
+$('#propQ').addEventListener('input', e => { prop.q = e.target.value; renderPropPicker(); });
+
+function openPropEditor(doc) {
+  prop.current = doc ? doc.id : null;
+  prop.picked = new Map((doc ? doc.itens : []).map(it => [it.codigo, it.descontoPct || 0]));
+  prop.tipo = ''; prop.q = '';
+  $('#propMode').textContent = doc ? 'Editar proposta' : 'Nova proposta';
+  $('#propTitle').textContent = doc ? (doc.cliente || 'Proposta sem nome') : 'Nova proposta';
+  $('#propCliente').value = doc ? (doc.cliente || '') : '';
+  $('#propPrecos').checked = doc ? doc.mostrarPrecos !== false : true;
+  $('#propQ').value = '';
+  $$('#propFTipo button').forEach(x => x.classList.toggle('is-active', x.dataset.v === ''));
+  $('#propErr').textContent = '';
+  renderPropPicker();
+  $('#propDrawer').hidden = false;
+}
+function closePropEditor() { $('#propDrawer').hidden = true; }
+$$('[data-close-prop]').forEach(el => el.addEventListener('click', closePropEditor));
+$('#propNewBtn').addEventListener('click', () => openPropEditor(null));
+
+$('#propForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  if (prop.saving) return;
+  if (!prop.picked.size) { $('#propErr').textContent = 'Selecione ao menos uma fórmula.'; return; }
+  const body = {
+    cliente: $('#propCliente').value.trim(),
+    mostrarPrecos: $('#propPrecos').checked,
+    itens: [...prop.picked.entries()].map(([codigo, descontoPct]) => ({ codigo, descontoPct })),
+  };
+  prop.saving = true;
+  const btn = $('#propSaveBtn'); btn.disabled = true; btn.textContent = 'Salvando…';
+  const r = prop.current
+    ? await api(`/api/admin/propostas?id=${encodeURIComponent(prop.current)}`, { method: 'PUT', body })
+    : await api('/api/admin/propostas', { method: 'POST', body });
+  prop.saving = false; btn.disabled = false; btn.textContent = 'Salvar proposta';
+  if (!r.ok) { $('#propErr').textContent = r.data.error || 'Erro ao salvar.'; return; }
+  toast(prop.current ? 'Proposta atualizada. O link enviado antes já mostra a versão nova.' : 'Proposta criada.', 'ok');
+  closePropEditor();
+  loadPropostas();
+});

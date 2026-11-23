@@ -26,6 +26,8 @@ async function redis(...cmds) {
 
 const DIR = path.join(process.cwd(), '.data');
 const FILE = path.join(DIR, 'catalog.json'), HFILE = path.join(DIR, 'history.json');
+const PROP_FILE = path.join(DIR, 'propostas.json');
+const PROP_KEY = id => `capsbr:proposta:${id}`, PROP_INDEX = 'capsbr:propostas:index';
 const readJSON = async (f, fb) => { try { return JSON.parse(await fs.readFile(f, 'utf8')); } catch { return fb; } };
 const writeJSON = async (f, v) => { await fs.mkdir(DIR, { recursive: true }); const tmp = f + '.tmp'; await fs.writeFile(tmp, JSON.stringify(v)); await fs.rename(tmp, f); };
 
@@ -70,4 +72,40 @@ export async function getHistory() {
   if (k === 'redis') { const [list] = await redis(['LRANGE', HIST, 0, HIST_MAX - 1]); return (list || []).map(s => { try { return JSON.parse(s); } catch { return null; } }).filter(Boolean); }
   if (k === 'file') return readJSON(HFILE, []);
   return [];
+}
+
+/* ---------- propostas: links fixos com uma seleção de fórmulas ----------
+   Cada proposta é um documento próprio (capsbr:proposta:<id>), fora do
+   catálogo publicado — editar uma proposta nunca mexe no catálogo, e
+   publicar o catálogo nunca mexe nas propostas já enviadas. */
+export async function getProposta(id) {
+  const k = storeKind();
+  if (k === 'redis') { const [v] = await redis(['GET', PROP_KEY(id)]); return v ? JSON.parse(v) : null; }
+  if (k === 'file') { const all = await readJSON(PROP_FILE, {}); return all[id] || null; }
+  return null;
+}
+
+export async function saveProposta(doc) {
+  const k = storeKind();
+  if (k === 'redis') { await redis(['SET', PROP_KEY(doc.id), JSON.stringify(doc)], ['SADD', PROP_INDEX, doc.id]); return; }
+  if (k === 'file') { const all = await readJSON(PROP_FILE, {}); all[doc.id] = doc; await writeJSON(PROP_FILE, all); return; }
+  throw new Error('NO_STORE');
+}
+
+export async function deleteProposta(id) {
+  const k = storeKind();
+  if (k === 'redis') { await redis(['DEL', PROP_KEY(id)], ['SREM', PROP_INDEX, id]); return; }
+  if (k === 'file') { const all = await readJSON(PROP_FILE, {}); delete all[id]; await writeJSON(PROP_FILE, all); return; }
+  throw new Error('NO_STORE');
+}
+
+/** lista de propostas (mais recente primeiro) */
+export async function listPropostas() {
+  const k = storeKind();
+  let ids = [];
+  if (k === 'redis') { const [members] = await redis(['SMEMBERS', PROP_INDEX]); ids = members || []; }
+  else if (k === 'file') { ids = Object.keys(await readJSON(PROP_FILE, {})); }
+  else return [];
+  const docs = await Promise.all(ids.map(getProposta));
+  return docs.filter(Boolean).sort((a, b) => (b.atualizadoEm || '').localeCompare(a.atualizadoEm || ''));
 }

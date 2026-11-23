@@ -3,5 +3,6 @@ Disallow: /admin
 Disallow: /admin/
 Disallow: /api/
 Disallow: /catalogo.html
+Disallow: /proposta.html
 
 Sitemap: https://www.capsbr.com.br/sitemap.xml

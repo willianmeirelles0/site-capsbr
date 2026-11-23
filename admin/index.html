@@ -39,6 +39,7 @@
       <button data-view="valores"><i>R$</i>Custos do pedido</button>
       <button data-view="contato"><i>☏</i>Contato e avisos</button>
       <button data-view="catalogo"><i>❐</i>Catálogo</button>
+      <button data-view="propostas"><i>🔗</i>Propostas</button>
       <button data-view="historico"><i>↺</i>Histórico</button>
       <button data-view="backup"><i>⇅</i>Backup</button>
     </nav>
@@ -134,6 +135,18 @@
         <div class="card__head"><div><h3>Barra de avisos do topo</h3><p class="muted">Frases que passam no letreiro do topo de todas as páginas. O aviso da campanha entra automaticamente quando ela está ativa.</p></div><button class="btn btn--ghost" id="addAnn">+ Aviso</button></div>
         <ul class="list" id="annList"></ul>
         <small class="err" data-err="announce"></small>
+      </div>
+    </section>
+
+    <!-- PROPOSTAS -->
+    <section class="view" data-view="propostas" hidden>
+      <div class="card">
+        <div class="card__head">
+          <div><h3>Propostas</h3><p class="muted">Link fixo com uma seleção de fórmulas para um cliente. Editar uma proposta e salvar atualiza o mesmo link — não precisa mandar um novo. A seleção usa os produtos já publicados no catálogo.</p></div>
+          <button type="button" class="btn btn--primary" id="propNewBtn">+ Nova proposta</button>
+        </div>
+        <div class="table-wrap"><table class="table"><thead><tr><th>Cliente</th><th class="num">Fórmulas</th><th>Preços</th><th>Atualizada em</th><th class="c-act"></th></tr></thead><tbody id="propBody"></tbody></table></div>
+        <p class="empty" id="propEmpty" hidden>Nenhuma proposta criada ainda.</p>
       </div>
     </section>
 
@@ -266,6 +279,40 @@
       <small class="muted" id="dErrSum"></small>
       <button type="button" class="btn btn--ghost" data-close>Cancelar</button>
       <button type="submit" class="btn btn--primary">Aplicar</button>
+    </footer>
+  </form>
+</div>
+
+<!-- ============ EDITOR DE PROPOSTA ============ -->
+<div class="drawer" id="propDrawer" hidden>
+  <div class="drawer__veil" data-close-prop></div>
+  <form class="drawer__panel" id="propForm" novalidate>
+    <header class="drawer__head">
+      <div><small class="muted" id="propMode">Nova proposta</small><h3 id="propTitle">Proposta</h3></div>
+      <button type="button" class="icon-btn" data-close-prop aria-label="Fechar">✕</button>
+    </header>
+    <div class="drawer__body">
+      <div class="dsec">
+        <div class="grid2">
+          <label class="field field--full"><span>Cliente <em class="muted" style="font-style:normal;font-weight:400">(opcional)</em></span><input type="text" id="propCliente" maxlength="60" placeholder="Ex.: Mariana Souza ou Loja Vida Fit" autocomplete="off"></label>
+          <label class="switch-row"><input type="checkbox" id="propPrecos" checked><span class="switch"></span><span><b>Mostrar preços</b><small>Desligue para enviar a proposta sem valores.</small></span></label>
+        </div>
+      </div>
+      <div class="dsec">
+        <div class="dsec__head"><h4>Fórmulas da proposta</h4><span class="muted" id="propPickCount">0 selecionadas</span></div>
+        <div class="toolbar">
+          <div class="search"><input type="search" id="propQ" placeholder="Buscar por nome ou código" aria-label="Buscar fórmula"></div>
+          <div class="seg" id="propFTipo" role="tablist">
+            <button type="button" class="is-active" data-v="">Todos</button><button type="button" data-v="Cápsulas">Cápsulas</button><button type="button" data-v="Líquidos">Líquidos</button><button type="button" data-v="Gomas e Pastilhas">Gomas e Pastilhas</button><button type="button" data-v="Solúveis">Solúveis</button>
+          </div>
+        </div>
+        <ul class="list prop-pick" id="propPickList"></ul>
+      </div>
+    </div>
+    <footer class="drawer__foot">
+      <small class="muted" id="propErr"></small>
+      <button type="button" class="btn btn--ghost" data-close-prop>Cancelar</button>
+      <button type="submit" class="btn btn--primary" id="propSaveBtn">Salvar proposta</button>
     </footer>
   </form>
 </div>

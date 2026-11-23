@@ -79,12 +79,16 @@
     box: sv('<path class="d" d="M24 6l16 8-16 8-16-8z"/><path d="M24 6l16 8v20l-16 8-16-8V14z"/><path d="M8 14l16 8 16-8M24 22v20M16 10l16 8v6"/>', 48),
   };
 
-  /* ---------- Estado (vem da URL) ---------- */
+  /* ---------- Estado (vem da URL, ou de uma proposta pré-selecionada) ---------- */
+  // proposta.html define window.__CAPSBR_PROPOSTA__ antes de carregar este
+  // script; nunca existe em catalogo.html, então o link normal do catálogo
+  // não muda em nada.
+  const PROPOSTA = window.__CAPSBR_PROPOSTA__ || null;
   const qs = new URLSearchParams(location.search);
   const state = {
-    para: (qs.get('para') || '').trim().slice(0, 40),
+    para: (PROPOSTA ? (PROPOSTA.cliente || '') : (qs.get('para') || '')).trim().slice(0, 40),
     linha: ['capsulas', 'liquidos', 'gomas', 'soluveis'].includes(qs.get('linha')) ? qs.get('linha') : 'todas',
-    precos: qs.get('precos') !== '0',
+    precos: PROPOSTA ? PROPOSTA.mostrarPrecos !== false : qs.get('precos') !== '0',
   };
   const EDIT = qs.get('editar') === '1';
   const PRINT = qs.get('print') === '1';
