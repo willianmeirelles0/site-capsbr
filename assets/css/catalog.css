@@ -65,6 +65,29 @@ input{font:inherit}
 .toast{position:fixed;left:50%;bottom:96px;z-index:30;translate:-50% 20px;padding:12px 18px;border-radius:999px;background:var(--deep);color:#fff;font-size:14px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .3s,translate .4s var(--ease)}
 .toast.is-on{opacity:1;translate:-50% 0}
 
+/* ---------- Aviso de cookies + modal de política ---------- */
+.cookie-aviso[hidden]{display:none}
+.cookie-aviso{position:fixed;left:16px;right:16px;bottom:16px;z-index:160;max-width:640px;margin:0 auto;background:var(--deep);color:#fff;border-radius:20px;padding:20px 24px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.cookie-aviso p{font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.82);margin-bottom:14px}
+.cookie-aviso-link{background:none;border:none;padding:0;font:inherit;color:var(--mint-2);text-decoration:underline;cursor:pointer}
+.cookie-aviso-acoes{display:flex;justify-content:flex-end}
+.cookie-aviso .btn{display:inline-flex;align-items:center;justify-content:center;height:42px;padding:0 22px;border-radius:999px;background:var(--g);color:#fff;font-weight:700;font-size:13.5px;white-space:nowrap}
+.cookie-aviso .btn:hover{background:var(--g-2)}
+@media (max-width:480px){.cookie-aviso{left:10px;right:10px;bottom:10px;padding:18px}.cookie-aviso-acoes{justify-content:stretch}.cookie-aviso .btn{width:100%}}
+
+.policy-modal[hidden]{display:none}
+.policy-modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}
+.policy-modal-backdrop{position:absolute;inset:0;background:rgba(10,20,18,.6);backdrop-filter:blur(3px)}
+.policy-modal-dialog{position:relative;z-index:1;background:#fff;border-radius:24px;max-width:720px;width:100%;max-height:82vh;overflow-y:auto;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+.policy-modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;border:none;background:var(--surface);color:var(--text);font-size:18px;cursor:pointer}
+.policy-modal-close:hover{background:var(--border)}
+.policy-modal-content{padding:52px 44px 40px}
+.policy-modal-content h2{margin:6px 0 4px;font-family:var(--f-display)}
+.policy-modal-content h3{font-size:17px;margin:26px 0 10px;font-family:var(--f-display)}
+.policy-modal-content p{font-size:14.5px;color:var(--muted);margin-bottom:12px;line-height:1.65}
+.policy-modal-content a{color:var(--g);text-decoration:underline}
+@media (max-width:640px){.policy-modal-content{padding:40px 24px 32px}}
+
 /* ---------- Animação de boas-vindas ---------- */
 .intro{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse 70% 60% at 50% 45%,#12403a,var(--deep) 70%);color:#f3f7f5;cursor:pointer;transition:opacity .8s var(--ease),transform .9s var(--ease)}
 .intro[hidden]{display:none}
@@ -166,7 +189,7 @@ input{font:inherit}
 /* ---------- Página: quem somos / como funciona ---------- */
 .about__head{display:grid;grid-template-columns:1.1fr 1fr;gap:10mm;align-items:end}
 .about__head .lead{font-size:10pt}
-.inc{margin-top:5mm;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2.6mm}
+.inc{margin-top:5mm;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2.6mm}
 .inc__it{padding:5mm 4mm;min-height:50mm;border-radius:5mm;background:var(--surface);border:1px solid var(--border)}
 .inc__ic{display:grid;place-items:center;width:10mm;height:10mm;padding:2mm;border-radius:3mm;background:#fff;color:var(--g);border:1px solid var(--border);margin-bottom:4mm}
 .inc__it b{display:block;font-family:var(--f-display);font-size:10pt;font-weight:600;letter-spacing:-.02em;line-height:1.15}
@@ -684,7 +707,6 @@ a.toc__row:active .toc__ar{opacity:1;transform:translateX(1mm)}
   .about__head .lead{font-size:15.5px}
   .inc{grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
   .inc__it{min-height:0;padding:16px 14px;border-radius:18px}
-  .inc__it:last-child{grid-column:1/-1}
   .inc__ic{width:40px;height:40px;padding:8px;border-radius:12px;margin-bottom:14px}
   .inc__it b{font-size:15.5px}
   .inc__it > span:last-child{font-size:13px;margin-top:4px}

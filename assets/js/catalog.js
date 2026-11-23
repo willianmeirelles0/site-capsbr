@@ -32,6 +32,10 @@
   ];
   const TIPO_BY_LINHA = { capsulas: 'Cápsulas', liquidos: 'Líquidos', gomas: 'Gomas e Pastilhas', soluveis: 'Solúveis' };
   const LINHA_BY_TIPO = { 'Cápsulas': 'capsulas', 'Líquidos': 'liquidos', 'Gomas e Pastilhas': 'gomas', 'Solúveis': 'soluveis' };
+  // Só mostra o filtro de uma linha se ela realmente tem fórmula nesta lista
+  // (numa proposta, quase sempre é só 1 ou 2 linhas — nas outras, o botão
+  // levaria a "Nenhuma fórmula encontrada").
+  const LINHAS_DISPONIVEIS = LINHAS.filter(l => l.v === 'todas' || ALL.some(p => p.tipo === TIPO_BY_LINHA[l.v]));
   // A Black Friday roda num site à parte; este catálogo nunca mostra promoção.
   const PROMO = { on: false };
 
@@ -164,7 +168,7 @@
   </section>`;
 
   const linhaBar = () => `<div class="lnf" role="group" aria-label="Filtrar por linha">
-    ${LINHAS.map(l => `<button type="button" class="lnf__b${state.linha === l.v ? ' is-on' : ''}" data-linha="${l.v}" aria-pressed="${state.linha === l.v}">${esc(l.l)}</button>`).join('')}
+    ${LINHAS_DISPONIVEIS.map(l => `<button type="button" class="lnf__b${state.linha === l.v ? ' is-on' : ''}" data-linha="${l.v}" aria-pressed="${state.linha === l.v}">${esc(l.l)}</button>`).join('')}
   </div>`;
 
   const index = (groups) => `<section class="page" aria-label="Índice">
