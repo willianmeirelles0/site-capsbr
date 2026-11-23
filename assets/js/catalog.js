@@ -358,6 +358,21 @@
       ['Posso fechar mais de uma fórmula?', 'Pode, e vale a pena: monte seu kit com 2 ou mais fórmulas e peça tudo numa única mensagem.'],
       ['O frete está incluso?', 'Não. Os valores deste catálogo cobrem fabricação, rótulo, impressão e ANVISA — o frete é calculado à parte, conforme o endereço de entrega.'],
     ];
+    const faqBlock = `<div class="faq">${faq.map(([q, a], i) => `<div class="faq__it"><span class="faq__n">${pad(i + 1)}</span><div><h4>${esc(q)}</h4><p>${esc(a)}</p></div></div>`).join('')}</div>`;
+    // Numa proposta (seleção avulsa, possivelmente com fórmulas de fornecedores
+    // diferentes) a tabela padrão de custos e a simulação ficam de fora: cada
+    // card de fórmula já mostra o cálculo certo dela (respeitando o fornecedor
+    // próprio, quando há um), e repetir uma tabela "padrão" aqui só duplica
+    // informação e pode contradizer o que está no card.
+    if (PROPOSTA) {
+      return `<section class="page" aria-label="Perguntas frequentes">
+        ${head('Dúvidas · <b>Perguntas frequentes</b>')}
+        <div class="eyebrow"><span class="num">03</span><span class="line"></span><span class="mono">Dúvidas</span></div>
+        <h2 class="display h2">Perguntas <span class="accent">frequentes.</span></h2>
+        ${faqBlock}
+        ${foot()}
+      </section>`;
+    }
     return `<section class="page" aria-label="Investimento e condições">
       ${head('Investimento · <b>Condições</b>')}
       <div class="eyebrow"><span class="num">03</span><span class="line"></span><span class="mono">Investimento</span></div>
@@ -373,7 +388,7 @@
       </div>
       ${sim}
       <div class="sec-label"><span class="mono">Perguntas frequentes</span></div>
-      <div class="faq">${faq.map(([q, a], i) => `<div class="faq__it"><span class="faq__n">${pad(i + 1)}</span><div><h4>${esc(q)}</h4><p>${esc(a)}</p></div></div>`).join('')}</div>
+      ${faqBlock}
       ${foot()}
     </section>`;
   };
