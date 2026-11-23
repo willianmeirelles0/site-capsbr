@@ -120,6 +120,9 @@
   const std = vols;
   const maxVol = std[std.length - 1];
   let vol = std[0], rot = rotQtys[0], custom = false, customQ = maxVol + 1000;
+  // tantas colunas quanto faixas de preço, pra sumir com o espaço vazio quando
+  // a fórmula tem menos (ou mais) faixas que o padrão de 4
+  $('.js-qty').style.setProperty('--qty-cols', std.length);
   $('.js-qty').innerHTML = std.map((v, i) => `<button class="pd-qty__b${i ? '' : ' is-active'}" data-v="${v}"><b>${v.toLocaleString('pt-BR')}</b><span>${brl(priceAt(p, v))}</span></button>`).join('')
     + `<button class="pd-qty__b pd-qty__b--custom" data-v="custom"><b>Personalizado</b><span>acima de ${maxVol.toLocaleString('pt-BR')}</span></button>`;
   const rotBox = $('.js-rot');
