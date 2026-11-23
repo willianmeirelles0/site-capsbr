@@ -140,6 +140,8 @@
   }
 
   /* ---------- Counters ---------- */
+  const countFormulas = $('.js-count-formulas');
+  if (countFormulas) countFormulas.dataset.count = P.length; // puxa do catálogo, não fica parado num número fixo
   $$('[data-count]').forEach(el => {
     const to = +el.dataset.count, o = { v: 0 };
     ScrollTrigger.create({ trigger: el, start: 'top 92%', once: true, onEnter: () => gsap.to(o, { v: to, duration: 2, ease: 'expo.out', onUpdate: () => el.textContent = Math.round(o.v).toLocaleString('pt-BR') }) });

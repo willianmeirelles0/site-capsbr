@@ -115,11 +115,13 @@
   const rotTable = (p.fornecedor && p.fornecedor.rotulo) || COSTS.rotulo[p.tipo] || COSTS.rotulo['Cápsulas'];
   const rotQtys = Object.keys(rotTable).map(Number).sort((a, b) => a - b);
   set('.js-anvisa', brl(ANV)); // shared.js só preenche com o valor padrão; aqui sobrescrevemos com o do fornecedor deste produto, se houver
-  // faixas fixas 300 / 500 / 1.000 + Personalizado (acima de 1.000, valores a consultar)
-  const std = vols.filter(v => v <= 1000);
-  let vol = std[0], rot = rotQtys[0], custom = false, customQ = 2000;
+  // faixas fixas: todas as quantidades cadastradas pra esta fórmula (pode passar
+  // de 1.000 — ex.: 2.000, 3.000) + Personalizado pra quantidades acima da maior faixa
+  const std = vols;
+  const maxVol = std[std.length - 1];
+  let vol = std[0], rot = rotQtys[0], custom = false, customQ = maxVol + 1000;
   $('.js-qty').innerHTML = std.map((v, i) => `<button class="pd-qty__b${i ? '' : ' is-active'}" data-v="${v}"><b>${v.toLocaleString('pt-BR')}</b><span>${brl(priceAt(p, v))}</span></button>`).join('')
-    + '<button class="pd-qty__b pd-qty__b--custom" data-v="custom"><b>Personalizado</b><span>acima de 1.000</span></button>';
+    + `<button class="pd-qty__b pd-qty__b--custom" data-v="custom"><b>Personalizado</b><span>acima de ${maxVol.toLocaleString('pt-BR')}</span></button>`;
   const rotBox = $('.js-rot');
   if (rotBox) {
     rotBox.innerHTML = rotQtys.map((q, i) => `<button type="button" class="pd-rot__b${i ? '' : ' is-active'}" data-rq="${q}">${q.toLocaleString('pt-BR')} un.</button>`).join('');
@@ -130,7 +132,7 @@
       update();
     });
   }
-  $('.js-qty').insertAdjacentHTML('afterend', `<div class="pd-qty__custom js-qcustom" hidden><label for="qcustom">Quantas unidades?</label><div class="pd-qty__in"><button type="button" data-d="-100" aria-label="Menos 100">−</button><input id="qcustom" type="number" inputmode="numeric" min="1001" step="100" value="${customQ}"><span>un.</span><button type="button" data-d="100" aria-label="Mais 100">+</button></div><small>Acima de 1.000 unidades o valor é calculado sob medida.</small></div>`);
+  $('.js-qty').insertAdjacentHTML('afterend', `<div class="pd-qty__custom js-qcustom" hidden><label for="qcustom">Quantas unidades?</label><div class="pd-qty__in"><button type="button" data-d="-100" aria-label="Menos 100">−</button><input id="qcustom" type="number" inputmode="numeric" min="${maxVol + 1}" step="100" value="${customQ}"><span>un.</span><button type="button" data-d="100" aria-label="Mais 100">+</button></div><small>Acima de ${maxVol.toLocaleString('pt-BR')} unidades o valor é calculado sob medida.</small></div>`);
   const qBox = $('.js-qcustom'), qIn = $('#qcustom');
   const tween = (el, to) => {
     if (!el || el._n === to) return;
@@ -151,7 +153,7 @@
     qBox.hidden = !custom;
     const rotPrice = rotTable[rot];
     if (custom) {
-      const q = Math.max(1001, Math.round(+qIn.value || 0));
+      const q = Math.max(maxVol + 1, Math.round(+qIn.value || 0));
       const arte = arteFor(q);
       say($('.js-por'), 'A consultar');
       say($('.js-lot'), 'A consultar');
@@ -161,7 +163,7 @@
       say($('.js-arte'), arte ? brl(arte) : 'Cortesia');
       say($('.js-c-total'), 'Valores a consultar');
       $$('.js-wa-calc').forEach(a => {
-        a.href = msg([`*Produto:* ${p.titulo} (${p.id})`, `*Quantidade:* ${nf(q)} unidades`, `*Embalagem:* ${p.tamanho}`, '*Fabricação:* a consultar (acima de 1.000 un.)', `*Rótulos impressos:* ${nf(rot)} unidades = ${brl(rotPrice)}`, `*Notificação ANVISA:* ${brl(ANV)}`, `*Arte do rótulo:* ${arte ? brl(arte) : 'Cortesia'}`]);
+        a.href = msg([`*Produto:* ${p.titulo} (${p.id})`, `*Quantidade:* ${nf(q)} unidades`, `*Embalagem:* ${p.tamanho}`, `*Fabricação:* a consultar (acima de ${nf(maxVol)} un.)`, `*Rótulos impressos:* ${nf(rot)} unidades = ${brl(rotPrice)}`, `*Notificação ANVISA:* ${brl(ANV)}`, `*Arte do rótulo:* ${arte ? brl(arte) : 'Cortesia'}`]);
         a.dataset.fbContentIds = p.id; a.dataset.fbContentName = p.titulo;
       });
       if (ctaTxt) ctaTxt.textContent = `Quero ${nf(q)} unidades`;
@@ -203,8 +205,8 @@
     else { custom = false; vol = +b.dataset.v; update(); }
   });
   qIn.addEventListener('input', () => update(true));
-  qIn.addEventListener('change', () => { qIn.value = Math.max(1001, Math.round(+qIn.value || 1001)); update(true); });
-  qBox.addEventListener('click', e => { const b = e.target.closest('[data-d]'); if (!b) return; qIn.value = Math.max(1001, (Math.round(+qIn.value) || 1000) + +b.dataset.d); update(true); });
+  qIn.addEventListener('change', () => { qIn.value = Math.max(maxVol + 1, Math.round(+qIn.value || maxVol + 1)); update(true); });
+  qBox.addEventListener('click', e => { const b = e.target.closest('[data-d]'); if (!b) return; qIn.value = Math.max(maxVol + 1, (Math.round(+qIn.value) || maxVol) + +b.dataset.d); update(true); });
   update(true);
 
   /* ---------- Relacionados ---------- */
