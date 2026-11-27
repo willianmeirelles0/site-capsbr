@@ -238,7 +238,7 @@
     `- Arte do rótulo: ${c.arte ? brl(c.arte) : 'Cortesia'}`,
     `*Total estimado: ${brl(c.total)}* (frete não incluso)`,
     '',
-    'Pode confirmar a cotação?',
+    'Quais são as próximas etapas?',
   ].join('\n');
   const priceBlock = (p, v, rq) => {
     const vs = vols(p);
