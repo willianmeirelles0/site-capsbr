@@ -149,7 +149,7 @@
   const fix = (el, v) => { if (!el) return; if (el._tw) el._tw.kill(); el._n = el._cur = v; el.textContent = brl(v); };
   const ctaTxt = $('.js-wa-calc .wa-cta__txt b'), ctaSub = $('.js-wa-calc .wa-cta__txt small');
   const nf = n => n.toLocaleString('pt-BR');
-  const msg = lines => waLink(`Olá! Vim pelo site da CapsBR e quero fabricar com a minha marca.\n\n${lines.join('\n')}\n\nPodem me enviar o orçamento?`);
+  const msg = lines => waLink(`Olá! Vim pelo site da CapsBR e quero fabricar com a minha marca.\n\n${lines.join('\n')}\n\nQuais são as próximas etapas?`);
   const update = (first) => {
     $$('.pd-qty__b').forEach(b => b.classList.toggle('is-active', custom ? b.dataset.v === 'custom' : +b.dataset.v === vol));
     $('.pd-buy').classList.toggle('is-custom', custom);
